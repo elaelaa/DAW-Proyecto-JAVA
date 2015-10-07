@@ -29,7 +29,8 @@ p {
 }
 
 a {
-	color: #57667e;
+	color: #00ccd6;
+	font-weight: 500;
 }
 
 a:hover {
@@ -61,8 +62,11 @@ header {
 }
 
 nav {
-	height: 90px;
 	width: 100%;
+}
+
+nav ul {
+	overflow: hidden;
 }
 
 nav ul li {
@@ -75,7 +79,6 @@ nav ul li:last-child {
 }
 
 nav a {
-	color: #00ccd6;
 	font-size: 20px;
 	font-weight: 500;
 }
@@ -95,10 +98,6 @@ h1 {
 	font-weight: 600;
 }
 
-h1 a {
-	font-size: 25px;
-}
-
 h3 {
 	margin: 0 10px;
 	font-weight: 200;
@@ -113,9 +112,48 @@ h2, h2 a {
 	font-size: 20px;
 }
 
-h2 {
-	position: absolute;
-	top: 630px;
+form p {
+	text-align: right;
+	margin: 15px 0;
+	width: 430px;
+}
+
+input[type="text"], input[type="email"], input[type="number"] {
+	width: 200px;
+	padding: 0 5px;
+}
+
+input[type="submit"] {
+	width: 130px;
+	height: 40px;
+	margin: 20px 20px 0 300px;
+	border-radius: 3px;
+	background: #00ccd6;
+	color: #ffffff;
+	font-weight: 500;
+}
+
+table {
+	width: 100%;
+	border-spacing: 0;
+}
+
+thead, tbody tr:nth-child(even) {
+	background: rgba(255, 255, 255, .7);
+}
+
+tbody tr:nth-child(odd) {
+	background: rgba(0, 0, 0, .05);
+}
+
+th, td {
+	padding: 5px;
+	border-right: 1px solid #333;
+}
+
+th:last-child, td:last-child {
+	text-align: center;
+	border: none;
 }
 
 footer {
