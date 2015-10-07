@@ -112,10 +112,25 @@ h2, h2 a {
 	font-size: 20px;
 }
 
-form p {
-	text-align: right;
+#main p {
 	margin: 15px 0;
 	width: 430px;
+}
+
+#data p {
+	font-weight: bold;
+}
+
+form p {
+	text-align: right;
+}
+
+#data ul {
+	margin: -15px 15px 0;
+}
+
+#data ul li {
+	margin: 0 0 10px;
 }
 
 input[type="text"], input[type="email"], input[type="number"] {
@@ -123,14 +138,33 @@ input[type="text"], input[type="email"], input[type="number"] {
 	padding: 0 5px;
 }
 
+input[type="submit"], #buttons a {
+	border-radius: 3px;
+	color: #ffffff;
+	font-weight: 500;
+}
+
+input[type="submit"], #edit {
+	background: #00ccd6;
+}
+
 input[type="submit"] {
 	width: 130px;
 	height: 40px;
 	margin: 20px 20px 0 300px;
-	border-radius: 3px;
-	background: #00ccd6;
-	color: #ffffff;
-	font-weight: 500;
+}
+
+#buttons {
+	padding: 20px 0;
+}
+
+#buttons a {
+	margin: 0px 50px 0 0;
+	padding: 10px 20px;
+}
+
+#delete {
+	background: hsl(4, 95.1%, 58.8%);
 }
 
 table {
