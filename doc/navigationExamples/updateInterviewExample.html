@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	
+	<title>Titulo de Página</title>
+</head>
+
+<body>
+	<header>
+		<nav>
+			<div class="wrapper">
+				<h1>Human Capital System</h1>
+				<ul>
+					<li><a href="">Dashboard</a></li>
+					<li><a href="employeesIndexExample.html">Empleados</a></li>
+					<li><a href="">Candidatos</a></li>
+					<li><a href="">Entrevistas</a></li>
+					<li><a href="loginExample.html">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<!-- html content -->
+	<div id="main">
+		<div class="wrapper">
+    <form>
+				<p><label>Puesto:	
+				<input type="text" name="post" required></label>
+				</p>
+				<p><label>Fecha de entrevista:	
+				<input type="text" name="dateInterview" required></label>
+				</p>
+				<p><label>Entrevistador:
+				<select name="interviewer"> 
+				  <option value="name1">Andrés Ávila</option>
+				  <option value="name2">Ella Potka</option>
+				  <option value="name3">Luis Lamadrid</option>
+				  <option value="name4">Manuel Sañudo</option>
+				</select>
+				</p>
+				<p><label>Candidato:
+				<select name="candidate"> 
+				  <option value="c1">Pedro Garza</option>
+				  <option value="c2">Andrea Ramírez</option>
+				  <option value="c3">María Días</option>
+				  <option value="c4">Ramiro Dominguez</option>
+				</select>
+				</p>
+				<p><label>Plataforma de la entrevista:
+				<input type="text" name="interviewPlatform" required></label>
+				</p>
+				<p><label>Feedback de la entrevista:
+				<input type="textarea" name="feedback" required></label>
+				</p>
+				<input type ="submit"  value="Guardar">
+			</form>
+		</div>
+	</div>
+
+	<footer>
+		<p>&copy; 2015 Equipo AlphaOne</p>
+	</footer>
+</body>
+</html>
