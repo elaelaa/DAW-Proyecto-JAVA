@@ -1,48 +1,100 @@
+
+
+
 <!DOCTYPE html>
 <html>
-	<head>
-	<meta charset="UTF-8">
-		<title>Dar de Alta</title>
-	</head>
-	<body>
-		<div id="wrapper">
-			<form>
-				<p><label>Nombre:
-				<input type="text" name="name" required></label>
-				</p>
-				<p><label>Apellidos:
-				<input type="text" name="lastname" required></label>
-				</p>
-				<p><label>Dirección:
-				<input type="text" name="address" required></label>
-				</p>
-				<p><label>Teléfono
-				<input type="number" name="age" required></label>
-				</p> 
-				<p><label>Correo Electrónico:
-				<input type="email" name="email" required></label>
-				</p>
-				<p><label>Título Profesional: 
-				<input type="text" name="title"></label>
-				</p>
-				<p><label>Universidad: 
-				<input type="text" name="university"></label>
-				</p>
-				<p><label>Certificados obtenidos: 
-				<input type="text" name="certificates"></label>
-				</p>
-				<p><label>Trabajos Anteriores:
-				<input type="text" name="previousWorks"></label>
-				</p>
-				<p><label>Expectativas Económicas:
-				<input type="number" name="expectation"></label>
-				</p>
-				<input type ="submit"  value="Guardar">
-			</form>
-		</div>	
-	</body>	
-
-		
-
-	</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Nuevo Candidato</title>
+        <link rel="stylesheet" type="text/css" href="../css/main.css">
+    </head>
+    <body>
+        
+        <header>
+		<nav>
+			<div class="wrapper">
+				<h1>Human Capital System</h1>
+				<ul>
+					<li><a href="dashboard.jsp">Dashboard</a></li>
+					<li><a href="employees.jsp">Empleados</a></li>
+					<li><a href="candidates.jsp">Candidatos</a></li>
+					<li><a href="interviews.jsp">Entrevistas</a></li>
+					<li><a href="login.html">Logout</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+        
+	<div id="main">
+            <div class="wrapper">
+                <form action="CreateCandidate" method="get">
+                    <p><label>Nombre:
+                        <input type="text" name="name" required></label>
+                    </p>
+                    <p><label>Apellidos:
+                        <input type="text" name="lastname" required></label>
+                    </p>
+                    <p><label>Dirección:
+                        <input type="text" name="address" required></label>
+                    </p>
+                    <p><label>Teléfono
+                        <input type="number" name="age" required></label>
+                    </p> 
+                    <p><label>Correo Electrónico:
+                        <input type="email" name="email" required></label>
+                    </p>
+                    <p><label>Título Profesional: 
+                        <input type="text" name="title"></label>
+                    </p>
+                    <fieldset> <legend> Certificados obtenidos: </legend>
+                    <div class="certificate">
+	                    <p><label>Tipo: 
+	                        <select name="type" value="profesional">
+	                            <option value="profesional">Titulo profesional</option>
+	                            <option value="posgrado">Posgrado</option>
+	                            <option value="certificado">Certificado</option>
+	                        </select>
+	                        </label>
+	                    </p>
+	                    <p><label>Nombre del certificado:
+	                            <input type="text" name="degreename"></label>
+	                    </p>
+	                    <p><label>Universidad: 
+	                        <input type="text" name="university"></label>
+	                    </p>
+                    </div>
+                    <div class="certificate">
+                        <p><label>Tipo: 
+                            <select name="type" value="profesional">
+                                <option value="profesional">Titulo profesional</option>
+                                <option value="posgrado">Posgrado</option>
+                                <option value="certificado">Certificado</option>
+                            </select>
+                            </label>
+                        </p>
+                        <p><label>Nombre del certificado:
+                                <input type="text" name="degreename"></label>
+                        </p>
+                        <p><label>Universidad: 
+                            <input type="text" name="university"></label>
+                        </p>
+                    </div>
+                    <a href="#">Agregar certificado…</a>
+                    </fieldset>
+                    <p><label>Trabajos Anteriores:
+                        <input type="text" name="previousWorks"></label>
+                    </p>
+                    <p><label>Expectativas Económicas:
+                        <input type="number" name="expectation"></label>
+                    </p>
+                    <input type ="submit"  value="Guardar">
+                </form>
+            </div>	
+        </div>
+    
+        <footer>
+		<p>&copy; 2015 Equipo AlphaOne</p>
+	</footer>
+        
+    </body>	
 </html>

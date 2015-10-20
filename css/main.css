@@ -133,7 +133,7 @@ form p {
 	margin: 0 0 10px;
 }
 
-input[type="text"], input[type="email"], input[type="number"] {
+input[type="text"], input[type="email"], input[type="number"], select {
 	width: 200px;
 	padding: 0 5px;
 }
@@ -152,6 +152,12 @@ input[type="submit"] {
 	width: 130px;
 	height: 40px;
 	margin: 20px 20px 0 300px;
+}
+
+.certificate {
+	width: 50%;
+	border: 1px solid #999;
+	margin: 5px 0;
 }
 
 #buttons {
