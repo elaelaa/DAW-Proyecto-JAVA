@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Candidato</title>
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        <script src="js/AddDegree.js"></script> 
+        <script src="js/CreateNew.js"></script> 
     </head>
     <body>
         
@@ -30,7 +30,7 @@
                         <input type="text" name="address" required></label>
                     </p>
                     <p><label>Teléfono
-                        <input type="number" name="age" required></label>
+                        <input type="number" name="phone" required></label>
                     </p> 
                     <p><label>Correo Electrónico:
                         <input type="email" name="email" required></label>
@@ -41,11 +41,13 @@
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <div id="allCertificates">
                         </div>
-                        <a id="add">Agregar certificado…</a>
+                        <a id="addCert">Agregar certificado…</a>
                     </fieldset>
-                    <p><label>Trabajos Anteriores:
-                        <input type="text" name="previousWorks"></label>
-                    </p>
+                    <fieldset> <legend> Trabajos Anteriores: </legend>
+                        <div id="allWorks">
+                        </div>
+                        <a id="addJob">Agregar trabajo…</a>
+                    </fieldset>
                     <p><label>Expectativas Económicas:
                         <input type="number" name="expectation"></label>
                     </p>

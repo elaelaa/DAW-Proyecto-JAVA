@@ -7,6 +7,7 @@ package Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ public class CreateCandidate extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -56,7 +58,85 @@ public class CreateCandidate extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        // get parameters from the request
+        String firstName = request.getParameter("name");
+        String lastName = request.getParameter("lastname");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email"); 
+        String title = request.getParameter("title");
+        
+        String[] types = request.getParameterValues("type"); 
+        String[] degrees = request.getParameterValues("degreename"); 
+        String[] universities = request.getParameterValues("university"); 
+        
+        String type; 
+        String degree; 
+        String university; 
+        
+        ArrayList degreeList = new ArrayList(); 
+        
+        if (types != null)
+        {
+            for(int i = 0; i<types.length; i++)
+            {
+                degree = ""; 
+                university = ""; 
+                type = types[i];
+                degree = degrees[i]; 
+                university = universities[i];
+                if (!degree.isEmpty() && !university.isEmpty())
+                {
+                    //create new degree and append to list
+                }
+                else
+                {
+                //validation that every degree has all the values
+                }
+            }
+        }
+        
+        
+        String[] previousJobs = request.getParameterValues("jobTitle");
+        String[] previousCompanies = request.getParameterValues("company"); 
+        String[] jobDurations = request.getParameterValues("duration");
+        
+        String job; 
+        String company; 
+        String duration; 
+        
+        ArrayList jobList = new ArrayList(); 
+        
+        if (previousJobs != null)
+        {
+            for(int i = 0; i<previousJobs.length; i++)
+            {
+                company = ""; 
+                duration = ""; 
+                job = previousJobs[i];
+                company = previousCompanies[i]; 
+                duration = jobDurations[i];
+                if (!company.isEmpty() && !duration.isEmpty())
+                {
+                    //create new job and append to list
+                }
+                else
+                {
+                //validation that every job has all the values
+                }
+            }
+        }
+        
+        String economicExpect = request.getParameter("expectation");
+        
+        //Some validation? 
+        
+        //send to database
+        
+        //Display message of success? 
+        
+        //processRequest(request, response);
     }
 
     /**
