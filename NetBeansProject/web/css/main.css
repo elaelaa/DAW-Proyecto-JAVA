@@ -1,0 +1,201 @@
+/* 
+#333333
+#414141
+#00ccd6
+#eff0ef
+#ffd900
+ */
+
+* {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+	color: #35383b;
+	-webkit-transition: all 30ms ease-in-out;
+	-webkit-text-size-adjust: none;
+	font: 18px Avenir, Helvetica Neue;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+}
+
+ul {
+	list-style: none;
+}
+
+p {
+	padding-bottom: 4px;
+	font-weight: 400;
+}
+
+a {
+	color: #00ccd6;
+	font-weight: 500;
+}
+
+a:hover {
+	opacity: 0.8;
+	text-decoration: underline;
+}
+
+a:active {
+	position: relative;
+	top: 1px;
+}
+
+body {
+	-webkit-text-size-adjust:none;
+	-webkit-font-smoothing: antialiased;
+	background: #eff0ef;
+}
+
+.wrapper, nav {
+	position: relative;
+	width: 960px;
+	margin: 0 auto;
+}
+
+header {
+	background: #333333;
+	width: 100%;
+	padding: 20px 0 0;
+}
+
+nav {
+	width: 100%;
+}
+
+nav ul {
+	overflow: hidden;
+}
+
+nav ul li {
+	float: left;
+	padding: 5px 10px;
+}
+
+nav ul li:last-child {
+	float: right;
+}
+
+nav a {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+nav a:hover {
+	text-decoration: none;
+}
+
+#main {
+	margin-top: 20px;
+}
+
+h1 {
+	margin: 0 10px 5px;
+	font-size: 28px;
+	color: #eff0ef;
+	font-weight: 600;
+}
+
+h3 {
+	margin: 0 10px;
+	font-weight: 200;
+}
+
+h3 a {
+	text-decoration: underline;
+	font-weight: 200;
+}
+
+h2, h2 a {
+	font-size: 20px;
+}
+
+#main p {
+	margin: 15px 0;
+	width: 430px;
+}
+
+#data p {
+	font-weight: bold;
+}
+
+form p {
+	text-align: right;
+}
+
+#data ul {
+	margin: -15px 15px 0;
+}
+
+#data ul li {
+	margin: 0 0 10px;
+}
+
+input[type="text"], input[type="email"], input[type="number"] {
+	width: 200px;
+	padding: 0 5px;
+}
+
+input[type="submit"], #buttons a {
+	border-radius: 3px;
+	color: #ffffff;
+	font-weight: 500;
+}
+
+input[type="submit"], #edit {
+	background: #00ccd6;
+}
+
+input[type="submit"] {
+	width: 130px;
+	height: 40px;
+	margin: 20px 20px 0 300px;
+}
+
+#buttons {
+	padding: 20px 0;
+}
+
+#buttons a {
+	margin: 0px 50px 0 0;
+	padding: 10px 20px;
+}
+
+#delete {
+	background: hsl(4, 95.1%, 58.8%);
+}
+
+table {
+	width: 100%;
+	border-spacing: 0;
+}
+
+thead, tbody tr:nth-child(even) {
+	background: rgba(255, 255, 255, .7);
+}
+
+tbody tr:nth-child(odd) {
+	background: rgba(0, 0, 0, .05);
+}
+
+th, td {
+	padding: 5px;
+	border-right: 1px solid #333;
+}
+
+th:last-child, td:last-child {
+	text-align: center;
+	border: none;
+}
+
+footer {
+	width: 930px;
+	margin: 20px auto 0;
+	padding: 30px 0 5px;
+}
+
+footer p {
+	font-size: 12px;
+}
