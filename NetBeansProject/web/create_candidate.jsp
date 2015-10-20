@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Candidato</title>
         <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src="js/AddDegree.js"></script> 
     </head>
     <body>
         
@@ -38,20 +39,9 @@
                         <input type="text" name="title"></label>
                     </p>
                     <fieldset> <legend> Certificados obtenidos: </legend>
-                    <p><label>Tipo: 
-                        <select name="type" value="profesional">
-                            <option value="profesional">Titulo profesional</option>
-                            <option value="posgrado">Posgrado</option>
-                            <option value="certificado">Certificado</option>
-                        </select>
-                        </label>
-                    </p>
-                    <p><label>Nombre del certificado:
-                            <input type="text" name="degreename"></label>
-                    </p>
-                    <p><label>Universidad: 
-                        <input type="text" name="university"></label>
-                    </p>
+                        <div id="allCertificates">
+                        </div>
+                        <a id="add">Agregar certificado…</a>
                     </fieldset>
                     <p><label>Trabajos Anteriores:
                         <input type="text" name="previousWorks"></label>
