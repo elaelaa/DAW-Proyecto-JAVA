@@ -14,7 +14,7 @@ public class Database {
     
     static {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/SENG_BYTES", "root", "");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/HumanCapital", "root", "");
             stmt = con.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
