@@ -28,8 +28,8 @@ public class Candidate extends Person {
         this.expectation = expectation;
     }
     
-    public List<Title> getTitles(){
-        List<Title> titles = new ArrayList<Title>();
+    public List<Certificate> getCertificates(){
+        List<Certificate> certificates = new ArrayList<Certificate>();
         
         try {
             String query = "SELECT T.id, T.person_id, T.type, T.name, T.organization, T.dateAquired " +
@@ -37,7 +37,7 @@ public class Candidate extends Person {
                            "WHERE %d = T.person_id";
             ResultSet rs = Database.query(query, this.id);
             while (rs.next()){
-                Title title = new Title(
+                Certificate certificate = new Certificate(
                         rs.getInt("id"),
                         rs.getInt("person_id"),
                         rs.getString("type"),
@@ -45,12 +45,12 @@ public class Candidate extends Person {
                         rs.getString("organization"),
                         rs.getDate("dateAquired")
                 );
-                titles.add(title);
+                certificates.add(certificate);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return titles;
+        return certificates;
     }
     
     public static Candidate getById(int id){

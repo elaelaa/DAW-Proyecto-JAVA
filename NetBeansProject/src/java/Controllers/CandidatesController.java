@@ -50,7 +50,7 @@ public class CandidatesController extends HttpServlet {
         // initializing variables
         String action = request.getServletPath();
         String url = "/404.jsp"; // starts default not found url
-        RequestDispatcher dispatcher = null;
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         
         // route to candidates index
         if (action.equals("/candidates")){

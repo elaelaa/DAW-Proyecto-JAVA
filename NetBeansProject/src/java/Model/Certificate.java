@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Beto
  */
-public class Title {
+public class Certificate {
     private int id = -1;
     private int personId = -1;
     private String type;
@@ -20,7 +20,7 @@ public class Title {
     private Date dateAquired;
 
     
-    public Title(int id, int personId, String type, String name, String organization, Date dateAquired) {
+    public Certificate(int id, int personId, String type, String name, String organization, Date dateAquired) {
         this.id = id;
         this.personId = personId;
         this.type = type;
