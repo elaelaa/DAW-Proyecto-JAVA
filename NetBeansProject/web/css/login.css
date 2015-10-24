@@ -1,0 +1,59 @@
+body {
+	background: #414141;
+}
+
+h1 {
+	position: relative;
+	top: -80px;
+	font-size: 35px;
+	font-weight: bold;
+	color: #eff0ef;
+}
+
+#login {
+	position: absolute;
+	bottom: 0;
+	background: #333333;
+	padding: 20px;
+	width: 100%;
+	min-width: 600px;
+	height: 60vh;
+	margin: auto 0;
+}
+
+#login p {
+	width: 100%;
+}
+
+form {
+	float: right;
+	width: 340px;
+	position: relative;
+	top: -60px;
+}
+
+label {
+	color: #eff0ef;
+	font-size: 24px;
+	float: right;
+	margin: 10px 0;
+}
+
+input[type="text"], input[type="password"] {
+	position: relative;
+	top: -3px;
+	width: 200px;
+	height: 35px;
+	text-align: center;
+}
+
+input[type="submit"] {
+	width: 130px;
+	height: 40px;
+	margin: 20px 0px 0;
+	border-radius: 3px;
+	float: right;
+	background: #00ccd6;
+	color: #ffffff;
+	font-weight: 500;
+}
