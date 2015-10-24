@@ -25,7 +25,7 @@ CREATE TABLE Employee (
 );
 
 /* TODO: Make a 'Person' superclass to avoid id collisions */
-CREATE TABLE Title (
+CREATE TABLE Certificate (
   id INT NOT NULL AUTO_INCREMENT,
   person_id INT NOT NULL,
   type VARCHAR(100) NOT NULL,

@@ -33,7 +33,7 @@ public class Candidate extends Person {
         
         try {
             String query = "SELECT T.id, T.person_id, T.type, T.name, T.organization, T.dateAquired " +
-                           "FROM Title AS T, Candidate As C " +
+                           "FROM Certificate AS T, Candidate As C " +
                            "WHERE %d = T.person_id";
             ResultSet rs = Database.query(query, this.id);
             while (rs.next()){

@@ -8,7 +8,7 @@ VALUES (
 	14000.00
 );
 
-INSERT INTO Title (person_id, type, name, organization, dateAquired)
+INSERT INTO Certificate (person_id, type, name, organization, dateAquired)
 VALUES (
 	1,
 	'Bachelors',
