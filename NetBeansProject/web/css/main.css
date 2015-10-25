@@ -160,6 +160,11 @@ input[type="submit"] {
 	margin: 5px 0;
 }
 
+.errorMessage {
+        color: red; 
+        font-style: italic; 
+}
+
 #buttons {
 	padding: 20px 0;
 }

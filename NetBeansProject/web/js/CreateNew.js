@@ -11,7 +11,7 @@ window.onload = function(){
 function addDegree(){
     var oldhtml = document.getElementById("allCertificates").innerHTML;
     var html =  '<div class="certificate">' +
-       ' <p><label>Tipo: <select name="type" value="profesional">' +
+       ' <p><label>Tipo: <select name="type" value="profesional" required>' +
         ' <option value="profesional">Titulo profesional</option> ' +
             '<option value="posgrado">Posgrado</option>' +
             '<option value="certificado">Certificado</option>' +
@@ -19,11 +19,12 @@ function addDegree(){
         '</label>' +
     '</p>' +
     '<p><label>Nombre del certificado:' + 
-            '<input type="text" name="degreename"></label>' +
+            '<input type="text" name="degreename" required></label>' +
     '</p>' +
     '<p><label>Universidad: ' +
-        '<input type="text" name="university"></label>' +
+        '<input type="text" name="university" required></label>' +
     '</p>' +    
+    '<a href="#" onclick="Remove(this)">Borrar</a>' +
 '</div>' ;
 
     document.getElementById("allCertificates").innerHTML = oldhtml + html; 
@@ -35,15 +36,21 @@ function addDegree(){
 function addWork(){
     var oldhtml = document.getElementById("allWorks").innerHTML;
     var html = '<div class="certificate"><p><label>Título profesional:' +
-                        '<input type="text" name="jobTitle"></label>' +
+                        '<input type="text" name="jobTitle" required></label>' +
                     '</p>' +
                     '<p><label>Empresa:' +
-                        '<input type="text" name="company"></label>' +
+                        '<input type="text" name="company" required></label>' +
                     '</p>' +
                     '<p><label>Duración:' +
-                        '<input type="text" name="duration"></label>' +
+                        '<input type="text" name="duration" required></label>' +
                     '</p>' +
+                    '<a href="#" onclick="Remove(this)">Borrar</a>'+
                     '</div>';
             
     document.getElementById("allWorks").innerHTML = oldhtml + html; 
+}
+
+function Remove(link) { 
+    //alert("removing" + link.parentNode + "from" + link.parentNode.parentNode);
+    link.parentNode.parentNode.removeChild(link.parentNode);
 }
