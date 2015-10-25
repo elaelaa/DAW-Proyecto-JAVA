@@ -120,6 +120,7 @@ public class CandidatesController extends HttpServlet {
         String[] previousJobs = request.getParameterValues("jobTitle");
         String[] previousCompanies = request.getParameterValues("company"); 
         String[] descriptions = request.getParameterValues("description");
+        String[] salaries = request.getParameterValues("salary");
         String[] startDates = request.getParameterValues("startdate");
         String[] endDates = request.getParameterValues("enddate");
         
@@ -209,6 +210,7 @@ public class CandidatesController extends HttpServlet {
         String jobTitle; 
         String company; 
         String description; 
+        String salaryStr; 
         String startDateStr;
         String endDateStr; 
         
@@ -220,11 +222,13 @@ public class CandidatesController extends HttpServlet {
             {
                 company = ""; 
                 description = ""; 
+                salaryStr = ""; 
                 startDateStr = ""; 
                 endDateStr = ""; 
                 jobTitle = previousJobs[i];
                 company = previousCompanies[i]; 
                 description = descriptions[i];
+                salaryStr = salaries[i];
                 startDateStr = startDates[i];
                 endDateStr = endDates[i];
 
@@ -254,7 +258,9 @@ public class CandidatesController extends HttpServlet {
                 
                 if (!errorFlag)
                 {
-                    //PreviousJob job = PreviousJob(int id, int person_id, jobTitle, description, startDate, endDate); 
+                    double salary = Double.parseDouble(salaryStr); 
+                    
+                    //PreviousJob job = PreviousJob(int id, int person_id, jobTitle, description, salary, startDate, endDate); 
 
                     //add job to db
 

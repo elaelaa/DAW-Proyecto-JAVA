@@ -86,6 +86,9 @@
                                     <p><label>Descripción: 
                                         <input type="text" rows="5" name="description" value="${job.getDescription()}" required></label>
                                     </p>
+                                    <p><label>Salario: 
+                                       <input type="number" name="salary" value="${jon.getSalary()}" required></label>
+                                    </p>
                                     <p><label>Fecha de inicio: 
                                         <input type="text" class="datepicker" name="startdate" value="${job.getStartDate()}" required></label>
                                     </p>

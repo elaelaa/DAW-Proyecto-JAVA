@@ -67,6 +67,7 @@ public class Candidate extends Person {
                         rs.getInt("person_id"),
                         rs.getString("jobTitle"),
                         rs.getString("jobDescription"),
+                        rs.getDouble("salary"),
                         rs.getDate("startDate"),
                         rs.getDate("endDate")
                 );

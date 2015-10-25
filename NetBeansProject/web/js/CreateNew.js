@@ -50,6 +50,9 @@ function addWork(){
                     '<p><label>Descripción:' +
                         '<input type="text" rows="5" name="description" required></label>' +
                     '</p>' +
+                    '<p><label>Salario: ' +
+                        '<input type="number" name="salary" required></label>' +
+                    '</p>' +
                     '<p><label>Fecha de inicio: ' +
                         '<input type="text" class="datepicker" name="startdate" required></label>' +
                     '</p>' +
