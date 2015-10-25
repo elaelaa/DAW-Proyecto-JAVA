@@ -16,17 +16,15 @@ public class PreviousJob {
     private int person_id;
     private String jobTitle;
     private String jobDescription;
-    private double salary;
     private Date startDate;
     private Date endDate;
 
     public PreviousJob(int id, int person_id, String jobTitle, 
-            String jobDescription, double salary, Date startDate, Date endDate) {
+            String jobDescription, Date startDate, Date endDate) {
         this.id = id;
         this.person_id = person_id;
         this.jobTitle = jobTitle;
         this.jobDescription = jobDescription;
-        this.salary = salary;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -86,21 +84,7 @@ public class PreviousJob {
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
     }
-
-    /**
-     * @return the salary
-     */
-    public double getSalary() {
-        return salary;
-    }
-
-    /**
-     * @param salary the salary to set
-     */
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
+    
     /**
      * @return the startDate
      */

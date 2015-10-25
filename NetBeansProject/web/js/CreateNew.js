@@ -4,6 +4,9 @@ window.onload = function(){
     element.addEventListener("click", addDegree, false);
     var element= document.getElementById("addJob");
     element.addEventListener("click", addWork, false);
+    
+    $('body').on('focus',".datepicker", function(){
+    $(this).datepicker();}); 
  
 };
 
@@ -21,9 +24,12 @@ function addDegree(){
     '<p><label>Nombre del certificado:' + 
             '<input type="text" name="degreename" required></label>' +
     '</p>' +
-    '<p><label>Universidad: ' +
+    '<p><label>Organización: ' +
         '<input type="text" name="university" required></label>' +
-    '</p>' +    
+    '</p>' +
+    '<p><label>Fecha de adquisición: ' +
+        '<input type="text" class="datepicker" name="dateacquired" required></label>' +
+    '</p>' +
     '<a href="#" onclick="Remove(this)">Borrar</a>' +
 '</div>' ;
 
@@ -41,8 +47,14 @@ function addWork(){
                     '<p><label>Empresa:' +
                         '<input type="text" name="company" required></label>' +
                     '</p>' +
-                    '<p><label>Duración:' +
-                        '<input type="text" name="duration" required></label>' +
+                    '<p><label>Descripción:' +
+                        '<input type="text" rows="5" name="description" required></label>' +
+                    '</p>' +
+                    '<p><label>Fecha de inicio: ' +
+                        '<input type="text" class="datepicker" name="startdate" required></label>' +
+                    '</p>' +
+                    '<p><label>Fecha final: ' +
+                        '<input type="text" class="datepicker" name="enddate" required></label>' +
                     '</p>' +
                     '<a href="#" onclick="Remove(this)">Borrar</a>'+
                     '</div>';

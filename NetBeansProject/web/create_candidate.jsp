@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Nuevo Candidato</title>
         <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script src="js/CreateNew.js"></script> 
     </head>
     <body>
@@ -24,27 +26,32 @@
                         <input type="text" name="name" value="${candidate.getName()}" required></label>
                     </p>
                     <p><label>Apellidos:
-                        <input type="text" name="lastname" value="${candidate.getLastname()}" required></label>
+                        <input type="text" name="lastname" value="" required></label>
                     </p>
                     <p><label>Dirección:
                         <input type="text" name="address" value="${candidate.getAddress()}" required></label>
                     </p>
-                    <p><label>Teléfono
-                        <input type="text" name="phone" value="${candidate.getNumber()}" required></label>
+                    <p><label>Teléfono: 
+                        <input type="text" name="phone" value="${candidate.getPhone()}" required></label>
                     </p> 
                     <p><label>Correo Electrónico:
                         <input type="email" name="email" value="${candidate.getEmail()}" required></label>
                     </p>
+                    <p>
+                        <label>Fecha de nacimiento: 
+                        <span class="errorMessage">${bdError}</span>
+                        <input type="text" name="birthday" class="datepicker" value="${candidate.getDateOfBirth()}" required></label>
+                    </p>
                     <p><label>Título Profesional: 
-                        <input type="text" name="title" value="${candidate.getTitle()}"></label>
+                        <input type="text" name="title" value=""></label>
                     </p>
                     <fieldset> <legend> Certificados obtenidos: </legend>
-                        <span class="errorMessage">${degreeError}</span>
+                        <span class="errorMessage">${certDateError}</span>
                         <div id="allCertificates">
-                            <!--<c:forEach items="${candidate.getCertificates()}" var="cert">
+                            <!--<c:forEach items=""statement for getting certificates"" var="cert">
                                 <div class="certificate"> 
                                     <p><label>Tipo: 
-                                        <select name="type" value="${cert.getType()}">
+                                        <select name="type" value="${cert.getType()}" required>
                                            <option value="profesional">Titulo profesional</option>
                                            <option value="posgrado">Posgrado</option>
                                            <option value="certificado">Certificado</option>
@@ -52,10 +59,13 @@
                                         </label>
                                     </p> 
                                     <p><label>Nombre del certificado: 
-                                        <input type="text" name="degreename" value="${cert.getName()}"></label>
+                                        <input type="text" name="degreename" value="${cert.getName()}" required></label>
                                     </p>
                                     <p><label>Organización: 
-                                        <input type="text" name="organization" value="${cert.getOrganization()}"></label> 
+                                        <input type="text" name="organization" value="${cert.getOrganization()}" required></label> 
+                                    </p>
+                                    <p><label>Fecha de adquisición: 
+                                        <input type="text" class="datepicker" name="dateacquired" value="${cert.getDateAquired()}" required></label>
                                     </p>
                                 </div>
                             </c:forEach>-->
@@ -63,18 +73,24 @@
                         <a id="addCert" href="#">Agregar certificado…</a>
                     </fieldset>
                     <fieldset> <legend> Trabajos Anteriores: </legend>
-                        <span class="errorMessage">${jobError}</span>
+                        <span class="errorMessage">${jobDateError}</span>
                         <div id="allWorks">
-                            <!--<c:forEach items="${candidate.getJobs()}" var="job">
+                            <!--<c:forEach items="statement for getting jobs" var="job">
                                 <div class="certficate">
                                     <p><label>Título profesional:
-                                        <input type="text" name="jobTitle" value="${job.getTitle()}"></label>
+                                        <input type="text" name="jobTitle" value="${job.getTitle()}" required></label>
                                     </p>
                                     <p><label>Empresa: 
-                                        <input type="text" name="company" value="${job.getCompany()}"></label>
+                                        <input type="text" name="company" value="${job.getCompany()}" required></label>
                                     </p>
-                                    <p><label>Duración:
-                                        <input type="text" name="duration" value="${job.getDuration()}"></label>
+                                    <p><label>Descripción: 
+                                        <input type="text" rows="5" name="description" value="${job.getDescription()}" required></label>
+                                    </p>
+                                    <p><label>Fecha de inicio: 
+                                        <input type="text" class="datepicker" name="startdate" value="${job.getStartDate()}" required></label>
+                                    </p>
+                                    <p><label>Fecha final: 
+                                        <input type="text" class="datepicker" name="enddate" value="${job.getEndDate()}" required></label>
                                     </p>
                                 </div>
                             </c:forEach>-->

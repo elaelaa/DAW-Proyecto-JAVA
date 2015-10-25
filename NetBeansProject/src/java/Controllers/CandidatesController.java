@@ -7,8 +7,13 @@ package Controllers;
 
 import Model.Candidate;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
@@ -87,7 +92,16 @@ public class CandidatesController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        //figure out if trying to modify or create
         String action = request.getPathInfo(); 
+        
+        Boolean creating = false; 
+        
+        if (action.equals("/create"))
+        {
+            creating = true; 
+        }
+        
         
         // get parameters from the request
         String firstName = request.getParameter("name");
@@ -96,23 +110,64 @@ public class CandidatesController extends HttpServlet {
         String phone = request.getParameter("phone");
         String email = request.getParameter("email"); 
         String title = request.getParameter("title");
+        String birthday = request.getParameter("birthday");
         
         String[] types = request.getParameterValues("type"); 
         String[] degrees = request.getParameterValues("degreename"); 
         String[] universities = request.getParameterValues("university"); 
+        String[] dates = request.getParameterValues("dateacquired"); 
         
         String[] previousJobs = request.getParameterValues("jobTitle");
         String[] previousCompanies = request.getParameterValues("company"); 
-        String[] jobDurations = request.getParameterValues("duration");
+        String[] descriptions = request.getParameterValues("description");
+        String[] startDates = request.getParameterValues("startdate");
+        String[] endDates = request.getParameterValues("enddate");
         
         String economicExpect = request.getParameter("expectation");
         
         //flag to check if there was errors in processing parameters
         Boolean errorFlag = false; 
+        double expectation = 0;
+        if (!economicExpect.isEmpty())
+        {
+            expectation = Double.parseDouble(economicExpect); 
+        }
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateOfBirth = new Date();
+        try{
+            dateOfBirth = df.parse(birthday);
+        } 
+        catch (ParseException ex){
+           
+            errorFlag = true; 
+
+            String bdError = "Insert dates in format dd/MM/yyyy! <br>";
+            request.setAttribute("bdError", bdError); 
+        }
+        
+        //VALIDATION OF PHONE NUMBER NEEDED
+        
+        Candidate candidate = null; 
+        
+        if (creating)
+        {
+            
+            //Create the candidate object
+            //title needed!!!!!
+            candidate = new Candidate(expectation, firstName + lastName, address, phone, email, dateOfBirth);
+            //add to db only when all the data checked
+            //assign id?
+        }
+        else 
+        {
+            //find candidate, compare values...
+        }
+
         
         String type; 
         String degree; 
         String university; 
+        String dateStr; 
         
         ArrayList degreeList = new ArrayList(); 
         
@@ -122,27 +177,40 @@ public class CandidatesController extends HttpServlet {
             {
                 degree = ""; 
                 university = ""; 
-                if (i < universities.length || i < degrees.length)
+                dateStr = ""; 
+                type = types[i];
+                degree = degrees[i]; 
+                university = universities[i];
+                dateStr = dates[i]; 
+                Date dateOfCert; 
+                try{
+                    dateOfCert = df.parse(dateStr);
+                } 
+                catch (Exception e){
+                    errorFlag = true; 
+
+                    String certDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    request.setAttribute("certDateError", certDateError);
+                }
+                
+                if (!errorFlag)
                 {
                     
-                    type = types[i];
-                    degree = degrees[i]; 
-                    university = universities[i];
-                    //Certificate cert = new cert(type, degree, university); 
+                    //Certificate cert = new Certificate(int id, int personId, type, degree, university, dateOfCert);
+                    
+                    //add cert to db
+                    
+                    //listing not needed? 
                     //degreeList.add(cert);
-                }
-                else
-                {
-                    errorFlag = true; 
-                    String degreeError = "Fill all the fields for all degrees! <br>";
-                    request.setAttribute("degreeError", degreeError);
                 }
             }
         }
         
-        String job; 
+        String jobTitle; 
         String company; 
-        String duration; 
+        String description; 
+        String startDateStr;
+        String endDateStr; 
         
         ArrayList jobList = new ArrayList(); 
         
@@ -151,54 +219,95 @@ public class CandidatesController extends HttpServlet {
             for(int i = 0; i<previousJobs.length; i++)
             {
                 company = ""; 
-                duration = ""; 
-                if (i < previousCompanies.length && i < jobDurations.length)
-                {
-                    
-                    job = previousJobs[i];
-                    company = previousCompanies[i]; 
-                    duration = jobDurations[i];
-                    //Job job = new job(title, company, duration); 
-                    //jobList.add(job);
-                }
-                else
-                {
-                    //this shouldn't be necessary anymore
+                description = ""; 
+                startDateStr = ""; 
+                endDateStr = ""; 
+                jobTitle = previousJobs[i];
+                company = previousCompanies[i]; 
+                description = descriptions[i];
+                startDateStr = startDates[i];
+                endDateStr = endDates[i];
+
+                Date endDate; 
+                Date startDate;
+                try{
+                    startDate = df.parse(startDateStr);
+                } 
+                catch (Exception e){
+
                     errorFlag = true; 
-                    String jobError = "Fill all the fields for all jobs! <br>";
-                    request.setAttribute("jobError", jobError);
+
+                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    request.setAttribute("jobDateError", jobDateError);
+                }
+                try{
+                    endDate = df.parse(endDateStr);
+                } 
+                catch (Exception e){
+                    errorFlag = true; 
+
+                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    request.setAttribute("jobDateError", jobDateError);
+                }
+
+               
+                
+                if (!errorFlag)
+                {
+                    //PreviousJob job = PreviousJob(int id, int person_id, jobTitle, description, startDate, endDate); 
+
+                    //add job to db
+
+                    //listing is not needed? 
+                    //jobList.add(job);
                 }
             }
         }
         
         //Some other validation? 
         
-        //Create the candidate object
-        //Candidate candidate = new Candidate(firstName, lastName, address, phone, email, title, degreeList, jobList, economicExpect);
-        
-        //Send error messages if there was errors
-        
-        if (action.equals("/create")){
+        ServletContext context = getServletContext();
+        if (creating){
             
         
             if (errorFlag = true)
             {
-                //request.setAttribute("candidate", candidate); 
-
-                ServletContext context = getServletContext();
+                request.setAttribute("candidate", candidate);
                 String url = "/create_candidate.jsp";
+                
+               
+                
+                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+                dispatcher.forward(request, response); 
+            }
+            else
+            {
+                //add candidate to db? 
+                
+                String url = "/candidates.jsp";
+
+                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+                dispatcher.forward(request, response); 
+                
+                //any success messages needed? 
+            }
+        }
+        else
+        {
+            if (errorFlag = true)
+            {
+                request.setAttribute("candidate", candidate);
+                String url = "/edit_candidate.jsp";
 
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
                 dispatcher.forward(request, response); 
             }
             else
             {
-                //send to database
+                //redirect to showing candidate with new data
             }
-        }
-        //add handling of editing 
         
-        //Display message of success? 
+        }
     }
 
     /**
