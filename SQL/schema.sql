@@ -35,3 +35,16 @@ CREATE TABLE Certificate (
   PRIMARY KEY(id),
   FOREIGN KEY(person_id) REFERENCES Candidate(id)
 );
+
+/* TODO: Make a 'Person' superclass to avoid id collisions */
+CREATE TABLE PreviousJob (
+  id INT NOT NULL AUTO_INCREMENT,
+  person_id INT NOT NULL,
+  jobTitle VARCHAR(100) NOT NULL,
+  jobDescription VARCHAR(3000) NOT NULL,
+  salary DOUBLE NOT NULL,
+  startDate DATE NOT NULL,
+  endDate DATE NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(person_id) REFERENCES Candidate(id)
+);

@@ -29,13 +29,13 @@ public class Candidate extends Person {
     }
     
     public List<Certificate> getCertificates(){
-        List<Certificate> certificates = new ArrayList<Certificate>();
+        List<Certificate> certificates = new ArrayList<>();
         
         try {
             String query = "SELECT T.id, T.person_id, T.type, T.name, T.organization, T.dateAquired " +
                            "FROM Certificate AS T, Candidate As C " +
                            "WHERE %d = T.person_id";
-            ResultSet rs = Database.query(query, this.id);
+            ResultSet rs = Database.query(query, this.getId());
             while (rs.next()){
                 Certificate certificate = new Certificate(
                         rs.getInt("id"),
@@ -53,6 +53,33 @@ public class Candidate extends Person {
         return certificates;
     }
     
+    public List<PreviousJob> getPreviousJobs(){
+        List<PreviousJob> previousJobs = new ArrayList<>();
+        
+        try {
+            String query = "SELECT P.id, P.person_id, P.jobTitle, P.jobDescription, P.salary, P.startDate, P.endDate " +
+                           "FROM Candidate AS C, PreviousJob AS P" +
+                           "WHERE P.person_id = %d";
+            ResultSet rs = Database.query(query, this.getId());
+            while (rs.next()){
+                PreviousJob pj = new PreviousJob(
+                        rs.getInt("id"),
+                        rs.getInt("person_id"),
+                        rs.getString("jobTitle"),
+                        rs.getString("jobDescription"),
+                        rs.getDouble("salary"),
+                        rs.getDate("startDate"),
+                        rs.getDate("endDate")
+                );
+                previousJobs.add(pj);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return previousJobs;
+    }
+    
     public static Candidate getById(int id){
         Candidate candidate = null;
         
@@ -68,7 +95,7 @@ public class Candidate extends Person {
                         rs.getString("email"), 
                         rs.getDate("dateOfBirth")
                 );
-                candidate.id = rs.getInt("id");
+                candidate.setId(rs.getInt("id"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
@@ -78,7 +105,7 @@ public class Candidate extends Person {
     }
     
     public static List<Candidate> getAll(){
-        List<Candidate> candidates = new ArrayList<Candidate>();
+        List<Candidate> candidates = new ArrayList<>();
    
         try {
             String query = "SELECT id, name, email, address, phone, dateOfBirth, expectation " + 
@@ -93,7 +120,7 @@ public class Candidate extends Person {
                         rs.getString("email"), 
                         rs.getDate("dateOfBirth")
                 );
-                candidate.id = rs.getInt("id");
+                candidate.setId(rs.getInt("id"));
                 candidates.add(candidate);
             }
         } catch (SQLException ex) {
@@ -101,6 +128,34 @@ public class Candidate extends Person {
         }
         
         return candidates;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the expectation
+     */
+    public double getExpectation() {
+        return expectation;
+    }
+
+    /**
+     * @param expectation the expectation to set
+     */
+    public void setExpectation(double expectation) {
+        this.expectation = expectation;
     }
     
 }

@@ -16,3 +16,14 @@ VALUES (
 	'Tec de Monterrey',
 	CURDATE()
 );
+
+INSERT INTO PreviousJob (person_id, jobTitle, jobDescription, salary, startDate, 
+												 endDate)
+VALUES (
+	1,
+	'Developer',
+	'I got to modify stuff from the software...',
+	3000.00,
+	CURDATE(),
+	CURDATE()
+);

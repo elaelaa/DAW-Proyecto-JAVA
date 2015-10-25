@@ -18,16 +18,17 @@ public class Employee extends Person {
     private String username;
     private String password;
     private int vacationDays = 0;
+    private Date startDate;
 
-    public Employee(int id, double salary, String jobTitle, String username, 
-            String password, String name, String address, String phone, 
-            String email, Date dateOfBirth) {
+    public Employee(double salary, String jobTitle, String username, 
+            String password, Date startDate, String name, String address, 
+            String phone, String email, Date dateOfBirth) {
         super(name, address, phone, email, dateOfBirth);
-        this.id = id;
         this.salary = salary;
         this.jobTitle = jobTitle;
         this.username = username;
         this.password = password;
+        this.startDate = startDate;
     }
 
     /**
@@ -112,5 +113,19 @@ public class Employee extends Person {
      */
     public void setVacationDays(int vacationDays) {
         this.vacationDays = vacationDays;
+    }
+
+    /**
+     * @return the startDate
+     */
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }
