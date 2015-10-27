@@ -121,7 +121,6 @@ window.onload = function(){
 
 
 function addDegree(){
-    var oldhtml = document.getElementById("allCertificates").innerHTML;
     var html =  '<div class="certificate">' +
        ' <p><label>Tipo: <select name="type" value="profesional" required>' +
         ' <option value="profesional">Titulo profesional</option> ' +
@@ -139,17 +138,14 @@ function addDegree(){
     '<p><label>Fecha de adquisición: ' +
         '<input type="text" class="datepicker" name="dateacquired" required></label>' +
     '</p>' +
-    '<a href="#" onclick="Remove(this)">Borrar</a>' +
+    '<a href="javascript:;" onclick="Remove(this)">Borrar</a>' +
 '</div>' ;
 
-    document.getElementById("allCertificates").innerHTML = oldhtml + html; 
+    $("#allCertificates").append(html);
     
-    
-                       
 }
 
 function addWork(){
-    var oldhtml = document.getElementById("allWorks").innerHTML;
     var html = '<div class="certificate"><p><label>Título profesional:' +
                         '<input type="text" name="jobTitle" required></label>' +
                     '</p>' +
@@ -168,10 +164,10 @@ function addWork(){
                     '<p><label>Fecha final: ' +
                         '<input type="text" class="datepicker" name="enddate" required></label>' +
                     '</p>' +
-                    '<a href="#" onclick="Remove(this)">Borrar</a>'+
+                    '<a href="javascript:;" onclick="Remove(this)">Borrar</a>'+
                     '</div>';
-            
-    document.getElementById("allWorks").innerHTML = oldhtml + html; 
+    $('#allWorks').append(html);
+    
 }
 
 function Remove(link) { 

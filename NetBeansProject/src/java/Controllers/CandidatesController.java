@@ -6,6 +6,8 @@
 package Controllers;
 
 import Model.Candidate;
+import Model.Certificate;
+import Model.PreviousJob;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -71,7 +73,7 @@ public class CandidatesController extends HttpServlet {
             Candidate candidate = Candidate.getById(id);
             if (candidate != null){                                                  // else, set route to candidate view
                 request.setAttribute("candidate", candidate);   // and init the req parameter
-                url = "/candidate.jsp";
+                url = "/show_candidate.jsp";
             }
         }
         else if (operation.equals("create"))
@@ -212,7 +214,7 @@ public class CandidatesController extends HttpServlet {
                 degree = degrees[i]; 
                 university = universities[i];
                 dateStr = dates[i]; 
-                Date dateOfCert; 
+                Date dateOfCert = null; 
                 try{
                     dateOfCert = df.parse(dateStr);
                 } 
@@ -226,12 +228,9 @@ public class CandidatesController extends HttpServlet {
                 if (!errorFlag)
                 {
                     
-                    //Certificate cert = new Certificate(int id, int personId, type, degree, university, dateOfCert);
+                    Certificate cert = new Certificate(type, degree, university, dateOfCert);
                     
-                    //add cert to db
-                    
-                    //listing not needed? 
-                    //degreeList.add(cert);
+                    degreeList.add(cert);
                 }
             }
         }
@@ -261,8 +260,8 @@ public class CandidatesController extends HttpServlet {
                 startDateStr = startDates[i];
                 endDateStr = endDates[i];
 
-                Date endDate; 
-                Date startDate;
+                Date endDate = null; 
+                Date startDate = null;
                 try{
                     startDate = df.parse(startDateStr);
                 } 
@@ -289,12 +288,9 @@ public class CandidatesController extends HttpServlet {
                 {
                     double salary = Double.parseDouble(salaryStr); 
                     
-                    //PreviousJob job = PreviousJob(int id, int person_id, jobTitle, description, salary, startDate, endDate); 
+                    PreviousJob job = new PreviousJob(jobTitle, description, salary, startDate, endDate); 
 
-                    //add job to db
-
-                    //listing is not needed? 
-                    //jobList.add(job);
+                    jobList.add(job);
                 }
             }
         }
@@ -308,6 +304,9 @@ public class CandidatesController extends HttpServlet {
             if (errorFlag)
             {
                 request.setAttribute("candidate", candidate);
+                request.setAttribute("previousJobs", jobList);
+                request.setAttribute("certificates", degreeList);
+                
                 String url = "/create_candidate.jsp";
                 
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
@@ -315,7 +314,9 @@ public class CandidatesController extends HttpServlet {
             }
             else
             {
-                //add candidate to db? 
+                //add candidate to db
+                //add all jobs & certificates to db
+                //set ids?
                 
                 String url = "/candidates.jsp";
 

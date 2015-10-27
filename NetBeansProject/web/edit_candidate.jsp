@@ -4,6 +4,9 @@
     Author     : elaela
 --%>
 
+<%@page import="Model.Certificate"%>
+<%@page import="Model.PreviousJob"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,6 +15,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Editar candidato</title>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script src="js/edit_create_candidate.js"></script> 
     </head>
     <body>
         
@@ -19,32 +27,43 @@
         
         <div id="main">
             <div class="wrapper">
-		<form action="CandidatesController" method="post">
+                <form action="candidates" id="candidateform" method="post">
+                    <input type="hidden" name="operation" value="edit">
+                    <input type="hidden" name="id" value="${candidate.getId()}">
                     <p><label>Nombre:
                         <input type="text" name="name" value="${candidate.getName()}" required></label>
                     </p>
                     <p><label>Apellidos:
-                        <input type="text" name="lastname" value="${candidate.getLastname()}" required></label>
+                        <input type="text" name="lastname" value="" required></label>
                     </p>
                     <p><label>Dirección:
                         <input type="text" name="address" value="${candidate.getAddress()}" required></label>
                     </p>
-                    <p><label>Teléfono
-                        <input type="text" name="phone" value="${candidate.getNumber()}" required></label>
+                    <p><label>Teléfono: 
+                        <input type="text" name="phone" value="${candidate.getPhone()}" required></label>
                     </p> 
                     <p><label>Correo Electrónico:
                         <input type="email" name="email" value="${candidate.getEmail()}" required></label>
                     </p>
+                    <p>
+                        <label>Fecha de nacimiento: 
+                        <span class="errorMessage">${bdError}</span>
+                        <input type="text" name="birthday" class="datepicker" value="${candidate.getDateOfBirth()}" required></label>
+                    </p>
                     <p><label>Título Profesional: 
-                        <input type="text" name="title" value="${candidate.getTitle()}"></label>
+                        <input type="text" name="title" value=""></label>
                     </p>
                     <fieldset> <legend> Certificados obtenidos: </legend>
-                        <span class="errorMessage">${degreeError}</span>
+                        <span class="errorMessage">${certDateError}</span>
                         <div id="allCertificates">
-                            <c:forEach items="${candidate.getCertificates()}" var="cert">
+                            <% List<Certificate> certificates = (List<Certificate>)request.getAttribute("certificates");
+                                int size = (certificates != null) ? certificates.size() : 0;
+                                for (int i=0; i<size; i++) 
+                                {
+                                %>
                                 <div class="certificate"> 
                                     <p><label>Tipo: 
-                                        <select name="type" value="${cert.getType()}">
+                                        <select name="type" value="<%= certificates.get(i).getType() %>" required>
                                            <option value="profesional">Titulo profesional</option>
                                            <option value="posgrado">Posgrado</option>
                                            <option value="certificado">Certificado</option>
@@ -52,44 +71,60 @@
                                         </label>
                                     </p> 
                                     <p><label>Nombre del certificado: 
-                                        <input type="text" name="degreename" value="${cert.getName()}"></label>
+                                        <input type="text" name="degreename" value="<%= certificates.get(i).getName()%>" required></label>
                                     </p>
-                                    <p><label>organización: 
-                                        <input type="text" name="university" value="${cert.getOrganization()}"></label> 
+                                    <p><label>Organización: 
+                                            <input type="text" name="organization" value="<%= certificates.get(i).getOrganization() %>" required></label> 
+                                    </p>
+                                    <p><label>Fecha de adquisición: 
+                                        <input type="text" class="datepicker" name="dateacquired" value="<%= certificates.get(i).getDateAquired()%>" required></label>
                                     </p>
                                 </div>
-                            </c:forEach>
+                                        <%}%>
                         </div>
-                        <a id="addCert" href="#">Agregar certificado…</a>
+                        <a id="addCert" href="javascript:;">Agregar certificado…</a>
                     </fieldset>
                     <fieldset> <legend> Trabajos Anteriores: </legend>
-                        <span class="errorMessage">${jobError}</span>
+                        <span class="errorMessage">${jobDateError}</span>
                         <div id="allWorks">
-                            <c:forEach items="${candidate.getJobs()}" var="job">
+                            <% List<PreviousJob> jobs = (List<PreviousJob>)request.getAttribute("previousJobs");
+                                int sizej = (jobs != null) ? jobs.size() : 0;
+                                for (int i=0; i<sizej; i++) 
+                                {
+                                %>
                                 <div class="certficate">
                                     <p><label>Título profesional:
-                                        <input type="text" name="jobTitle" value="${job.getTitle()}"></label>
+                                            <input type="text" name="jobTitle" value="<%= jobs.get(i).getJobTitle()%>" required></label>
                                     </p>
                                     <p><label>Empresa: 
-                                        <input type="text" name="company" value="${job.getCompany()}"></label>
+                                            <input type="text" name="company" value="TITLE" required></label>
                                     </p>
-                                    <p><label>Duración:
-                                        <input type="text" name="duration" value="${job.getDuration()}"></label>
+                                    <p><label>Descripción: 
+                                            <input type="text" rows="5" name="description" value="<%= jobs.get(i).getJobDescription() %>" required></label>
+                                    </p>
+                                    <p><label>Salario: 
+                                            <input type="number" name="salary" value="<%= jobs.get(i).getSalary() %>" required></label>
+                                    </p>
+                                    <p><label>Fecha de inicio: 
+                                        <input type="text" class="datepicker" name="startdate" value="<%= jobs.get(i).getStartDate() %>" required></label>
+                                    </p>
+                                    <p><label>Fecha final: 
+                                        <input type="text" class="datepicker" name="enddate" value="<%= jobs.get(i).getStartDate() %>" required></label>
                                     </p>
                                 </div>
-                            </c:forEach>
+                            <% } %>
                         </div>
-                        <a id="addJob" href="#">Agregar trabajo…</a>
+                        <a id="addJob" href="javascript:;">Agregar trabajo…</a>
                     </fieldset>
                     <p><label>Expectativas Económicas:
                         <input type="number" name="expectation" value="${candidate.getExpectation()}"></label>
                     </p>
                     <input type ="submit"  value="Guardar">
                 </form>
-            </div>
-	</div>
-        
-         <%@include  file="footer.html" %>
+            </div>	
+        </div>
+    
+        <%@include  file="/footer.html" %>
          
     </body>
 </html>
