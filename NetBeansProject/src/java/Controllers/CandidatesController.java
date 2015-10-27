@@ -60,21 +60,18 @@ public class CandidatesController extends HttpServlet {
             Candidate candidate = Candidate.getById(id);
             if (candidate != null){                                                  // else, set route to candidate view
                 request.setAttribute("candidate", candidate);   // and init the req parameter
+            }
+            if (operation.equals("show"))
+            {
                 url = "/show_candidate.jsp";
+            }
+            else if (operation.equals("edit"))
+            {
+                url = "/edit_candidate.jsp";
             }
         }
         else if (operation.equals("create")){
             url = "/create_candidate.jsp";
-        }
-        else if (operation.equals("show") && paramId != null)
-        {
-            int id = Integer.parseInt(paramId); 
-            Candidate candidate = Candidate.getById(id);
-            if (candidate != null)
-            {
-                request.setAttribute("candidate", candidate); 
-                url = "edit_candidate.jsp";
-            }
         }
 
         // redirect after analyzing options above
