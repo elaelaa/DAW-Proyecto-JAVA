@@ -73,7 +73,7 @@
                                 </div>
                             </c:forEach>-->
                         </div>
-                        <a id="addCert" href="#">Agregar certificado…</a>
+                        <a id="addCert" href="javascript:;">Agregar certificado…</a>
                     </fieldset>
                     <fieldset> <legend> Trabajos Anteriores: </legend>
                         <span class="errorMessage">${jobDateError}</span>
