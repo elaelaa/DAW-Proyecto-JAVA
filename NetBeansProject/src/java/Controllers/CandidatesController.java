@@ -55,7 +55,7 @@ public class CandidatesController extends HttpServlet {
             url = "/candidates.jsp";                         // url to redirect to
         }
         else if (paramId != null && paramId.matches("\\d+") &&
-				(operation.equals("edit") || operation.equals("show"))){ //if operation is only digits??
+				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??
             int id = Integer.parseInt(paramId);
             Candidate candidate = Candidate.getById(id);
             if (candidate != null){                                                  // else, set route to candidate view
@@ -68,6 +68,10 @@ public class CandidatesController extends HttpServlet {
             else if (operation.equals("edit"))
             {
                 url = "/edit_candidate.jsp";
+            }
+            else if (operation.equals("delete"))
+            {
+                //IMPLEMENT ME!!! 
             }
         }
         else if (operation.equals("create")){
