@@ -4,6 +4,8 @@
 	Author		: manolo
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Model.Candidate"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,7 +19,7 @@
 	
 	<div id="main">
 		<div class="wrapper">
-			<a class="button" id="new" href="">Nuevo</a>
+			<a class="button" id="new" href="create_candidate.jsp">Nuevo</a>
 			<div id="search">
 				<div id="searchImage"><div class="svg"></div></div>
 				<input id="searchBox" type="text" name="search" value="" placeholder="Search" />
@@ -33,24 +35,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Bruce Wayne</td>
-						<td>not-batman@gotham.com</td>
-						<td>CEO</td>
-						<td>$1,000,000.00 USD</td>
-						<td>
-							<a href="https://google.com" class="button">Mostrar</a>
-						</td>
-					</tr>
-					<tr>
-						<td>The Joker</td>
-						<td>knockknock@whosthere.com</td>
-						<td>Villain</td>
-						<td>$0 USD</td>
-						<td>
-							<a href="https://google.com" class="button">Mostrar</a>
-						</td>
-					</tr>
+				<% List<Candidate> candidates = (List<Candidate>)request.getAttribute("candidates");
+					int size = (candidates != null) ? candidates.size() : 0;
+					for (int i=0; i<size; i++) { %>
+						<tr>
+							<td><%= candidates.get(i).getName() %></td>
+							<td><%= candidates.get(i).getEmail() %></td>
+							<td><%= candidates.get(i).getPhone() %></td>
+							<td><%= candidates.get(i).getExpectation() %></td>
+							<td>
+								<a href="edit_candidate.jsp" class="button">Mostrar</a>
+							</td>
+						</tr>
+				<% } %>
 				</tbody>
 			</table>
 		</div>
