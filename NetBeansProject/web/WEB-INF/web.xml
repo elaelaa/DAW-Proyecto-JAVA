@@ -4,17 +4,9 @@
         <servlet-name>CandidatesController</servlet-name>
         <servlet-class>Controllers.CandidatesController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CreateCandidate</servlet-name>
-        <servlet-class>Controllers.CreateCandidate</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>CandidatesController</servlet-name>
         <url-pattern>/candidates</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateCandidate</servlet-name>
-        <url-pattern>/CreateCandidate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

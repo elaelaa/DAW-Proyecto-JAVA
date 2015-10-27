@@ -9,7 +9,6 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
         <script src="js/edit_create_candidate.js"></script> 
     </head>
     <body>
@@ -72,13 +71,13 @@
                                         </label>
                                     </p> 
                                     <p><label>Nombre del certificado: 
-                                        <input type="text" name="degreename" value="<%= certificates.get(i).getName()%>" required></label>
+                                        <input type="text" name="degreename" value="<%= certificates.get(i).getName() %>" required></label>
                                     </p>
                                     <p><label>Organización: 
                                             <input type="text" name="organization" value="<%= certificates.get(i).getOrganization() %>" required></label> 
                                     </p>
                                     <p><label>Fecha de adquisición: 
-                                        <input type="text" class="datepicker" name="dateacquired" value="<%= certificates.get(i).getDateAquired()%>" required></label>
+                                        <input type="text" class="datepicker" name="dateacquired" value="<%= certificates.get(i).getDateAquired() %>" required></label>
                                     </p>
                                 </div>
                                         <%}%>
@@ -126,7 +125,7 @@
             </div>	
         </div>
     
-        <%@include  file="/footer.html" %>
+        <%@include  file="footer.html" %>
          
     </body>
 </html>
