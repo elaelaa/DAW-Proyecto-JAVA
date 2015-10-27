@@ -58,8 +58,10 @@ public class CandidatesController extends HttpServlet {
         
         String url = "/404.jsp"; // starts default not found url
         
+        
+        
         //handling the rerouting based on opertion? 
-        if (operation.equals("showall")){
+        if (operation == null){
             List<Candidate> candidates = Candidate.getAll(); // all of the candidates
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to

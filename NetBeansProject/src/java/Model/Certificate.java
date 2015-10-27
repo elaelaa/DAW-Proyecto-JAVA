@@ -29,6 +29,14 @@ public class Certificate {
         this.dateAquired = dateAquired;
     }
 
+    public Certificate(String type, String name, String organization, Date dateAquired) {
+        this.type = type;
+        this.name = name;
+        this.organization = organization;
+        this.dateAquired = dateAquired;
+    }
+
+    
     /**
      * @return the id
      */
