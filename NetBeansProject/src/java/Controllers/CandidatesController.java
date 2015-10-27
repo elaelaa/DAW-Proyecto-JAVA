@@ -57,7 +57,6 @@ public class CandidatesController extends HttpServlet {
         String operation = request.getParameter("operation");
         
         String url = "/404.jsp"; // starts default not found url
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         
         //handling the rerouting based on opertion? 
         if (operation.equals("showall")){
@@ -68,11 +67,10 @@ public class CandidatesController extends HttpServlet {
         else if (operation.matches("\\d+")){ //if operation is only digits??
             int id = Integer.parseInt(operation);
             Candidate candidate = Candidate.getById(id);
-            if (candidate == null){                         // if it didn't find the candidate
-                dispatcher.forward(request, response);      // forward to default 404 page
-            }                                               // else, set route to candidate view
-            request.setAttribute("candidate", candidate);   // and init the req parameter
-            url = "/candidate.jsp";
+            if (candidate != null){                                                  // else, set route to candidate view
+                request.setAttribute("candidate", candidate);   // and init the req parameter
+                url = "/candidate.jsp";
+            }
         }
         else if (operation.equals("create"))
         {
@@ -105,7 +103,7 @@ public class CandidatesController extends HttpServlet {
             url = "/create_candidate.jsp";
         }*/
         // redirect after analyzing options above
-        dispatcher = getServletContext().getRequestDispatcher(url);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
 
