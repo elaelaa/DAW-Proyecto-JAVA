@@ -182,6 +182,10 @@ input[type="submit"] {
 	font-style: italic; 
 }
 
+.ui-datepicker-div {
+	background: #eff0ef;
+}
+
 #buttons {
 	padding: 20px 0;
 }
