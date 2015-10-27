@@ -28,19 +28,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Beto
  */
 public class CandidatesController extends HttpServlet {
-
-    /**
-     * Gets the ID from the <code>GET</code> url.
-     *
-     * @param url the route string
-     * @return id => the id number in url
-     */
-    private int getIdFromURL(String url){
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(url);
-        int id = Integer.parseInt(m.group());
-        return id;
-    }
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -55,10 +42,9 @@ public class CandidatesController extends HttpServlet {
             throws ServletException, IOException {
         
         String operation = request.getParameter("operation");
+        String paramId = request.getParameter("id");
         
         String url = "/404.jsp"; // starts default not found url
-        
-        
         
         //handling the rerouting based on opertion? 
         if (operation == null){
@@ -66,44 +52,18 @@ public class CandidatesController extends HttpServlet {
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to
         }
-        else if (operation.matches("\\d+")){ //if operation is only digits??
-            int id = Integer.parseInt(operation);
+        else if (paramId != null && paramId.matches("\\d+")){ //if operation is only digits??
+            int id = Integer.parseInt(paramId);
             Candidate candidate = Candidate.getById(id);
             if (candidate != null){                                                  // else, set route to candidate view
                 request.setAttribute("candidate", candidate);   // and init the req parameter
                 url = "/candidate.jsp";
             }
         }
-        else if (operation.equals("create"))
-        {
+        else if (operation.equals("create")){
             url = "/create_candidate.jsp";
         }
-        //
-        
-        /*// initializing variables
-        String action = request.getServletPath(); //will always be /candidate
-        String path = request.getPathInfo(); */
-        
-        // route to candidates index
-        /*if (path.equals("/") || path.equals("") || path.equals("candidates.jsp")){
-            List<Candidate> candidates = Candidate.getAll(); // all of the candidates
-            request.setAttribute("candidates", candidates);  // setting the attribute
-            url = "/candidates.jsp";                         // url to redirect to
-        }
-        // route  candidates show (has id in url)
-        else if (path.matches("\\d+")){
-            int id = getIdFromURL(action);//this won't work since action now is always /candidate 
-            Candidate candidate = Candidate.getById(id);
-            if (candidate == null){                         // if it didn't find the candidate
-                dispatcher.forward(request, response);      // forward to default 404 page
-            }                                               // else, set route to candidate view
-            request.setAttribute("candidate", candidate);   // and init the req parameter
-            url = "/candidate.jsp";
-        }
-        else if (path.equals("/create"))
-        {
-            url = "/create_candidate.jsp";
-        }*/
+
         // redirect after analyzing options above
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
