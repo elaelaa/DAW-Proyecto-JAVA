@@ -26,6 +26,7 @@
         
         <div id="main">
             <div class="wrapper">
+                <% Candidate candidate = (Candidate)request.getAttribute("candidate"); %>
                 <form action="candidates" id="candidateform" method="post">
                     <input type="hidden" name="operation" value="edit">
                     <input type="hidden" name="id" value="${candidate.getId()}">
@@ -55,7 +56,7 @@
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <span class="errorMessage">${certDateError}</span>
                         <div id="allCertificates">
-                            <% List<Certificate> certificates = (List<Certificate>)request.getAttribute("certificates");
+                            <% List<Certificate> certificates = (List<Certificate>)candidate.getCertificates();
                                 int size = (certificates != null) ? certificates.size() : 0;
                                 for (int i=0; i<size; i++) 
                                 {
@@ -87,7 +88,7 @@
                     <fieldset> <legend> Trabajos Anteriores: </legend>
                         <span class="errorMessage">${jobDateError}</span>
                         <div id="allWorks">
-                            <% List<PreviousJob> jobs = (List<PreviousJob>)request.getAttribute("previousJobs");
+                            <% List<PreviousJob> jobs = (List<PreviousJob>)candidate.getPreviousJobs(); 
                                 int sizej = (jobs != null) ? jobs.size() : 0;
                                 for (int i=0; i<sizej; i++) 
                                 {
