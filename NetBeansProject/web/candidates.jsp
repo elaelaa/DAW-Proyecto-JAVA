@@ -43,7 +43,7 @@
 							<td><%= candidates.get(i).getEmail() %></td>
 							<td><%= candidates.get(i).getPhone() %></td>
 							<td>$<%= candidates.get(i).getExpectation() %></td>
-							<td><a href=<%= "candidates?operation=show?id="+candidates.get(i).getId() %> class="button">Mostrar</a></td>
+							<td><a href=<%= "candidates?operation=show&id="+candidates.get(i).getId() %> class="button">Mostrar</a></td>
 						</tr>
 				<% } %>
 				</tbody>
