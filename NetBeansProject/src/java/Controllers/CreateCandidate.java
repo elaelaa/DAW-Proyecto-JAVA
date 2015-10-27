@@ -7,15 +7,12 @@ package Controllers;
 
 import Model.Candidate;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,23 +22,37 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Beto
+ * @author elaela
  */
-public class CandidatesController extends HttpServlet {
+public class CreateCandidate extends HttpServlet {
 
     /**
-     * Gets the ID from the <code>GET</code> url.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
-     * @param url the route string
-     * @return id => the id number in url
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
-    private int getIdFromURL(String url){
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(url);
-        int id = Integer.parseInt(m.group());
-        return id;
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CreateCandidate</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CreateCandidate at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
-    
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -53,38 +64,7 @@ public class CandidatesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // initializing variables
-        String action = request.getServletPath(); //will always be /candidate
-        String path = request.getPathInfo(); 
-        
-        String url = "/404.jsp"; // starts default not found url
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        
-        // route to candidates index
-        if (path.equals("/") || path.equals("") || path.equals("candidates.jsp")){
-            List<Candidate> candidates = Candidate.getAll(); // all of the candidates
-            request.setAttribute("candidates", candidates);  // setting the attribute
-            url = "/candidates.jsp";                         // url to redirect to
-        }
-        // route  candidates show (has id in url)
-        else if (path.matches("\\d+")){
-            int id = getIdFromURL(action);//this won't work since action now is always /candidate 
-            Candidate candidate = Candidate.getById(id);
-            if (candidate == null){                         // if it didn't find the candidate
-                dispatcher.forward(request, response);      // forward to default 404 page
-            }                                               // else, set route to candidate view
-            request.setAttribute("candidate", candidate);   // and init the req parameter
-            url = "/candidate.jsp";
-        }
-        else if (path.equals("/create"))
-        {
-            url = "/create_candidate.jsp";
-            response.sendRedirect(request + action + url);
-        }
-        // redirect after analyzing options above
-        dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -98,17 +78,6 @@ public class CandidatesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //figure out if trying to modify or create
-        String action = request.getPathInfo(); 
-        
-        Boolean creating = false; 
-        
-        if (action.equals("/create"))
-        {
-            creating = true; 
-        }
-        
         
         // get parameters from the request
         String firstName = request.getParameter("name");
@@ -140,7 +109,7 @@ public class CandidatesController extends HttpServlet {
         {
             expectation = Double.parseDouble(economicExpect); 
         }
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date dateOfBirth = new Date();
         try{
             dateOfBirth = df.parse(birthday);
@@ -149,28 +118,17 @@ public class CandidatesController extends HttpServlet {
            
             errorFlag = true; 
 
-            String bdError = "Insert dates in format dd/MM/yyyy! <br>";
+            String bdError = "Insert dates in format mm/dd/yyyy! <br>";
             request.setAttribute("bdError", bdError); 
         }
         
         //VALIDATION OF PHONE NUMBER NEEDED
         
-        Candidate candidate = null; 
         
-        if (creating)
-        {
-            
-            //Create the candidate object
-            //title needed!!!!!
-            candidate = new Candidate(expectation, firstName + lastName, address, phone, email, dateOfBirth);
-            //add to db only when all the data checked
-            //assign id?
-        }
-        else 
-        {
-            //find candidate, compare values...
-        }
-
+        //title needed!!!!!
+        Candidate candidate = new Candidate(expectation, firstName + lastName, address, phone, email, dateOfBirth);
+        //add to db only when all the data checked
+        //assign id?
         
         String type; 
         String degree; 
@@ -197,7 +155,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String certDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("certDateError", certDateError);
                 }
                 
@@ -248,7 +206,7 @@ public class CandidatesController extends HttpServlet {
 
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
                 try{
@@ -257,7 +215,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
 
@@ -280,47 +238,30 @@ public class CandidatesController extends HttpServlet {
         //Some other validation? 
         
         ServletContext context = getServletContext();
-        if (creating){
-            
-        
-            if (errorFlag = true)
-            {
-                request.setAttribute("candidate", candidate);
-                String url = "/create_candidate.jsp";
-                
-               
-                
-                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-                dispatcher.forward(request, response); 
-            }
-            else
-            {
-                //add candidate to db? 
-                
-                String url = "/candidates.jsp";
+        if (errorFlag = true)
+        {
+            request.setAttribute("candidate", candidate);
+            String url = "/create_candidate.jsp";
 
-                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-                dispatcher.forward(request, response); 
-                
-                //any success messages needed? 
-            }
+
+
+            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+            dispatcher.forward(request, response); 
         }
         else
         {
-            if (errorFlag = true)
-            {
-                request.setAttribute("candidate", candidate);
-                String url = "/edit_candidate.jsp";
+            //add candidate to db? 
 
-                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-                dispatcher.forward(request, response); 
-            }
-            else
-            {
-                //redirect to showing candidate with new data
-            }
-        
+            String url = "/candidates.jsp";
+
+            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+            dispatcher.forward(request, response); 
+
+            //any success messages needed? 
         }
+        
+        
+        
     }
 
     /**

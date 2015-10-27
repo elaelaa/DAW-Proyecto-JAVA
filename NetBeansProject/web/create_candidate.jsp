@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
         <script src="js/CreateNew.js"></script> 
     </head>
     <body>
@@ -21,7 +22,7 @@
         
 	<div id="main">
             <div class="wrapper">
-                <form action="candidates/create" method="post">
+                <form action="CreateCandidate" id="candidateform" method="post">
                     <p><label>Nombre:
                         <input type="text" name="name" value="${candidate.getName()}" required></label>
                     </p>
@@ -48,6 +49,7 @@
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <span class="errorMessage">${certDateError}</span>
                         <div id="allCertificates">
+                            
                             <!--<c:forEach items=""statement for getting certificates"" var="cert">
                                 <div class="certificate"> 
                                     <p><label>Tipo: 

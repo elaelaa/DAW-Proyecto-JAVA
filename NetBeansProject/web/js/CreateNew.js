@@ -6,7 +6,115 @@ window.onload = function(){
     element.addEventListener("click", addWork, false);
     
     $('body').on('focus',".datepicker", function(){
-    $(this).datepicker();}); 
+    $(this).datepicker();});
+
+    $.validator.addMethod("lettersonly", function(value, element) 
+    {
+        return this.optional(element) || /^[a-z ]+$/i.test(value);
+    }, "Letters and spaces only please");
+    
+    $.validator.addMethod("date", function(value, element) 
+    {
+        return this.optional(element) || /^(?:(?:(?:0?[13578]|1[02])(\/)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/i.test(value);
+    }, "Date in mm/ddyyyy");
+    
+     $.validator.addMethod("phone", function(value, element) 
+    {
+        return this.optional(element) || /((((\+[0-9]{2})?)([ .-]?)([0-9]{3})([ .-]?)([0-9]{3})([ .-]?)([0-9]{4}))|(([0-9]{3})([ .-]?)([0-9]{3})([ .-]?)([0-9]{4})))$/i.test(value);
+    }, "Add a valid phone number");
+    
+    
+
+    $('#candidateform').validate({
+        rules: {
+            name: {
+                required: true,
+                lettersonly: true
+            },
+            lastname: {
+                required: true,
+                lettersonly: true
+            },
+            address:{
+                required: true
+            },
+                    
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+                phone: true
+            },
+            birthday:{
+                date: true
+            },
+            title: {
+                lettersonly: true
+            },
+            degreename:{
+                required: true,
+                lettersonly: true
+            },
+            university:{
+                required: true,
+                lettersonly: true
+            },
+            dateacquired:{
+                required: true, 
+                date: true
+            },
+            salary:{
+                required: true
+            },
+            company:{
+                required: true
+            },
+            description:{
+                required: true
+            },
+            enddate: {
+                required: true,
+                date: true
+            },
+            startdate:{
+                required: true,
+                date: true
+            },
+        },
+        
+        messages: {
+            name: "Please enter your first name",
+            lastname: "Please enter your last name",
+            email: "Please enter a valid email address",
+            address: "Please fill your address",
+            phone:"Please add a valid phone number",
+            birthday:"Please add date in mm/dd/yyyy format",
+            title:"Please add a valid title, no numbers",
+            degreename:"Please add a degree",
+            university:"Please add a university",
+            dateacquired:"Please add date in mm/ddyyyy format", 
+            salary:"Please add your salary",
+            company:"Please add a company",
+            description:"Please add a short description",
+            enddate:"Please add date in mm/dd/yyyy format",
+            startdate:"Please add date in mm/dd/yyyy format",            
+        },
+        
+        errorElement: "div",
+        wrapper: "div",  // a wrapper around the error message
+        errorPlacement: function(error, element) {
+            error.insertAfter(element);
+            error.addClass('errorMessage');  // add a class to the wrapper
+            error.css("color", "red");
+            error.css("font-style", "italic");
+        },
+        
+        submitHandler: function(form) {
+            form.submit();
+        }
+    }) ;
  
 };
 

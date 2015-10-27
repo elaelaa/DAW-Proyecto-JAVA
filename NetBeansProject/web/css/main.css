@@ -160,7 +160,7 @@ input[type="submit"] {
 	margin: 5px 0;
 }
 
-.errorMessage {
+.errorMessage, div.error {
         color: red; 
         font-style: italic; 
 }
