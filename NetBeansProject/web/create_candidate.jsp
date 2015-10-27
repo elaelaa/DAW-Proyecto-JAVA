@@ -77,8 +77,9 @@
                                     <p><label>Fecha de adquisición: 
                                         <input type="text" class="datepicker" name="dateacquired" value="<%= certificates.get(i).getDateAquired()%>" required></label>
                                     </p>
+                                    <a href="javascript:;" onclick="Remove(this)">Borrar</a>
                                 </div>
-                                        <%}%>
+                                        <% } %>
                         </div>
                         <a id="addCert" href="javascript:;">Agregar certificado…</a>
                     </fieldset>
@@ -109,6 +110,7 @@
                                     <p><label>Fecha final: 
                                         <input type="text" class="datepicker" name="enddate" value="<%= jobs.get(i).getStartDate() %>" required></label>
                                     </p>
+                                    <a href="javascript:;" onclick="Remove(this)">Borrar</a>
                                 </div>
                             <% } %>
                         </div>
