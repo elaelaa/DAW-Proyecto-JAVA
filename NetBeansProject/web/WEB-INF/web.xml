@@ -10,7 +10,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CandidatesController</servlet-name>
-        <url-pattern>/candidates/*</url-pattern>
+        <url-pattern>/CandidatesController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateCandidate</servlet-name>

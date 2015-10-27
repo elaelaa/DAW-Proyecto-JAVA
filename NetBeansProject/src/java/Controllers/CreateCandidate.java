@@ -238,7 +238,7 @@ public class CreateCandidate extends HttpServlet {
         //Some other validation? 
         
         ServletContext context = getServletContext();
-        if (errorFlag = true)
+        if (errorFlag)
         {
             request.setAttribute("candidate", candidate);
             String url = "/create_candidate.jsp";

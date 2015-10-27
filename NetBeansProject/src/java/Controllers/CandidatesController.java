@@ -54,15 +54,38 @@ public class CandidatesController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // initializing variables
-        String action = request.getServletPath(); //will always be /candidate
-        String path = request.getPathInfo(); 
+        String operation = request.getParameter("operation");
         
         String url = "/404.jsp"; // starts default not found url
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
         
+        //handling the rerouting based on opertion? 
+        if (operation.equals("showall")){
+            List<Candidate> candidates = Candidate.getAll(); // all of the candidates
+            request.setAttribute("candidates", candidates);  // setting the attribute
+            url = "/candidates.jsp";                         // url to redirect to
+        }
+        else if (operation.matches("\\d+")){ //if operation is only digits??
+            int id = Integer.parseInt(operation);
+            Candidate candidate = Candidate.getById(id);
+            if (candidate == null){                         // if it didn't find the candidate
+                dispatcher.forward(request, response);      // forward to default 404 page
+            }                                               // else, set route to candidate view
+            request.setAttribute("candidate", candidate);   // and init the req parameter
+            url = "/candidate.jsp";
+        }
+        else if (operation.equals("create"))
+        {
+            url = "/create_candidate.jsp";
+        }
+        //
+        
+        /*// initializing variables
+        String action = request.getServletPath(); //will always be /candidate
+        String path = request.getPathInfo(); */
+        
         // route to candidates index
-        if (path.equals("/") || path.equals("") || path.equals("candidates.jsp")){
+        /*if (path.equals("/") || path.equals("") || path.equals("candidates.jsp")){
             List<Candidate> candidates = Candidate.getAll(); // all of the candidates
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to
@@ -80,8 +103,7 @@ public class CandidatesController extends HttpServlet {
         else if (path.equals("/create"))
         {
             url = "/create_candidate.jsp";
-            response.sendRedirect(request + action + url);
-        }
+        }*/
         // redirect after analyzing options above
         dispatcher = getServletContext().getRequestDispatcher(url);
         dispatcher.forward(request, response);
@@ -100,11 +122,11 @@ public class CandidatesController extends HttpServlet {
             throws ServletException, IOException {
         
         //figure out if trying to modify or create
-        String action = request.getPathInfo(); 
+        String operation = request.getParameter("operation"); 
         
         Boolean creating = false; 
         
-        if (action.equals("/create"))
+        if (operation.equals("create"))
         {
             creating = true; 
         }
@@ -140,7 +162,7 @@ public class CandidatesController extends HttpServlet {
         {
             expectation = Double.parseDouble(economicExpect); 
         }
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date dateOfBirth = new Date();
         try{
             dateOfBirth = df.parse(birthday);
@@ -149,7 +171,7 @@ public class CandidatesController extends HttpServlet {
            
             errorFlag = true; 
 
-            String bdError = "Insert dates in format dd/MM/yyyy! <br>";
+            String bdError = "Insert dates in format MM/dd/yyyy! <br>";
             request.setAttribute("bdError", bdError); 
         }
         
@@ -197,7 +219,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String certDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("certDateError", certDateError);
                 }
                 
@@ -248,7 +270,7 @@ public class CandidatesController extends HttpServlet {
 
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
                 try{
@@ -257,7 +279,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format dd/MM/yyyy! <br>";
+                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
 
@@ -283,12 +305,10 @@ public class CandidatesController extends HttpServlet {
         if (creating){
             
         
-            if (errorFlag = true)
+            if (errorFlag)
             {
                 request.setAttribute("candidate", candidate);
                 String url = "/create_candidate.jsp";
-                
-               
                 
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
                 dispatcher.forward(request, response); 
@@ -307,7 +327,7 @@ public class CandidatesController extends HttpServlet {
         }
         else
         {
-            if (errorFlag = true)
+            if (errorFlag)
             {
                 request.setAttribute("candidate", candidate);
                 String url = "/edit_candidate.jsp";

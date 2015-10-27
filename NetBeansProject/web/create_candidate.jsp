@@ -22,7 +22,8 @@
         
 	<div id="main">
             <div class="wrapper">
-                <form action="CreateCandidate" id="candidateform" method="post">
+                <form action="CandidatesController" id="candidateform" method="post">
+                    <input type="hidden" name="operation" value="create">
                     <p><label>Nombre:
                         <input type="text" name="name" value="${candidate.getName()}" required></label>
                     </p>
