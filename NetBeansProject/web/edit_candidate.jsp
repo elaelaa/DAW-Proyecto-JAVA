@@ -4,6 +4,7 @@
     Author     : elaela
 --%>
 
+<%@page import="Model.Candidate"%>
 <%@page import="Model.Certificate"%>
 <%@page import="Model.PreviousJob"%>
 <%@page import="java.util.List"%>
@@ -58,9 +59,7 @@
                         <div id="allCertificates">
                             <% List<Certificate> certificates = (List<Certificate>)candidate.getCertificates();
                                 int size = (certificates != null) ? certificates.size() : 0;
-                                for (int i=0; i<size; i++) 
-                                {
-                                %>
+                                for (int i=0; i<size; i++) { %>
                                 <div class="certificate"> 
                                     <input type="hidden" name="certId" value="<%= certificates.get(i).getId() %>">
                                     <p><label>Tipo: 
@@ -81,7 +80,7 @@
                                         <input type="text" class="datepicker" name="dateacquired" value="<%= certificates.get(i).getDateAquired() %>" required></label>
                                     </p>
                                 </div>
-                                        <%}%>
+							<% } %>
                         </div>
                         <a id="addCert" href="javascript:;">Agregar certificado…</a>
                     </fieldset>
