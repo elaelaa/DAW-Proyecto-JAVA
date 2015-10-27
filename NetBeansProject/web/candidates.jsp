@@ -29,8 +29,8 @@
 					<tr>
 						<th>Nombre</th>
 						<th>Correo</th>
-						<th>Puesto</th>
-						<th>Sueldo</th>
+						<th>Telefono</th>
+						<th>Expectativas</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -42,9 +42,9 @@
 							<td><%= candidates.get(i).getName() %></td>
 							<td><%= candidates.get(i).getEmail() %></td>
 							<td><%= candidates.get(i).getPhone() %></td>
-							<td><%= candidates.get(i).getExpectation() %></td>
+							<td>$<%= candidates.get(i).getExpectation() %></td>
 							<td>
-								<a href="edit_candidate.jsp" class="button">Mostrar</a>
+								<a href=<%= "candidates?operation="+candidates.get(i).getId() %> class="button">Mostrar</a>
 							</td>
 						</tr>
 				<% } %>
