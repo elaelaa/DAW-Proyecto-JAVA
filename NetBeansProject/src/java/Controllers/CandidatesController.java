@@ -72,7 +72,7 @@ public class CandidatesController extends HttpServlet {
             if (candidate != null)
             {
                 request.setAttribute("candidate", candidate); 
-                url = "edit_candidate.jsp"; 
+                url = "edit_candidate.jsp";
             }
         }
 
@@ -161,7 +161,7 @@ public class CandidatesController extends HttpServlet {
         else 
         {
             int id = Integer.parseInt(personId);
-            //candidate = Candidate.getById(id); 
+            candidate = Candidate.getById(id); 
             //find candidate, compare values...
         }
 
