@@ -21,9 +21,9 @@ public class Employee extends Person {
     private Date startDate;
 
     public Employee(double salary, String jobTitle, String username, 
-            String password, Date startDate, String name, String address, 
-            String phone, String email, Date dateOfBirth) {
-        super(name, address, phone, email, dateOfBirth);
+            String password, Date startDate, String name, String lastName, String address, 
+            String phone, String email, String professionalTitle, Date dateOfBirth) {
+        super(name, lastName, address, phone, email, professionalTitle, dateOfBirth);
         this.salary = salary;
         this.jobTitle = jobTitle;
         this.username = username;

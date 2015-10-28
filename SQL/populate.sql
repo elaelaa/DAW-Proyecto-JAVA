@@ -1,6 +1,8 @@
-INSERT INTO Candidate (name, email, address, phone, dateOfBirth, expectation) 
+INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, 
+											 expectation) 
 VALUES (
-	'Luis Lamadrid', 
+	'Luis',
+	'Lamadrid', 
 	'luis@web.com', 
 	'777 Ejemplo, NL, MX', 
 	'+(52) 827777777',

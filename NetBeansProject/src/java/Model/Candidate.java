@@ -6,6 +6,7 @@
 package Model;
 
 import Database.Database;
+import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,10 +23,32 @@ public class Candidate extends Person {
     private int id = -1;
     private double expectation;
 
-    public Candidate(double expectation, String name, String address, 
-            String phone, String email, Date dateOfBirth) {
-        super(name, address, phone, email, dateOfBirth);
+    public Candidate(double expectation, String name, String lastName, 
+            String address, String phone, String email, String professionalTitle,
+            Date dateOfBirth) {
+        super(name, lastName, address, phone, email, professionalTitle, dateOfBirth);
         this.expectation = expectation;
+    }
+    
+    public boolean save(){
+        if (!this.isValid()){
+            return false;
+        }
+
+        String query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, expectation)" +
+                       "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+
+        
+        try {
+            Database.update(query, this.firstName, this.lastName, this.email, 
+                this.address, this.phone, this.dateOfBirth, this.expectation);
+            ResultSet rs = Database.query("SELECT id FROM Candidate ORDER BY id DESC LIMIT 1");
+            this.setId(!rs.next() ? -1 : rs.getInt(1));
+        } catch (SQLException ex) {
+            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return true;
     }
     
     public List<Certificate> getCertificates(){
@@ -89,10 +112,12 @@ public class Candidate extends Person {
             if (rs.next()){
                 candidate = new Candidate(
                         rs.getDouble("expectation"),
-                        rs.getString("name"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
                         rs.getString("address"), 
                         rs.getString("phone"), 
-                        rs.getString("email"), 
+                        rs.getString("email"),
+                        rs.getString("professionalTitle"),
                         rs.getDate("dateOfBirth")
                 );
                 candidate.setId(rs.getInt("id"));
@@ -108,16 +133,18 @@ public class Candidate extends Person {
         List<Candidate> candidates = new ArrayList<>();
    
         try {
-            String query = "SELECT id, name, email, address, phone, dateOfBirth, expectation " + 
+            String query = "SELECT id, firstName, lastName, email, address, phone, professionalTitle, dateOfBirth, expectation " + 
                            "FROM Candidate";
             ResultSet rs = Database.query(query);
             while(rs.next()) {
                 Candidate candidate = new Candidate(
                         rs.getDouble("expectation"),
-                        rs.getString("name"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
                         rs.getString("address"), 
                         rs.getString("phone"), 
-                        rs.getString("email"), 
+                        rs.getString("email"),
+                        rs.getString("professionalTitle"),
                         rs.getDate("dateOfBirth")
                 );
                 candidate.setId(rs.getInt("id"));
@@ -130,6 +157,27 @@ public class Candidate extends Person {
         return candidates;
     }
 
+    /**
+     * isValid
+     * 
+     * @return true if the fields are filled
+     */
+    @Override
+    public boolean isValid(){ // TODO: Careful with these
+        boolean x = super.isValid();
+        Field[] attrs = getClass().getDeclaredFields();
+        for (Field attr : attrs){
+            try {
+                if (attr.get(this) == null || attr.get(this).equals("")){
+                    return false;
+                }
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return x;
+    }
+    
     /**
      * @return the id
      */

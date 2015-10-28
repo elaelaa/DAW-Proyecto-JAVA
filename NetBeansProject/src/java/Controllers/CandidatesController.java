@@ -97,8 +97,8 @@ public class CandidatesController extends HttpServlet {
         String lastName = request.getParameter("lastname");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
-        String email = request.getParameter("email"); 
-        String title = request.getParameter("title");
+        String email = request.getParameter("email");
+        String professionalTitle = request.getParameter("professionalTitle");
         String birthday = request.getParameter("birthday");
         
         String[] types = request.getParameterValues("type"); 
@@ -144,7 +144,8 @@ public class CandidatesController extends HttpServlet {
             
             //Create the candidate object
             //title needed!!!!!
-            candidate = new Candidate(expectation, firstName + lastName, address, phone, email, dateOfBirth);
+            candidate = new Candidate(expectation, firstName, lastName, address, 
+                    phone, email, professionalTitle, dateOfBirth);
             //add to db only when all the data checked
             //assign id?
         }

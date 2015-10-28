@@ -4,7 +4,8 @@ USE HumanCapital;
 
 CREATE TABLE Candidate (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(200) NOT NULL,
+  firstName VARCHAR(200) NOT NULL,
+  lastName VARCHAR(200) NOT NULL,
   email VARCHAR(100) NOT NULL,
   address VARCHAR(200) NOT NULL,
   phone VARCHAR(100) NOT NULL,

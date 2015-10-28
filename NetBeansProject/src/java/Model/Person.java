@@ -5,7 +5,12 @@
  */
 package Model;
 
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,25 +18,45 @@ import java.util.Date;
  */
 public class Person {
     
-    String name;
-    private String address;
-    private String phone;
-    private String email;
-    private Date dateOfBirth;
+    protected String firstName;
+    protected String lastName;
+    protected String address;
+    protected String phone;
+    protected String email;
+    protected String professionalTitle;
+    protected Date dateOfBirth;
 
-    public Person(String name, String address, String phone, String email, Date dateOfBirth) {
-        this.name = name;
+    public Person(String name, String lastName, String address, String phone, 
+            String email, String professionalTitle, Date dateOfBirth) {
+        this.firstName = name;
+        this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.professionalTitle = professionalTitle;
         this.dateOfBirth = dateOfBirth;
     }
 
+    // TODO: careful with this...
+    public boolean isValid(){
+        Field[] attrs = getClass().getDeclaredFields();
+        for (Field attr : attrs){
+            try {
+                if (attr.get(this) == null || attr.get(this).equals("")){
+                    return false;
+                }
+            } catch (IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return true;
+    }
+    
     /**
      * @return the name
      */
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
@@ -60,5 +85,21 @@ public class Person {
      */
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+    
+    public String getFullName(){
+        return firstName + " " + getLastName();
+    }
+
+    public static String dateToSQL(Date date){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(date);
+    }
+
+    /**
+     * @return the lastName
+     */
+    public String getLastName() {
+        return lastName;
     }
 }
