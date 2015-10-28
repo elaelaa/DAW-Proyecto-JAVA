@@ -30,15 +30,25 @@ public class Candidate extends Person {
         this.expectation = expectation;
     }
     
+    /**
+     * save
+     * 
+     * Handles both INSERT and UPDATE actions to the Database
+     * @return true if the insert / update was successful, false otherwise
+     */
     public boolean save(){
         if (!this.isValid()){
             return false;
         }
+        String query;
+        if (!this.existsInDB()) {
+            query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, expectation)" +
+                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";   
+        } else {
+            query = "UPDATE Candidate SET firstName='%s', lastName='%s', email='%s, address='%s', phone='%s', dateOfBirth='%s', expectation='%s'" +
+                    "WHERE id = %d";
+        }
 
-        String query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, expectation)" +
-                       "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";
-
-        
         try {
             Database.update(query, this.firstName, this.lastName, this.email, 
                 this.address, this.phone, this.dateOfBirth, this.expectation);
@@ -47,7 +57,6 @@ public class Candidate extends Person {
         } catch (SQLException ex) {
             Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return true;
     }
     
@@ -157,6 +166,16 @@ public class Candidate extends Person {
         return candidates;
     }
 
+    /**
+     * exists
+     * 
+     * Method to check if the object exists in the Database.
+     * @return true if the candidate exists in database, false otherwise.
+     */
+    public boolean existsInDB(){
+        return (getById(this.id) != null);
+    }
+    
     /**
      * isValid
      * 
