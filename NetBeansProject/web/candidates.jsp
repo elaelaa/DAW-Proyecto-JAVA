@@ -35,7 +35,7 @@
 					</tr>
 				</thead>
 				<tbody>
-				<% List<Candidate> candidates = (List<Candidate>)request.getAttribute("candidates");
+				<%	List<Candidate> candidates = (List<Candidate>)request.getAttribute("candidates");
 					int size = (candidates != null) ? candidates.size() : 0;
 					for (int i=0; i<size; i++) { %>
 						<tr>
@@ -43,9 +43,7 @@
 							<td><%= candidates.get(i).getEmail() %></td>
 							<td><%= candidates.get(i).getPhone() %></td>
 							<td>$<%= candidates.get(i).getExpectation() %></td>
-							<td>
-								<a href=<%= "candidates?operation="+candidates.get(i).getId() %> class="button">Mostrar</a>
-							</td>
+							<td><a href=<%= "candidates?operation=show&id="+candidates.get(i).getId() %> class="button">Mostrar</a></td>
 						</tr>
 				<% } %>
 				</tbody>

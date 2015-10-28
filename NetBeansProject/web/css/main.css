@@ -98,6 +98,12 @@ h1 {
 	font-weight: 600;
 }
 
+h1.error {
+	text-align: center;
+	margin: 100px;
+	color: black;
+}
+
 h3 {
 	margin: 0 10px;
 	font-weight: 200;
@@ -119,6 +125,17 @@ h2, h2 a {
 
 #data p {
 	font-weight: bold;
+}
+
+.indented {
+	padding-left: 15px;
+}
+
+span.separator {
+	display: inline-block;
+	width: 100%;
+	height: 1px;
+	background: rgba(0, 0, 0, 0.5);
 }
 
 form p {
@@ -161,8 +178,12 @@ input[type="submit"] {
 }
 
 .errorMessage, div.error {
-        color: red; 
-        font-style: italic; 
+	color: red;
+	font-style: italic; 
+}
+
+.ui-datepicker-div {
+	background: #eff0ef;
 }
 
 #buttons {

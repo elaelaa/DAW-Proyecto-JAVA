@@ -6,6 +6,8 @@
 package Controllers;
 
 import Model.Candidate;
+import Model.Certificate;
+import Model.PreviousJob;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -52,12 +54,24 @@ public class CandidatesController extends HttpServlet {
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to
         }
-        else if (paramId != null && paramId.matches("\\d+")){ //if operation is only digits??
+        else if (paramId != null && paramId.matches("\\d+") &&
+				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??
             int id = Integer.parseInt(paramId);
             Candidate candidate = Candidate.getById(id);
             if (candidate != null){                                                  // else, set route to candidate view
                 request.setAttribute("candidate", candidate);   // and init the req parameter
-                url = "/candidate.jsp";
+            }
+            if (operation.equals("show"))
+            {
+                url = "/show_candidate.jsp";
+            }
+            else if (operation.equals("edit"))
+            {
+                url = "/edit_candidate.jsp";
+            }
+            else if (operation.equals("delete"))
+            {
+                //IMPLEMENT ME!!! 
             }
         }
         else if (operation.equals("create")){
@@ -83,6 +97,7 @@ public class CandidatesController extends HttpServlet {
         
         //figure out if trying to modify or create
         String operation = request.getParameter("operation"); 
+        String personId = request.getParameter("id"); 
         
         Boolean creating = false; 
         
@@ -90,7 +105,6 @@ public class CandidatesController extends HttpServlet {
         {
             creating = true; 
         }
-        
         
         // get parameters from the request
         String firstName = request.getParameter("name");
@@ -135,8 +149,6 @@ public class CandidatesController extends HttpServlet {
             request.setAttribute("bdError", bdError); 
         }
         
-        //VALIDATION OF PHONE NUMBER NEEDED
-        
         Candidate candidate = null; 
         
         if (creating)
@@ -151,115 +163,111 @@ public class CandidatesController extends HttpServlet {
         }
         else 
         {
+            int id = Integer.parseInt(personId);
+            candidate = Candidate.getById(id); 
             //find candidate, compare values...
         }
 
         
-        String type; 
-        String degree; 
-        String university; 
-        String dateStr; 
-        
         ArrayList degreeList = new ArrayList(); 
-        
-        if (types != null)
-        {
-            for(int i = 0; i<types.length; i++)
-            {
-                degree = ""; 
-                university = ""; 
-                dateStr = ""; 
-                type = types[i];
-                degree = degrees[i]; 
-                university = universities[i];
-                dateStr = dates[i]; 
-                Date dateOfCert; 
-                try{
-                    dateOfCert = df.parse(dateStr);
-                } 
-                catch (Exception e){
-                    errorFlag = true; 
-
-                    String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                    request.setAttribute("certDateError", certDateError);
-                }
-                
-                if (!errorFlag)
-                {
-                    
-                    //Certificate cert = new Certificate(int id, int personId, type, degree, university, dateOfCert);
-                    
-                    //add cert to db
-                    
-                    //listing not needed? 
-                    //degreeList.add(cert);
-                }
-            }
-        }
-        
-        String jobTitle; 
-        String company; 
-        String description; 
-        String salaryStr; 
-        String startDateStr;
-        String endDateStr; 
-        
         ArrayList jobList = new ArrayList(); 
-        
-        if (previousJobs != null)
+        if (creating)
         {
-            for(int i = 0; i<previousJobs.length; i++)
+            String type; 
+            String degree; 
+            String university; 
+            String dateStr; 
+
+            if (types != null)
             {
-                company = ""; 
-                description = ""; 
-                salaryStr = ""; 
-                startDateStr = ""; 
-                endDateStr = ""; 
-                jobTitle = previousJobs[i];
-                company = previousCompanies[i]; 
-                description = descriptions[i];
-                salaryStr = salaries[i];
-                startDateStr = startDates[i];
-                endDateStr = endDates[i];
-
-                Date endDate; 
-                Date startDate;
-                try{
-                    startDate = df.parse(startDateStr);
-                } 
-                catch (Exception e){
-
-                    errorFlag = true; 
-
-                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                    request.setAttribute("jobDateError", jobDateError);
-                }
-                try{
-                    endDate = df.parse(endDateStr);
-                } 
-                catch (Exception e){
-                    errorFlag = true; 
-
-                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                    request.setAttribute("jobDateError", jobDateError);
-                }
-
-               
-                
-                if (!errorFlag)
+                for(int i = 0; i<types.length; i++)
                 {
-                    double salary = Double.parseDouble(salaryStr); 
-                    
-                    //PreviousJob job = PreviousJob(int id, int person_id, jobTitle, description, salary, startDate, endDate); 
+                    degree = ""; 
+                    university = ""; 
+                    dateStr = ""; 
+                    type = types[i];
+                    degree = degrees[i]; 
+                    university = universities[i];
+                    dateStr = dates[i]; 
+                    Date dateOfCert = null; 
+                    try{
+                        dateOfCert = df.parse(dateStr);
+                    } 
+                    catch (Exception e){
+                        errorFlag = true; 
 
-                    //add job to db
+                        String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                        request.setAttribute("certDateError", certDateError);
+                    }
 
-                    //listing is not needed? 
-                    //jobList.add(job);
+                    if (!errorFlag)
+                    {
+
+                        Certificate cert = new Certificate(type, degree, university, dateOfCert);
+
+                        degreeList.add(cert);
+                    }
+                }
+            }
+
+            String jobTitle; 
+            String company; 
+            String description; 
+            String salaryStr; 
+            String startDateStr;
+            String endDateStr; 
+
+            if (previousJobs != null)
+            {
+                for(int i = 0; i<previousJobs.length; i++)
+                {
+                    company = ""; 
+                    description = ""; 
+                    salaryStr = ""; 
+                    startDateStr = ""; 
+                    endDateStr = ""; 
+                    jobTitle = previousJobs[i];
+                    company = previousCompanies[i]; 
+                    description = descriptions[i];
+                    salaryStr = salaries[i];
+                    startDateStr = startDates[i];
+                    endDateStr = endDates[i];
+
+                    Date endDate = null; 
+                    Date startDate = null;
+                    try{
+                        startDate = df.parse(startDateStr);
+                    } 
+                    catch (Exception e){
+
+                        errorFlag = true; 
+
+                        String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                        request.setAttribute("jobDateError", jobDateError);
+                    }
+                    try{
+                        endDate = df.parse(endDateStr);
+                    } 
+                    catch (Exception e){
+                        errorFlag = true; 
+
+                        String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                        request.setAttribute("jobDateError", jobDateError);
+                    }
+
+
+
+                    if (!errorFlag)
+                    {
+                        double salary = Double.parseDouble(salaryStr); 
+
+                        PreviousJob job = new PreviousJob(jobTitle, description, salary, startDate, endDate); 
+
+                        jobList.add(job);
+                    }
                 }
             }
         }
-        
         //Some other validation? 
         
         ServletContext context = getServletContext();
@@ -269,6 +277,9 @@ public class CandidatesController extends HttpServlet {
             if (errorFlag)
             {
                 request.setAttribute("candidate", candidate);
+                request.setAttribute("previousJobs", jobList);
+                request.setAttribute("certificates", degreeList);
+                
                 String url = "/create_candidate.jsp";
                 
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
@@ -276,7 +287,9 @@ public class CandidatesController extends HttpServlet {
             }
             else
             {
-                //add candidate to db? 
+                //add candidate to db
+                //add all jobs & certificates to db
+                //set ids?
                 
                 String url = "/candidates.jsp";
 

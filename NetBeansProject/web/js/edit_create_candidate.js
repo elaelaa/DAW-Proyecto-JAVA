@@ -16,7 +16,7 @@ window.onload = function(){
     $.validator.addMethod("date", function(value, element) 
     {
         return this.optional(element) || /^(?:(?:(?:0?[13578]|1[02])(\/)31)\1|(?:(?:0?[1,3-9]|1[0-2])(\/)(?:29|30)\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:0?2(\/)29\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:(?:0?[1-9])|(?:1[0-2]))(\/)(?:0?[1-9]|1\d|2[0-8])\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/i.test(value);
-    }, "Date in mm/ddyyyy");
+    }, "Date in mm/dd/yyyy");
     
      
     $.validator.addMethod("phone", function(value, element) 
@@ -121,7 +121,6 @@ window.onload = function(){
 
 
 function addDegree(){
-    var oldhtml = document.getElementById("allCertificates").innerHTML;
     var html =  '<div class="certificate">' +
        ' <p><label>Tipo: <select name="type" value="profesional" required>' +
         ' <option value="profesional">Titulo profesional</option> ' +
@@ -139,17 +138,14 @@ function addDegree(){
     '<p><label>Fecha de adquisición: ' +
         '<input type="text" class="datepicker" name="dateacquired" required></label>' +
     '</p>' +
-    '<a href="#" onclick="Remove(this)">Borrar</a>' +
+    '<a href="javascript:;" onclick="Remove(this)">Borrar</a>' +
 '</div>' ;
 
-    document.getElementById("allCertificates").innerHTML = oldhtml + html; 
+    $("#allCertificates").append(html);
     
-    
-                       
 }
 
 function addWork(){
-    var oldhtml = document.getElementById("allWorks").innerHTML;
     var html = '<div class="certificate"><p><label>Título profesional:' +
                         '<input type="text" name="jobTitle" required></label>' +
                     '</p>' +
@@ -168,10 +164,10 @@ function addWork(){
                     '<p><label>Fecha final: ' +
                         '<input type="text" class="datepicker" name="enddate" required></label>' +
                     '</p>' +
-                    '<a href="#" onclick="Remove(this)">Borrar</a>'+
+                    '<a href="javascript:;" onclick="Remove(this)">Borrar</a>'+
                     '</div>';
-            
-    document.getElementById("allWorks").innerHTML = oldhtml + html; 
+    $('#allWorks').append(html);
+    
 }
 
 function Remove(link) { 
