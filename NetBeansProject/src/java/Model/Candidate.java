@@ -245,6 +245,24 @@ public class Candidate extends Person {
         return x;
     }
     
+    /**
+     * deleteById
+     * 
+     * Method to delete a Candidate record from the database by its ID
+     * @return true if the fields are filled correctly
+     */
+    public static boolean deleteById(int id){
+        int res = 0;
+        try {
+            String query = "DELETE FROM Candidate WHERE id = %d";
+            res = Database.update(query, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res == 1;
+    }
+
+    
     /* -------- GETTERS AND SETTERS ----------------------------------------- */
 
     /**

@@ -76,7 +76,6 @@ public class CandidatesController extends HttpServlet {
                 request.removeAttribute("operation");
                 request.removeAttribute("id");
                 url="/candidates"; 
-                
             }
         }
         else if (operation.equals("create")){
@@ -350,7 +349,7 @@ public class CandidatesController extends HttpServlet {
             Certificate.deleteById(certId);
         }
         
-        //Candidate.deleteById(candidate.getId());
+        Candidate.deleteById(candidate.getId());
         
     }
 
