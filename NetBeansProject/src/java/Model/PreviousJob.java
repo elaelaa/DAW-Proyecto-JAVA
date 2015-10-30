@@ -39,6 +39,14 @@ public class PreviousJob {
         this.endDate = endDate;
     }
     
+    
+    public void Update(String jobTitle, String jobDescription, double salary, Date startDate, Date endDate){
+        this.jobTitle = jobTitle;
+        this.jobDescription = jobDescription;
+        this.salary = salary;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     /**
      * @return the id

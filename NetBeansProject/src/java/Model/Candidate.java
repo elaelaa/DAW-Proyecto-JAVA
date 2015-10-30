@@ -60,6 +60,22 @@ public class Candidate extends Person {
         return true;
     }
     
+    
+    public void Update(double newExpectation, String newName, String newLastname, 
+            String newAddress, String newPhone, String newEmail, String newProfessionalTitle,
+            Date newDateOfBirth)
+    {
+        this.setExpectation(newExpectation);
+        this.setFirstName(newName);
+        this.setLastName(newLastname); 
+        this.setAddress(newAddress);
+        this.setPhone(newPhone);
+        this.setEmail(newEmail);
+        this.setProfessionalTitle(newProfessionalTitle);
+        this.setDateOfBirth(newDateOfBirth);
+    }
+    
+    
     /**
      * getCertificates
      * 
@@ -249,6 +265,34 @@ public class Candidate extends Person {
      */
     public void setExpectation(double expectation) {
         this.expectation = expectation;
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setProfessionalTitle(String professionalTitle) {
+        this.professionalTitle = professionalTitle;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
     
 }
