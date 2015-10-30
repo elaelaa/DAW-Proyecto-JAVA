@@ -32,10 +32,10 @@
                     <input type="hidden" name="operation" value="edit">
                     <input type="hidden" name="id" value="${candidate.getId()}">
                     <p><label>Nombre:
-                        <input type="text" name="name" value="${candidate.getName()}" required></label>
+                        <input type="text" name="name" value="${candidate.getFirstName()}" required></label>
                     </p>
                     <p><label>Apellidos:
-                        <input type="text" name="lastname" value="" required></label>
+                        <input type="text" name="lastname" value="${candidate.getLastName()}" required></label>
                     </p>
                     <p><label>Dirección:
                         <input type="text" name="address" value="${candidate.getAddress()}" required></label>

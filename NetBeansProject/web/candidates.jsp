@@ -39,7 +39,7 @@
 					int size = (candidates != null) ? candidates.size() : 0;
 					for (int i=0; i<size; i++) { %>
 						<tr>
-							<td><%= candidates.get(i).getName() %></td>
+							<td><%= candidates.get(i).getFullName() %></td>
 							<td><%= candidates.get(i).getEmail() %></td>
 							<td><%= candidates.get(i).getPhone() %></td>
 							<td>$<%= candidates.get(i).getExpectation() %></td>
