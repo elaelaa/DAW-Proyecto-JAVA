@@ -9,6 +9,7 @@ CREATE TABLE Candidate (
   email VARCHAR(100) NOT NULL,
   address VARCHAR(200) NOT NULL,
   phone VARCHAR(100) NOT NULL,
+  professionalTitle VARCHAR(100) NOT NULL,
   dateOfBirth DATE NOT NULL,
   expectation DOUBLE NOT NULL,
   PRIMARY KEY(id)

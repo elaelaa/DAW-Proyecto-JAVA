@@ -1,11 +1,12 @@
-INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, 
-											 expectation) 
+INSERT INTO Candidate (firstName, lastName, email, address, phone, 
+											 professionalTitle, dateOfBirth, expectation) 
 VALUES (
 	'Luis',
 	'Lamadrid', 
 	'luis@web.com', 
 	'777 Ejemplo, NL, MX', 
 	'+(52) 827777777',
+	'Student',
 	CURDATE(),
 	14000.00
 );
