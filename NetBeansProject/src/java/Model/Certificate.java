@@ -41,6 +41,13 @@ public class Certificate {
         this.organization = organization;
         this.dateAquired = dateAquired;
     }
+    
+    public void Update(String type, String name, String organization, Date dateAquired){
+        this.type = type;
+        this.name = name;
+        this.organization = organization;
+        this.dateAquired = dateAquired;
+    }
 
     /**
      * save

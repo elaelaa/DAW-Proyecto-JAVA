@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
@@ -115,11 +116,13 @@ public class CandidatesController extends HttpServlet {
         String professionalTitle = request.getParameter("professionalTitle");
         String birthday = request.getParameter("birthday");
         
+        String[] certIDs = request.getParameterValues("certId"); 
         String[] types = request.getParameterValues("type"); 
         String[] degrees = request.getParameterValues("degreename"); 
         String[] universities = request.getParameterValues("university"); 
         String[] dates = request.getParameterValues("dateacquired"); 
         
+        String[] jobIDs = request.getParameterValues("jobId"); 
         String[] previousJobs = request.getParameterValues("jobTitle");
         String[] previousCompanies = request.getParameterValues("company"); 
         String[] descriptions = request.getParameterValues("description");
@@ -131,12 +134,14 @@ public class CandidatesController extends HttpServlet {
         
         //flag to check if there was errors in processing parameters
         Boolean errorFlag = false; 
+        
+        //processing parameters
         double expectation = 0;
         if (!economicExpect.isEmpty())
         {
             expectation = Double.parseDouble(economicExpect); 
         }
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date dateOfBirth = new Date();
         try{
             dateOfBirth = df.parse(birthday);
@@ -145,68 +150,84 @@ public class CandidatesController extends HttpServlet {
            
             errorFlag = true; 
 
-            String bdError = "Insert dates in format MM/dd/yyyy! <br>";
+            String bdError = "Insert dates in format yyyy-mm-dd! <br>";
             request.setAttribute("bdError", bdError); 
         }
+        phone = phone.replaceAll(" ", "");
+        phone = phone.replaceAll(".", "");
+        phone = phone.replaceAll("-", ""); 
+        
         
         Candidate candidate = null; 
         
         if (creating)
         {
-            
-            //Create the candidate object
-            //title needed!!!!!
             candidate = new Candidate(expectation, firstName, lastName, address, 
                     phone, email, professionalTitle, dateOfBirth);
-            //add to db only when all the data checked
-            //assign id?
         }
         else 
         {
             int id = Integer.parseInt(personId);
             candidate = Candidate.getById(id); 
-            //find candidate, compare values...
+            candidate.Update(expectation, firstName, lastName, address, 
+                    phone, email, professionalTitle, dateOfBirth);
         }
 
         
         ArrayList degreeList = new ArrayList(); 
         ArrayList jobList = new ArrayList(); 
-        if (creating)
+        String type; 
+        String degree; 
+        String university; 
+        String dateStr; 
+
+        if (types != null)
         {
-            String type; 
-            String degree; 
-            String university; 
-            String dateStr; 
-
-            if (types != null)
+            for(int i = 0; i<types.length; i++)
             {
-                for(int i = 0; i<types.length; i++)
+                degree = ""; 
+                university = ""; 
+                dateStr = ""; 
+                type = types[i];
+                degree = degrees[i]; 
+                university = universities[i];
+                dateStr = dates[i]; 
+                Date dateOfCert = null; 
+                try{
+                    dateOfCert = df.parse(dateStr);
+                } 
+                catch (Exception e){
+                    errorFlag = true; 
+
+                    String certDateError = "Insert dates in format yyyy-mm-dd! <br>";
+                    request.setAttribute("certDateError", certDateError);
+                }
+
+                if (!errorFlag)
                 {
-                    degree = ""; 
-                    university = ""; 
-                    dateStr = ""; 
-                    type = types[i];
-                    degree = degrees[i]; 
-                    university = universities[i];
-                    dateStr = dates[i]; 
-                    Date dateOfCert = null; 
-                    try{
-                        dateOfCert = df.parse(dateStr);
-                    } 
-                    catch (Exception e){
-                        errorFlag = true; 
 
-                        String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                        request.setAttribute("certDateError", certDateError);
-                    }
+                    int certID = -1; 
 
-                    if (!errorFlag)
+                    if (certIDs != null)
                     {
-
-                        Certificate cert = new Certificate(type, degree, university, dateOfCert);
-
-                        degreeList.add(cert);
+                        if (certIDs.length > i)
+                        {
+                            certID = Integer.parseInt(certIDs[i]); 
+                        }
+                        
                     }
+                    Certificate cert = null;  
+                    if (certID > -1)
+                    {
+                        cert = Certificate.getById(certID); 
+                        cert.Update(type, degree, university, dateOfCert); 
+                    }
+                    else
+                    {
+                        cert = new Certificate(type, degree, university, dateOfCert);
+                    }
+                   
+                    degreeList.add(cert);
                 }
             }
 
@@ -216,58 +237,74 @@ public class CandidatesController extends HttpServlet {
             String salaryStr; 
             String startDateStr;
             String endDateStr; 
-
-            if (previousJobs != null)
+            
+            for(int i = 0; i<previousJobs.length; i++)
             {
-                for(int i = 0; i<previousJobs.length; i++)
+                company = ""; 
+                description = ""; 
+                salaryStr = ""; 
+                startDateStr = ""; 
+                endDateStr = ""; 
+                jobTitle = previousJobs[i];
+                company = previousCompanies[i]; 
+                description = descriptions[i];
+                salaryStr = salaries[i];
+                startDateStr = startDates[i];
+                endDateStr = endDates[i];
+
+                Date endDate = null; 
+                Date startDate = null;
+                try{
+                    startDate = df.parse(startDateStr);
+                } 
+                catch (Exception e){
+
+                    errorFlag = true; 
+
+                    String jobDateError = "Insert dates in format yyyy-mm-dd! <br>";
+                    request.setAttribute("jobDateError", jobDateError);
+                }
+                try{
+                    endDate = df.parse(endDateStr);
+                } 
+                catch (Exception e){
+                    errorFlag = true; 
+
+                    String jobDateError = "Insert dates in format yyyy-mm-dd! <br>";
+                    request.setAttribute("jobDateError", jobDateError);
+                }
+
+
+
+                if (!errorFlag)
                 {
-                    company = ""; 
-                    description = ""; 
-                    salaryStr = ""; 
-                    startDateStr = ""; 
-                    endDateStr = ""; 
-                    jobTitle = previousJobs[i];
-                    company = previousCompanies[i]; 
-                    description = descriptions[i];
-                    salaryStr = salaries[i];
-                    startDateStr = startDates[i];
-                    endDateStr = endDates[i];
-
-                    Date endDate = null; 
-                    Date startDate = null;
-                    try{
-                        startDate = df.parse(startDateStr);
-                    } 
-                    catch (Exception e){
-
-                        errorFlag = true; 
-
-                        String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                        request.setAttribute("jobDateError", jobDateError);
-                    }
-                    try{
-                        endDate = df.parse(endDateStr);
-                    } 
-                    catch (Exception e){
-                        errorFlag = true; 
-
-                        String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
-                        request.setAttribute("jobDateError", jobDateError);
-                    }
-
-
-
-                    if (!errorFlag)
+                    double salary = Double.parseDouble(salaryStr); 
+                   
+                    int jobID = -1; 
+                    
+                    if (jobIDs != null)
                     {
-                        double salary = Double.parseDouble(salaryStr); 
-
-                        PreviousJob job = new PreviousJob(jobTitle, description, salary, startDate, endDate); 
-
-                        jobList.add(job);
+                        if (jobIDs.length > i)
+                        {
+                            jobID = Integer.parseInt(jobIDs[i]); 
+                        }
+                        
                     }
+                    PreviousJob job = null; 
+                    if (jobID > -1)
+                    {
+                        //job = PreviousJob.getById(jobID); 
+                        //job.Update(jobTitle, description, salary, startDate, endDate); 
+                    }
+                    else
+                    {
+                        job = new PreviousJob(jobTitle, description, salary, startDate, endDate); 
+                    }
+                    jobList.add(job);
                 }
             }
         }
+        
         //Some other validation? 
         
         ServletContext context = getServletContext();
@@ -287,12 +324,23 @@ public class CandidatesController extends HttpServlet {
             }
             else
             {
-                //add candidate to db
-                //add all jobs & certificates to db
-                //set ids?
+                candidate.save(); 
+                int id = candidate.getId(); 
                 
-                String url = "/candidates.jsp";
-
+                for (Object prevJob : jobList) {
+                    PreviousJob job = (PreviousJob) prevJob;
+                    job.setPerson_id(id);
+                    //job.save(); 
+                }
+                
+                for (Object cert : degreeList) {
+                    Certificate certificate = (Certificate) cert;
+                    certificate.setPersonId(id);
+                    certificate.save(); 
+                }
+                
+                String url = "/candidates";
+                
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
                 dispatcher.forward(request, response); 
                 
@@ -311,7 +359,56 @@ public class CandidatesController extends HttpServlet {
             }
             else
             {
-                //redirect to showing candidate with new data
+                candidate.save(); 
+                int id = candidate.getId(); 
+                
+                ArrayList newCertIDs = new ArrayList();
+                ArrayList newJobIDs = new ArrayList(); 
+                
+                for (Object prevJob : jobList) {
+                    PreviousJob job = (PreviousJob) prevJob;
+                    if (job.getId() == -1)
+                    {
+                        job.setPerson_id(id);
+                    }
+                    //job.save(); 
+                    newJobIDs.add(job.getId());
+                }
+                
+                for (Object cert : degreeList) {
+                    Certificate certificate = (Certificate) cert;
+                    if (certificate.getId() == -1)
+                    {
+                        certificate.setPersonId(id);
+                    }
+                    certificate.save(); 
+                    newCertIDs.add(certificate.getId()); 
+                }
+                
+                for (Certificate oldCert : candidate.getCertificates())
+                {
+                    int oldId = oldCert.getId(); 
+                    if (!newCertIDs.contains(oldId))
+                    {
+                        //oldCert.remove(); 
+                    }
+                }
+                
+                for (PreviousJob oldJob : candidate.getPreviousJobs())
+                {
+                    int oldId = oldJob.getId(); 
+                    if (!newJobIDs.contains(oldId))
+                    {
+                        //oldJob.remove(); 
+                    }
+                }
+                
+                String url = "/show_candidate.jsp";
+                
+                request.setAttribute("candidate", candidate); 
+                
+                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+                dispatcher.forward(request, response); 
             }
         
         }
@@ -326,5 +423,5 @@ public class CandidatesController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }
