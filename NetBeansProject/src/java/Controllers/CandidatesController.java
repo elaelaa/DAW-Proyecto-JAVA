@@ -141,7 +141,7 @@ public class CandidatesController extends HttpServlet {
         {
             expectation = Double.parseDouble(economicExpect); 
         }
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date dateOfBirth = new Date();
         try{
             dateOfBirth = df.parse(birthday);
@@ -150,7 +150,7 @@ public class CandidatesController extends HttpServlet {
            
             errorFlag = true; 
 
-            String bdError = "Insert dates in format MM/dd/yyyy! <br>";
+            String bdError = "Insert dates in format yyyy-mm-dd! <br>";
             request.setAttribute("bdError", bdError); 
         }
         phone = phone.replaceAll(" ", "");
@@ -199,7 +199,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String certDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                    String certDateError = "Insert dates in format yyyy-mm-dd! <br>";
                     request.setAttribute("certDateError", certDateError);
                 }
 
@@ -261,7 +261,7 @@ public class CandidatesController extends HttpServlet {
 
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                    String jobDateError = "Insert dates in format yyyy-mm-dd! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
                 try{
@@ -270,7 +270,7 @@ public class CandidatesController extends HttpServlet {
                 catch (Exception e){
                     errorFlag = true; 
 
-                    String jobDateError = "Insert dates in format mm/dd/yyyy! <br>";
+                    String jobDateError = "Insert dates in format yyyy-mm-dd! <br>";
                     request.setAttribute("jobDateError", jobDateError);
                 }
 
