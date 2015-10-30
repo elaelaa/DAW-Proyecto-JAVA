@@ -38,8 +38,8 @@
 				<%	}
 					for (int i=0; i<size; i++) { %>
 					<p class="indented">Tipo: <span><%= certificates.get(i).getType() %></span></p>
-					<p class="indented">Nombre: <span><%= certificates.get(i).getOrganization() %></span></p>
-					<p class="indented">Organización: <span><%= certificates.get(i).getType() %></span></p>
+					<p class="indented">Nombre: <span><%= certificates.get(i).getName() %></span></p>
+					<p class="indented">Organización: <span><%= certificates.get(i).getOrganization() %></span></p>
 					<p class="indented">Fecha de adquisición: <span><%= certificates.get(i).getDateAquired() %></span></p>
 					<span class="separator"></span>
 				<%	} %>
@@ -52,6 +52,7 @@
 					for (int i=0; i<size; i++) { %>
 					<p class="indented">Descripción: <span><%= jobs.get(i).getJobDescription() %></span></p>
 					<p class="indented">Título: <span><%= jobs.get(i).getJobTitle() %></span></p>
+                                        <p class="intended">Empresa: <span><%= jobs.get(i).getCompany()%></span></p>
 					<span class="separator"></span>
 				<%	} %>
 				<p>Expectativas Económicas: <span>$<%= candidate.getExpectation() %></span></p>

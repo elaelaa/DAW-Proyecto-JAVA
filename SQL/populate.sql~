@@ -20,12 +20,11 @@ VALUES (
 	CURDATE()
 );
 
-INSERT INTO PreviousJob (personId, jobTitle, company,  jobDescription, salary, startDate, 
+INSERT INTO PreviousJob (personId, jobTitle, jobDescription, salary, startDate, 
 												 endDate)
 VALUES (
 	1,
 	'Developer',
-	'AlphaOne',
 	'I got to modify stuff from the software...',
 	3000.00,
 	CURDATE(),

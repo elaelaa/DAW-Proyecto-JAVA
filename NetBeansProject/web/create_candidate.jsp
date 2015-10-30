@@ -96,7 +96,7 @@
                                             <input type="text" name="jobTitle" value="<%= jobs.get(i).getJobTitle()%>" required></label>
                                     </p>
                                     <p><label>Empresa: 
-                                            <input type="text" name="company" value="TITLE" required></label>
+                                            <input type="text" name="company" value="<%= jobs.get(i).getCompany()%>" required></label>
                                     </p>
                                     <p><label>Descripción: 
                                             <input type="text" rows="5" name="description" value="<%= jobs.get(i).getJobDescription() %>" required></label>

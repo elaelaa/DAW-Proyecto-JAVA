@@ -92,14 +92,14 @@ public class Candidate extends Person {
         List<Certificate> certificates = new ArrayList<>();
         
         try {
-            String query = "SELECT T.id, T.person_id, T.type, T.name, T.organization, T.dateAquired " +
-                           "FROM Certificate AS T, Candidate As C " +
-                           "WHERE %d = T.person_id";
+            String query = "SELECT T.id, T.personId, T.type, T.name, T.organization, T.dateAquired " +
+                           "FROM Certificate AS T " +
+                           "WHERE T.personId = " + Integer.toString(this.id);
             ResultSet rs = Database.query(query, this.getId());
             while (rs.next()){
                 Certificate certificate = new Certificate(
                         rs.getInt("id"),
-                        rs.getInt("person_id"),
+                        rs.getInt("personId"),
                         rs.getString("type"),
                         rs.getString("name"),
                         rs.getString("organization"),
@@ -123,14 +123,15 @@ public class Candidate extends Person {
         List<PreviousJob> previousJobs = new ArrayList<>();
         
         try {
-            String query = "SELECT P.id, P.person_id, P.jobTitle, P.jobDescription, P.salary, P.startDate, P.endDate " +
-                           "FROM Candidate AS C, PreviousJob AS P" +
-                           "WHERE P.person_id = %d";
+            String query = "SELECT P.id, P.personId, P.jobTitle, P.company, P.jobDescription, P.salary, P.startDate, P.endDate " +
+                           "FROM PreviousJob AS P " +
+                           "WHERE P.personId = " + Integer.toString(this.id);
             ResultSet rs = Database.query(query, this.getId());
             while (rs.next()){
                 PreviousJob pj = new PreviousJob(
                         rs.getInt("id"),
-                        rs.getInt("person_id"),
+                        rs.getInt("personId"),
+                        rs.getString("company"),
                         rs.getString("jobTitle"),
                         rs.getString("jobDescription"),
                         rs.getDouble("salary"),

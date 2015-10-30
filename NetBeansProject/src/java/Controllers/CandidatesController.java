@@ -127,7 +127,7 @@ public class CandidatesController extends HttpServlet {
                 int oldId = oldCert.getId(); 
                 if (!newCertIDs.contains(oldId))
                 {
-                    //oldCert.remove(); 
+                    Certificate.deleteById(oldId);
                 }
             }
                 
@@ -136,7 +136,7 @@ public class CandidatesController extends HttpServlet {
                 int oldId = oldJob.getId(); 
                 if (!newJobIDs.contains(oldId))
                 {
-                    //oldJob.remove(); 
+                    PreviousJob.deleteById(oldId); 
                 }
             }
         }
@@ -223,11 +223,6 @@ public class CandidatesController extends HttpServlet {
             
             for(int i = 0; i<previousJobs.length; i++)
             {
-                company = ""; 
-                description = ""; 
-                salaryStr = ""; 
-                startDateStr = ""; 
-                endDateStr = ""; 
                 jobTitle = previousJobs[i];
                 company = previousCompanies[i]; 
                 description = descriptions[i];
@@ -264,11 +259,11 @@ public class CandidatesController extends HttpServlet {
                 if (jobID > -1)
                 {
                     job = PreviousJob.getById(jobID); 
-                    job.Update(jobTitle, description, salary, startDate, endDate); 
+                    job.Update(jobTitle, company, description, salary, startDate, endDate); 
                 }   
                 else
                 {
-                    job = new PreviousJob(personID, jobTitle, description, salary, startDate, endDate); 
+                    job = new PreviousJob(personID, jobTitle, company, description, salary, startDate, endDate); 
                 }
                 job.save(); 
                 jobList.add(job.getId());
@@ -282,25 +277,22 @@ public class CandidatesController extends HttpServlet {
         String[] certIDs = request.getParameterValues("certId"); 
         String[] types = request.getParameterValues("type"); 
         String[] degrees = request.getParameterValues("degreename"); 
-        String[] universities = request.getParameterValues("university"); 
+        String[] organizations = request.getParameterValues("organization"); 
         String[] dates = request.getParameterValues("dateacquired"); 
         
         ArrayList degreeList = new ArrayList(); 
         String type; 
         String degree; 
-        String university; 
+        String organization; 
         String dateStr; 
 
         if (types != null)
         {
             for(int i = 0; i<types.length; i++)
             {
-                degree = ""; 
-                university = ""; 
-                dateStr = ""; 
                 type = types[i];
                 degree = degrees[i]; 
-                university = universities[i];
+                organization = organizations[i];
                 dateStr = dates[i]; 
                 Date dateOfCert = null; 
                 try{
@@ -323,11 +315,11 @@ public class CandidatesController extends HttpServlet {
                 if (certID > -1)
                 {
                     cert = Certificate.getById(certID); 
-                    cert.Update(type, degree, university, dateOfCert); 
+                    cert.Update(type, degree, organization, dateOfCert); 
                 }
                 else
                 {
-                    cert = new Certificate(personID, type, degree, university, dateOfCert);
+                    cert = new Certificate(personID, type, degree, organization, dateOfCert);
                 }
                 
                 cert.save();

@@ -63,7 +63,7 @@ window.onload = function(){
                 required: true,
                 lettersonly: true
             },
-            university:{
+            organization:{
                 required: true,
                 lettersonly: true
             },
@@ -99,7 +99,7 @@ window.onload = function(){
             birthday:"Please add date in yyyy-mm-dd format",
             title:"Please add a valid title, no numbers",
             degreename:"Please add a degree",
-            university:"Please add a university",
+            organization:"Please add a university",
             dateacquired:"Please add date in yyyy-mm-dd format", 
             salary:"Please add your salary",
             company:"Please add a company",
@@ -138,7 +138,7 @@ function addDegree(){
             '<input type="text" name="degreename" required></label>' +
     '</p>' +
     '<p><label>Organización: ' +
-        '<input type="text" name="university" required></label>' +
+        '<input type="text" name="organization" required></label>' +
     '</p>' +
     '<p><label>Fecha de adquisición: ' +
         '<input type="text" class="datepicker" name="dateacquired" required></label>' +

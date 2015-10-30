@@ -23,44 +23,39 @@ public class PreviousJob {
     private int id = -1;
     private int personId = -1;
     private String jobTitle;
+    private String company; 
     private String jobDescription;
     private double salary;
     private Date startDate;
     private Date endDate;
 
-    public PreviousJob(int id, int personId, String jobTitle, 
+    public PreviousJob(int id, int personId, String jobTitle, String company, 
             String jobDescription, double salary, Date startDate, Date endDate) {
         this.id = id;
         this.personId = personId;
         this.jobTitle = jobTitle;
+        this.company = company; 
         this.jobDescription = jobDescription;
         this.salary = salary;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public PreviousJob(int personId, String jobTitle, String jobDescription, 
+    public PreviousJob(int personId, String jobTitle, String company, String jobDescription, 
         double salary, Date startDate, Date endDate) {
         this.personId = personId;
         this.jobTitle = jobTitle;
+        this.company = company; 
         this.jobDescription = jobDescription;
         this.salary = salary;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public PreviousJob(String jobTitle, String jobDescription, 
-        double salary, Date startDate, Date endDate) {
-        this.jobTitle = jobTitle;
-        this.jobDescription = jobDescription;
-        this.salary = salary;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public void Update(String jobTitle, String jobDescription, double salary, 
+    public void Update(String jobTitle, String company, String jobDescription, double salary, 
         Date startDate, Date endDate){
         this.jobTitle = jobTitle;
+        this.company = company; 
         this.jobDescription = jobDescription;
         this.salary = salary;
         this.startDate = startDate;
@@ -80,10 +75,10 @@ public class PreviousJob {
         }
         String query;
         if (!this.existsInDB()) {
-            query = "INSERT INTO PreviousJob (personId, jobTitle, jobDescription, salary, startDate, endDate)" +
-                    "VALUES (%d, '%s', '%s', %f, '%s', '%s')";   
+            query = "INSERT INTO PreviousJob (personId, jobTitle, company, jobDescription, salary, startDate, endDate)" +
+                    "VALUES (%d, '%s', '%s', '%s', %f, '%s', '%s')";   
         } else {
-            query = "UPDATE PreviousJob SET personId=%d, jobTitle='%s', jobDescription='%s, salary=%f, startDate='%s', endDate='%s'" +
+            query = "UPDATE PreviousJob SET personId=%d, jobTitle='%s', company='%s', jobDescription='%s', salary=%f, startDate='%s', endDate='%s'" +
                     "WHERE id = " + Integer.toString(this.id);
         }
 
@@ -91,7 +86,7 @@ public class PreviousJob {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String startDate2 = df.format(this.startDate);
             String endDate2 = df.format(this.endDate);
-            Database.update(query, this.personId, this.jobTitle, this.jobDescription, 
+            Database.update(query, this.personId, this.jobTitle, this.company, this.jobDescription, 
                 this.salary, startDate2, endDate2);
             ResultSet rs = Database.query("SELECT id FROM PreviousJob ORDER BY id DESC LIMIT 1");
             this.setId(!rs.next() ? -1 : rs.getInt(1));
@@ -117,6 +112,7 @@ public class PreviousJob {
                 previousJob = new PreviousJob(
                         rs.getInt("personId"),
                         rs.getString("jobTitle"),
+                        rs.getString("company"),
                         rs.getString("jobDescription"),
                         rs.getDouble("salary"),
                         rs.getDate("startDate"), 
@@ -219,6 +215,20 @@ public class PreviousJob {
      */
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+    
+    /**
+     * @return the company
+     */
+    public String getCompany() {
+        return company;
+    }
+
+    /**
+     * @param company the company to set
+     */
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     /**
