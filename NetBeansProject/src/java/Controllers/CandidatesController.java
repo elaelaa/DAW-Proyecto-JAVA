@@ -179,7 +179,7 @@ public class CandidatesController extends HttpServlet {
             
         }
         phone = phone.replaceAll(" ", "");
-        phone = phone.replaceAll(".", "");
+        phone = phone.replaceAll("\\.", "");
         phone = phone.replaceAll("-", ""); 
         
         

@@ -151,6 +151,7 @@ public class Candidate extends Person {
      * getById
      * 
      * Method to retrieve a Candidate from the database by its ID.
+     * @param id
      * @return a Candidate object if found, null if not present in DB.
      */
     public static Candidate getById(int id){
