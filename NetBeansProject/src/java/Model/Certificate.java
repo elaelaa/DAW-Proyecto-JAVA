@@ -37,7 +37,8 @@ public class Certificate {
         this.dateAquired = dateAquired;
     }
 
-    public Certificate(String type, String name, String organization, Date dateAquired) {
+    public Certificate(int personId, String type, String name, String organization, Date dateAquired) {
+        this.personId = personId; 
         this.type = type;
         this.name = name;
         this.organization = organization;
