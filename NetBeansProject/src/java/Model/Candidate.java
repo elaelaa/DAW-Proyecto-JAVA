@@ -46,7 +46,7 @@ public class Candidate extends Person {
                     "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";   
         } else {
             query = "UPDATE Candidate SET firstName='%s', lastName='%s', email='%s, address='%s', phone='%s', dateOfBirth='%s', expectation='%s'" +
-                    "WHERE id = %d";
+                    "WHERE id = " + Integer.toString(this.id);
         }
 
         try {
@@ -60,6 +60,12 @@ public class Candidate extends Person {
         return true;
     }
     
+    /**
+     * getCertificates
+     * 
+     * Retrieves all the certificates for a given candidate
+     * @return a list of type List<Certificate>, empty if none present in DB
+     */
     public List<Certificate> getCertificates(){
         List<Certificate> certificates = new ArrayList<>();
         
@@ -85,6 +91,12 @@ public class Candidate extends Person {
         return certificates;
     }
     
+    /**
+     * getPreviousJobs
+     * 
+     * Retrieves all the previous jobs for a given candidate
+     * @return a list of type List<PreviousJob>, empty if none present in DB
+     */
     public List<PreviousJob> getPreviousJobs(){
         List<PreviousJob> previousJobs = new ArrayList<>();
         
@@ -112,6 +124,12 @@ public class Candidate extends Person {
         return previousJobs;
     }
     
+    /**
+     * getAll
+     * 
+     * Method to retrieve a Candidate from the database by its ID.
+     * @return a Candidate object if found, null if not present in DB.
+     */
     public static Candidate getById(int id){
         Candidate candidate = null;
         
@@ -138,6 +156,12 @@ public class Candidate extends Person {
         return candidate;
     }
     
+    /**
+     * getAll
+     * 
+     * Method to retrieve all the Candidates from the database.
+     * @return a list of type List<Candidate>, empty list if there are none in DB.
+     */
     public static List<Candidate> getAll(){
         List<Candidate> candidates = new ArrayList<>();
    
@@ -197,6 +221,8 @@ public class Candidate extends Person {
         return x;
     }
     
+    /* -------- GETTERS AND SETTERS ----------------------------------------- */
+
     /**
      * @return the id
      */
