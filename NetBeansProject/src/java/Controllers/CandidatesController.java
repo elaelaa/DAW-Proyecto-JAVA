@@ -113,30 +113,15 @@ public class CandidatesController extends HttpServlet {
         //Some other validation? 
         
         ServletContext context = getServletContext();
-        if (creating){
-            
-            candidate.save(); 
-            int id = candidate.getId(); 
-            
-            createJobs(request, creating, df, id); 
-            createCertificates(request, creating, df, id);
-            
-            String url = "/candidates";
+        
+        candidate.save(); 
+        int id = candidate.getId(); 
 
-            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-            dispatcher.forward(request, response); 
-
-            //any success messages needed?
-        }
-        else
+        ArrayList newCertIDs = createCertificates(request, creating, df, id);
+        ArrayList newJobIDs = createJobs(request, creating, df, id); 
+                
+        if (!creating)
         {
-            candidate.save(); 
-            int id = candidate.getId(); 
-                
-            ArrayList newCertIDs = createCertificates(request, creating, df, id);
-            ArrayList newJobIDs = createJobs(request, creating, df, id); 
-                
-                
             for (Certificate oldCert : candidate.getCertificates())
             {
                 int oldId = oldCert.getId(); 
@@ -154,16 +139,17 @@ public class CandidatesController extends HttpServlet {
                     //oldJob.remove(); 
                 }
             }
-                
-            String url = "/show_candidate.jsp";
-
-            request.setAttribute("candidate", candidate); 
-
-            RequestDispatcher dispatcher = context.getRequestDispatcher(url);
-            dispatcher.forward(request, response); 
-            }
-        
         }
+                
+        String url = "/show_candidate.jsp";
+
+        request.setAttribute("candidate", candidate); 
+
+        RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+        dispatcher.forward(request, response); 
+        
+        
+    }
     
     public Candidate createCandidate(HttpServletRequest request, Boolean creating, DateFormat df)
     {

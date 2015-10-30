@@ -52,7 +52,7 @@
                         <input type="text" name="birthday" class="datepicker" value="${candidate.getDateOfBirth()}" required></label>
                     </p>
                     <p><label>Título Profesional: 
-                        <input type="text" name="title" value=""></label>
+                        <input type="text" name="professionalTitle" value="${candidate.getProfessionalTitle()}"></label>
                     </p
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <span class="errorMessage">${certDateError}</span>
