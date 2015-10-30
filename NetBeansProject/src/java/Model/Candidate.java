@@ -141,7 +141,7 @@ public class Candidate extends Person {
     }
     
     /**
-     * getAll
+     * getById
      * 
      * Method to retrieve a Candidate from the database by its ID.
      * @return a Candidate object if found, null if not present in DB.

@@ -21,8 +21,8 @@ public class Database {
         }
     }
     
-    public static void update(String update, Object... args) throws SQLException {
-        stmt.executeUpdate(String.format(update, args));
+    public static int update(String update, Object... args) throws SQLException {
+        return stmt.executeUpdate(String.format(update, args));
     }
     
     public static ResultSet query(String query, Object... args) throws SQLException {

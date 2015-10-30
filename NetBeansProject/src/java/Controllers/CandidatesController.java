@@ -279,14 +279,13 @@ public class CandidatesController extends HttpServlet {
                 {
                     //job = PreviousJob.getById(jobID); 
                     //job.Update(jobTitle, description, salary, startDate, endDate); 
-                }
+                }   
                 else
                 {
                     job = new PreviousJob(personID, jobTitle, description, salary, startDate, endDate); 
                 }
                 //job.save(); 
                 jobList.add(job.getId());
-
             }
         }
         return jobList; 
@@ -322,8 +321,8 @@ public class CandidatesController extends HttpServlet {
                     dateOfCert = df.parse(dateStr);
                 } 
                 catch (Exception e){
+                
                 }
-
                 int certID = -1; 
 
                 if (certIDs != null)
