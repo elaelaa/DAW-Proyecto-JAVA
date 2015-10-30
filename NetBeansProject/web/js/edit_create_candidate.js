@@ -24,7 +24,7 @@ window.onload = function(){
      
     $.validator.addMethod("phone", function(value, element) 
     {
-        return this.optional(element) || /((((\+[0-9]{2})?)([ ]?)([0-9]{3})([ ]?)([0-9]{3})([ ]?)([0-9]{4}))|(([0-9]{3})([ ]?)([0-9]{3})([ ]?)([0-9]{4})))$/i.test(value);
+        return this.optional(element) || /^((((\+[0-9]{2})?)( ?)([0-9]{3})( ?)([0-9]{3})( ?)([0-9]{4}))|(([0-9]{3})( ?)([0-9]{3})( ?)([0-9]{4})))$/i.test(value);
     }, "Add a valid phone number");
     
     
