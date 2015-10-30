@@ -1,5 +1,4 @@
-#Entrega 3
-#Instrucciones de Instalación
+#Entrega 3 - Instrucciones de Instalación
 
 1. Bajar el repositorio de GitHub usando el boton "Download ZIP"
 
