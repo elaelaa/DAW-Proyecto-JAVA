@@ -102,4 +102,11 @@ public class Person {
     public String getLastName() {
         return lastName;
     }
+
+    /**
+     * @return the professionalTitle
+     */
+    public String getProfessionalTitle() {
+        return professionalTitle;
+    }
 }

@@ -30,7 +30,7 @@
 				<p>Teléfono: <span><%= candidate.getPhone() %></span></p>
 				<p>E-mail: <span><%= candidate.getEmail() %></span></p>
 				<p>Fecha de nacimiento: <span><%= candidate.getDateOfBirth() %></span></p>
-				<p>Título profesional: <span>Cowboy</span></p>
+				<p>Título profesional: <span><%= candidate.getProfessionalTitle() %></span></p>
 				<%	List<Certificate> certificates = candidate.getCertificates();
 					int size = (certificates != null) ? certificates.size() : 0;
 					if (size > 0) { %>
