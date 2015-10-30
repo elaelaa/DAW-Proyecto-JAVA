@@ -49,6 +49,8 @@ public class CandidatesController extends HttpServlet {
         
         String url = "/404.jsp"; // starts default not found url
         
+        Boolean redirect =false; 
+        
         //handling the rerouting based on opertion? 
         if (operation == null){
             List<Candidate> candidates = Candidate.getAll(); // all of the candidates
@@ -73,18 +75,20 @@ public class CandidatesController extends HttpServlet {
             else if (operation.equals("delete"))
             {
                 DeleteCandidate(candidate);
-                request.removeAttribute("operation");
-                request.removeAttribute("id");
-                url="/candidates"; 
+                response.sendRedirect("candidates");
+                redirect = true; 
             }
         }
         else if (operation.equals("create")){
             url = "/create_candidate.jsp";
         }
-
+        
+        if (!redirect)
+        {
         // redirect after analyzing options above
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-        dispatcher.forward(request, response);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+            dispatcher.forward(request, response);
+        }
     }
 
     /**
