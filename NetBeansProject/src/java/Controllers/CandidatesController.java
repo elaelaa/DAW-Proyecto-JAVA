@@ -277,14 +277,14 @@ public class CandidatesController extends HttpServlet {
                 PreviousJob job = null; 
                 if (jobID > -1)
                 {
-                    //job = PreviousJob.getById(jobID); 
-                    //job.Update(jobTitle, description, salary, startDate, endDate); 
+                    job = PreviousJob.getById(jobID); 
+                    job.Update(jobTitle, description, salary, startDate, endDate); 
                 }   
                 else
                 {
                     job = new PreviousJob(personID, jobTitle, description, salary, startDate, endDate); 
                 }
-                //job.save(); 
+                job.save(); 
                 jobList.add(job.getId());
             }
         }
