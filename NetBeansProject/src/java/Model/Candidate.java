@@ -10,6 +10,8 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,16 +44,20 @@ public class Candidate extends Person {
         }
         String query;
         if (!this.existsInDB()) {
-            query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, dateOfBirth, expectation)" +
-                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";   
+            query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, professionalTitle, dateOfBirth, expectation)" +
+                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %f)";   
         } else {
-            query = "UPDATE Candidate SET firstName='%s', lastName='%s', email='%s, address='%s', phone='%s', dateOfBirth='%s', expectation='%s'" +
+            query = "UPDATE Candidate SET firstName='%s', lastName='%s', email='%s, " + 
+                    "address='%s', phone='%s', professionalTitle='%s', dateOfBirth='%s', expectation=%f" +
                     "WHERE id = " + Integer.toString(this.id);
         }
 
         try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String dateOfBirth2 = df.format(this.dateOfBirth);
             Database.update(query, this.firstName, this.lastName, this.email, 
-                this.address, this.phone, this.dateOfBirth, this.expectation);
+                this.address, this.phone, this.professionalTitle, 
+                dateOfBirth2, this.expectation);
             ResultSet rs = Database.query("SELECT id FROM Candidate ORDER BY id DESC LIMIT 1");
             this.setId(!rs.next() ? -1 : rs.getInt(1));
         } catch (SQLException ex) {

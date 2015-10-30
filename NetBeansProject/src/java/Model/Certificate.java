@@ -9,6 +9,8 @@ import Database.Database;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,8 +71,10 @@ public class Certificate {
         }
 
         try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String dateAquired2 = df.format(this.dateAquired);
             Database.update(query, this.personId, this.type, this.name, 
-                this.organization, this.dateAquired);
+                this.organization, dateAquired2);
             ResultSet rs = Database.query("SELECT id FROM Certificate ORDER BY id DESC LIMIT 1");
             this.setId(!rs.next() ? -1 : rs.getInt(1));
         } catch (SQLException ex) {

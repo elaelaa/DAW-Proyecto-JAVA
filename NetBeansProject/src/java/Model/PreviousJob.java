@@ -89,10 +89,10 @@ public class PreviousJob {
 
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String startDate = df.format(this.startDate);
-            String endDate = df.format(this.endDate);
+            String startDate2 = df.format(this.startDate);
+            String endDate2 = df.format(this.endDate);
             Database.update(query, this.personId, this.jobTitle, this.jobDescription, 
-                this.salary, startDate, endDate);
+                this.salary, startDate2, endDate2);
             ResultSet rs = Database.query("SELECT id FROM PreviousJob ORDER BY id DESC LIMIT 1");
             this.setId(!rs.next() ? -1 : rs.getInt(1));
         } catch (SQLException ex) {
