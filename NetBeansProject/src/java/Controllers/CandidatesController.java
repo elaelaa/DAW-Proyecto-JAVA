@@ -329,7 +329,7 @@ public class CandidatesController extends HttpServlet {
                 
                 for (Object prevJob : jobList) {
                     PreviousJob job = (PreviousJob) prevJob;
-                    job.setPerson_id(id);
+                    job.setPersonId(id);
                     //job.save(); 
                 }
                 
@@ -369,7 +369,7 @@ public class CandidatesController extends HttpServlet {
                     PreviousJob job = (PreviousJob) prevJob;
                     if (job.getId() == -1)
                     {
-                        job.setPerson_id(id);
+                        job.setPersonId(id);
                     }
                     //job.save(); 
                     newJobIDs.add(job.getId());
