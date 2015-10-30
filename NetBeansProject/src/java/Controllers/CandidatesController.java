@@ -219,8 +219,8 @@ public class CandidatesController extends HttpServlet {
                     Certificate cert = null;  
                     if (certID > -1)
                     {
-                        //cert = Certificate.getById(certID); 
-                        //cert.Update(type, degree, university, dateOfCert); 
+                        cert = Certificate.getById(certID); 
+                        cert.Update(type, degree, university, dateOfCert); 
                     }
                     else
                     {
@@ -339,8 +339,7 @@ public class CandidatesController extends HttpServlet {
                     certificate.save(); 
                 }
                 
-                String url = "/candidates.jsp";
-                
+                String url = "/candidates";
                 
                 RequestDispatcher dispatcher = context.getRequestDispatcher(url);
                 dispatcher.forward(request, response); 

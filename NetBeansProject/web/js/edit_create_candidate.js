@@ -52,9 +52,11 @@ window.onload = function(){
                 phone: true
             },
             birthday:{
+                required: true,
                 date: true
             },
             title: {
+                required: true,
                 lettersonly: true
             },
             degreename:{
