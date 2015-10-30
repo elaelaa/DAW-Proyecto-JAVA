@@ -72,7 +72,11 @@ public class CandidatesController extends HttpServlet {
             }
             else if (operation.equals("delete"))
             {
-                //IMPLEMENT ME!!! 
+                DeleteCandidate(candidate);
+                request.removeAttribute("operation");
+                request.removeAttribute("id");
+                url="/candidates"; 
+                
             }
         }
         else if (operation.equals("create")){
@@ -151,7 +155,7 @@ public class CandidatesController extends HttpServlet {
         
     }
     
-    public Candidate createCandidate(HttpServletRequest request, Boolean creating, DateFormat df)
+    private Candidate createCandidate(HttpServletRequest request, Boolean creating, DateFormat df)
     {
         
         String personId = request.getParameter("id"); 
@@ -198,7 +202,7 @@ public class CandidatesController extends HttpServlet {
         
     }
     
-    public ArrayList createJobs(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
+    private ArrayList createJobs(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
         
         String[] jobIDs = request.getParameterValues("jobId"); 
         String[] previousJobs = request.getParameterValues("jobTitle");
@@ -272,7 +276,7 @@ public class CandidatesController extends HttpServlet {
         return jobList; 
     }
     
-    public ArrayList createCertificates(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
+    private ArrayList createCertificates(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
         
         String[] certIDs = request.getParameterValues("certId"); 
         String[] types = request.getParameterValues("type"); 
@@ -327,6 +331,26 @@ public class CandidatesController extends HttpServlet {
             }
         }
         return degreeList; 
+        
+    }
+    
+    /**
+     * Deletes candidate, previousJobs and certificates from database.
+     */
+    private void DeleteCandidate(Candidate candidate){
+        
+        for (PreviousJob job : candidate.getPreviousJobs())
+        {
+            int jobId = job.getId();
+            PreviousJob.deleteById(jobId);
+        }
+        for (Certificate cert : candidate.getCertificates())
+        {
+            int certId = cert.getId();
+            Certificate.deleteById(certId);
+        }
+        
+        //Candidate.deleteById(candidate.getId());
         
     }
 
