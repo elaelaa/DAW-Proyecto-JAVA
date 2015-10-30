@@ -3,7 +3,7 @@
 
 1. Bajar el repositorio de GitHub usando el boton "Download ZIP"
 
-![](http://imgur.com/Ft7ZmDA.png)
+  ![](http://imgur.com/Ft7ZmDA.png)
 
 2. Descomprimir el archivo .zip
 
@@ -19,7 +19,7 @@
 
 8. En NetBeans, dar click sobre el boton "Run Project"
 
-![](https://i.imgur.com/nE2dfH3.png)
+  ![](https://i.imgur.com/nE2dfH3.png)
 
 9. En el navegador, ir a la ruta "http://localhost:8080/NetBeansProject/candidates"
 
