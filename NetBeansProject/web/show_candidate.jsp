@@ -24,8 +24,8 @@
 		<div class="wrapper">
 			<div id="data">
 				<% Candidate candidate = (Candidate)request.getAttribute("candidate"); %>
-				<p>Nombre: <span><%= candidate.getFullName() %></span></p>
-				<p>Apellidos: <span>Luke</span></p>
+				<p>Nombre: <span><%= candidate.getFirstName() %></span></p>
+				<p>Apellidos: <span><%= candidate.getLastName() %></span></p>
 				<p>Dirección: <span><%= candidate.getAddress() %></span></p>
 				<p>Teléfono: <span><%= candidate.getPhone() %></span></p>
 				<p>E-mail: <span><%= candidate.getEmail() %></span></p>

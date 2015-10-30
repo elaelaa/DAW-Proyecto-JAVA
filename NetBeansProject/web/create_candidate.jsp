@@ -29,10 +29,10 @@
                 <form action="candidates" id="candidateform" method="post">
                     <input type="hidden" name="operation" value="create">
                     <p><label>Nombre:
-                        <input type="text" name="name" value="${candidate.getName()}" required></label>
+                        <input type="text" name="name" value="${candidate.getFirstName()}" required></label>
                     </p>
                     <p><label>Apellidos:
-                        <input type="text" name="lastname" value="" required></label>
+                        <input type="text" name="lastname" value="${candidate.getLastName()}" required></label>
                     </p>
                     <p><label>Dirección:
                         <input type="text" name="address" value="${candidate.getAddress()}" required></label>
