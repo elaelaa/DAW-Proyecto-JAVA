@@ -341,7 +341,7 @@ public class CandidatesController extends HttpServlet {
                 }
                 else
                 {
-                    cert = new Certificate(personID,  type, degree, university, dateOfCert);
+                    cert = new Certificate(personID, type, degree, university, dateOfCert);
                 }
                 
                 cert.save();
