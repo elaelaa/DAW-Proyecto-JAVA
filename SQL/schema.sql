@@ -2,7 +2,7 @@ DROP SCHEMA HumanCapital;
 CREATE SCHEMA HumanCapital;
 USE HumanCapital;
 
-CREATE TABLE Candidate (
+CREATE TABLE Person (
   id INT NOT NULL AUTO_INCREMENT,
   firstName VARCHAR(200) NOT NULL,
   lastName VARCHAR(200) NOT NULL,
@@ -11,22 +11,32 @@ CREATE TABLE Candidate (
   phone VARCHAR(100) NOT NULL,
   professionalTitle VARCHAR(100) NOT NULL,
   dateOfBirth DATE NOT NULL,
-  expectation DOUBLE NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
 );
 
-/* Base employee table. TODO: Refactor */
 CREATE TABLE Employee (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(200) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  address VARCHAR(200) NOT NULL,
-  phone VARCHAR(100) NOT NULL,
-  dateOfBirth DATE NOT NULL,
-  PRIMARY KEY(id)
+  id INT NOT NULL UNIQUE,
+  jobTitle VARCHAR(100) NOT NULL,
+  salary DOUBLE NOT NULL,
+  vacationDays INT NOT NULL DEFAULT 0,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id) REFERENCES Person(id)
 );
 
-/* TODO: Make a 'Person' superclass to avoid id collisions */
+CREATE TABLE User (
+  id INT NOT NULL UNIQUE,
+  password VARCHAR(20) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id) REFERENCES Employee(id)
+);
+
+CREATE TABLE Candidate (
+  id INT NOT NULL UNIQUE,
+  expectation DOUBLE NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id) REFERENCES Person(id)
+);
+
 CREATE TABLE Certificate (
   id INT NOT NULL AUTO_INCREMENT,
   personId INT NOT NULL,
@@ -38,7 +48,6 @@ CREATE TABLE Certificate (
   FOREIGN KEY(personId) REFERENCES Candidate(id)
 );
 
-/* TODO: Make a 'Person' superclass to avoid id collisions */
 CREATE TABLE PreviousJob (
   id INT NOT NULL AUTO_INCREMENT,
   personId INT NOT NULL,
@@ -50,4 +59,16 @@ CREATE TABLE PreviousJob (
   endDate DATE NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(personId) REFERENCES Candidate(id)
+);
+
+CREATE TABLE Interview (
+  id INT NOT NULL AUTO_INCREMENT,
+  employeeId INT NOT NULL,
+  candidateId INT NOT NULL,
+  interviewDate DATE NOT NULL,
+  feedback VARCHAR(2000) NOT NULL,
+  platform VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(employeeId) REFERENCES Employee(id),
+  FOREIGN KEY(candidateId) REFERENCES Candidate(id)
 );
