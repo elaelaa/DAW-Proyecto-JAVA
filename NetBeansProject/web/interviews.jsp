@@ -12,6 +12,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/filter.js" type="text/javascript"></script>
 	<title>Entrevistas</title>
 </head>
 <body>
