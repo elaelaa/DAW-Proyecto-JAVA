@@ -15,7 +15,7 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Employee (
-  id INT NOT NULL UNIQUE,
+  id INT NOT NULL,
   jobTitle VARCHAR(100) NOT NULL,
   salary DOUBLE NOT NULL,
   vacationDays INT NOT NULL DEFAULT 0,
@@ -24,14 +24,14 @@ CREATE TABLE Employee (
 );
 
 CREATE TABLE User (
-  id INT NOT NULL UNIQUE,
+  id INT NOT NULL,
   password VARCHAR(20) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id) REFERENCES Employee(id)
 );
 
 CREATE TABLE Candidate (
-  id INT NOT NULL UNIQUE,
+  id INT NOT NULL,
   expectation DOUBLE NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id) REFERENCES Person(id)
@@ -45,7 +45,7 @@ CREATE TABLE Certificate (
   organization VARCHAR(300) NOT NULL,
   dateAquired DATE NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(personId) REFERENCES Candidate(id)
+  FOREIGN KEY(personId) REFERENCES Person(id)
 );
 
 CREATE TABLE PreviousJob (
@@ -58,7 +58,7 @@ CREATE TABLE PreviousJob (
   startDate DATE NOT NULL,
   endDate DATE NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(personId) REFERENCES Candidate(id)
+  FOREIGN KEY(personId) REFERENCES Person(id)
 );
 
 CREATE TABLE Interview (
