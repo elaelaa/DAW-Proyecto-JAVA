@@ -22,9 +22,9 @@
 			<a class="button" id="new" href="create_candidate.jsp">Nuevo</a>
 			<div id="search">
 				<div id="searchImage"><div class="svg"></div></div>
-				<input id="searchBox" type="text" name="search" value="" placeholder="Search" />
+				<input id="searchBox" class="light-table-filter" data-table="order-table" type="text" name="search" value="" placeholder="Search" />
 			</div>
-			<table class="table">
+			<table class="order-table table">
 				<thead>
 					<tr>
 						<th>Nombre</th>
