@@ -29,7 +29,7 @@ window.onload = function(){
     
     
 
-    $('#candidateform').validate({
+    $('#createform').validate({
         rules: {
             name: {
                 required: true,
@@ -55,9 +55,23 @@ window.onload = function(){
                 required: true,
                 date: true
             },
-            title: {
+            currentTitle: {
                 required: true,
                 lettersonly: true
+            },
+            startDate: {
+                required: true,
+                date: true
+            },
+            professionalTitle: {
+                required: true,
+                lettersonly: true
+            },
+            currentSalary: {
+              required: true
+            },
+            vacations: {
+                required: true
             },
             degreename:{
                 required: true,
@@ -76,6 +90,10 @@ window.onload = function(){
             },
             company:{
                 required: true
+            },
+            jobTitle: {
+              required: true,
+              lettersonly: true
             },
             description:{
                 required: true
@@ -97,12 +115,17 @@ window.onload = function(){
             address: "Please fill your address",
             phone:"Please add a valid phone number",
             birthday:"Please add date in yyyy-mm-dd format",
-            title:"Please add a valid title, no numbers",
+            currenttitle: "Please add a valid title, no numbers",
+            startDate: "Please add date in yyyy-mm-dd format",
+            professionalTitle:"Please add a valid title, no numbers",
+            currentSalary: "Please add current salary",
+            vacations: "Please add number of vacation days",
             degreename:"Please add a degree",
             organization:"Please add a university",
             dateacquired:"Please add date in yyyy-mm-dd format", 
             salary:"Please add your salary",
             company:"Please add a company",
+            jobTitle: "Please add job title",
             description:"Please add a short description",
             enddate:"Please add date in yyyy-mm-dd format",
             startdate:"Please add date in yyyy-mm-dd format",            

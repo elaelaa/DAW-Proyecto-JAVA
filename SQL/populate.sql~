@@ -26,8 +26,8 @@ VALUES (
 
 INSERT INTO Candidate (id, expectation) 
 VALUES ( 1, 14000.00 );
-INSERT INTO Employee (id, jobTitle, startDate, salary, vacationDays) 
-VALUES ( 2, 'Disque CEO', CURDATE(), 10.0, 7 );
+INSERT INTO Employee (id, jobTitle, salary, vacationDays) 
+VALUES ( 2, 'Disque CEO', 10.0, 7 );
 
 -- CERTIFICATE CREATION
 INSERT INTO Certificate (personId, type, name, organization, dateAquired)

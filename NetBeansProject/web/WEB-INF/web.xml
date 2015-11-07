@@ -4,9 +4,17 @@
         <servlet-name>CandidatesController</servlet-name>
         <servlet-class>Controllers.CandidatesController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeController</servlet-name>
+        <servlet-class>Controllers.EmployeeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CandidatesController</servlet-name>
         <url-pattern>/candidates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeController</servlet-name>
+        <url-pattern>/employees</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

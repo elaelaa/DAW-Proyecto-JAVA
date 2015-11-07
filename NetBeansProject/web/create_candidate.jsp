@@ -18,7 +18,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script src="js/edit_create_candidate.js"></script> 
+        <script src="js/edit_create_functionality.js"></script> 
     </head>
     <body>
         
@@ -26,7 +26,7 @@
         
 	<div id="main">
             <div class="wrapper">
-                <form action="candidates" id="candidateform" method="post">
+                <form action="candidates" id="createform" method="post">
                     <input type="hidden" name="operation" value="create">
                     <p><label>Nombre:
                         <input type="text" name="name" value="${candidate.getFirstName()}" required></label>

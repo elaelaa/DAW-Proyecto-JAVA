@@ -5,20 +5,17 @@
  */
 package Controllers;
 
-import Model.Candidate;
 import Model.Certificate;
+import Model.Employee;
 import Model.PreviousJob;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -28,22 +25,25 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Beto
+ * @author elaela
  */
-public class CandidatesController extends HttpServlet {
-    
+public class EmployeeController extends HttpServlet {
+
+  
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
+     * @throaws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+         
         String operation = request.getParameter("operation");
         String paramId = request.getParameter("id");
         
@@ -51,35 +51,35 @@ public class CandidatesController extends HttpServlet {
         
         Boolean redirect =false; 
         
-        //handling the rerouting based on opertion? 
+        //handling the rerouting based on operation 
         if (operation == null){
-            List<Candidate> candidates = Candidate.getAll(); // all of the candidates
-            request.setAttribute("candidates", candidates);  // setting the attribute
-            url = "/candidates.jsp";                         // url to redirect to
+            List<Employee> employees = Employee.getAll(); // all of the candidates
+            request.setAttribute("employees", employees);  // setting the attribute
+            url = "/employees.jsp";                         // url to redirect to
         }
         else if (paramId != null && paramId.matches("\\d+") &&
 				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??
             int id = Integer.parseInt(paramId);
-            Candidate candidate = Candidate.getById(id);
-            if (candidate != null){                                                  // else, set route to candidate view
-                request.setAttribute("candidate", candidate);   // and init the req parameter
+            Employee employee = Employee.getById(id);
+            if (employee != null){                                                  // else, set route to candidate view
+            request.setAttribute("employee", employee);   // and init the req parameter
             }
             switch (operation) {
                 case "show":
-                    url = "/show_candidate.jsp";
+                    url = "/show_employee.jsp";
                     break;
                 case "edit":
-                    url = "/edit_candidate.jsp";
+                    url = "/edit_employee.jsp";
                     break;
                 case "delete":
-                    DeleteCandidate(candidate);
-                    response.sendRedirect("candidates");
+                    //DeleteCandidate(employee);
+                    response.sendRedirect("employees");
                     redirect = true;
                     break; 
             }
         }
         else if (operation.equals("create")){
-            url = "/create_candidate.jsp";
+            url = "/create_employee.jsp";
         }
         
         if (!redirect)
@@ -89,6 +89,7 @@ public class CandidatesController extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
+        
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -101,8 +102,7 @@ public class CandidatesController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //figure out if trying to modify or create
+         //figure out if trying to modify or create
         String operation = request.getParameter("operation"); 
         
         Boolean creating = false; 
@@ -114,21 +114,19 @@ public class CandidatesController extends HttpServlet {
         
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
-        Candidate candidate = createCandidate(request, creating, df); 
-        
-        //Some other validation? 
+        Employee employee = createEmployee(request, creating, df); 
         
         ServletContext context = getServletContext();
         
-        candidate.save(); 
-        int id = candidate.getId(); 
-
+        employee.save(); 
+        int id = employee.getId(); 
+        
         ArrayList newCertIDs = createCertificates(request, creating, df, id);
         ArrayList newJobIDs = createJobs(request, creating, df, id); 
-                
+        
         if (!creating)
         {
-            for (Certificate oldCert : candidate.getCertificates())
+            for (Certificate oldCert : employee.getCertificates())
             {
                 int oldId = oldCert.getId(); 
                 if (!newCertIDs.contains(oldId))
@@ -136,8 +134,8 @@ public class CandidatesController extends HttpServlet {
                     Certificate.deleteById(oldId);
                 }
             }
-                
-            for (PreviousJob oldJob : candidate.getPreviousJobs())
+             
+            for (PreviousJob oldJob : employee.getPreviousJobs())
             {
                 int oldId = oldJob.getId(); 
                 if (!newJobIDs.contains(oldId))
@@ -146,10 +144,10 @@ public class CandidatesController extends HttpServlet {
                 }
             }
         }
-                
-        String url = "/show_candidate.jsp";
+        
+        String url = "/show_employee.jsp";
 
-        request.setAttribute("candidate", candidate); 
+        request.setAttribute("employee", employee); 
 
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response); 
@@ -157,13 +155,14 @@ public class CandidatesController extends HttpServlet {
         
     }
     
+    
     /**
-     * Creates or updates new candidate object and adds it to database.
+     * Creates or updates new employee object and adds it to database.
      * @param creating if creating or not
      * @param df dateformat
-     * @return Candidate created.
+     * @return Employee created.
      */
-    private Candidate createCandidate(HttpServletRequest request, Boolean creating, DateFormat df)
+    private Employee createEmployee(HttpServletRequest request, Boolean creating, DateFormat df)
     {
         
         String personId = request.getParameter("id"); 
@@ -174,14 +173,27 @@ public class CandidatesController extends HttpServlet {
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
+        String currentTitle = request.getParameter("currentTitle");
         String professionalTitle = request.getParameter("professionalTitle");
+        String currentSalaryStr = request.getParameter("currentSalary");
         String birthday = request.getParameter("birthday");
-        String economicExpect = request.getParameter("expectation");
+        String vacationDaysStr = request.getParameter("vacations");
+        String startDateStr = request.getParameter("startDate");
         
-        double expectation = Double.parseDouble(economicExpect); 
+        double currentSalary = Double.parseDouble(currentSalaryStr);
+        int vacationDays = Integer.parseInt(vacationDaysStr);
+        
         Date dateOfBirth = new Date();
         try{
             dateOfBirth = df.parse(birthday);
+        } 
+        catch (ParseException ex){
+            
+        }
+        
+        Date startDate = new Date();
+        try{
+            startDate = df.parse(startDateStr);
         } 
         catch (ParseException ex){
             
@@ -191,24 +203,26 @@ public class CandidatesController extends HttpServlet {
         phone = phone.replaceAll("-", ""); 
         
         
-        Candidate candidate = null; 
+        Employee employee = null; 
+        
         
         if (creating)
         {
-            candidate = new Candidate(expectation, firstName, lastName, address, 
-                    phone, email, professionalTitle, dateOfBirth);
+            employee = new Employee(currentSalary, currentTitle, startDate, firstName, lastName, address, 
+                    phone, email, professionalTitle, dateOfBirth, vacationDays);     
         }
         else 
         {
             int id = Integer.parseInt(personId);
-            candidate = Candidate.getById(id); 
-            candidate.Update(expectation, firstName, lastName, address, 
-                    phone, email, professionalTitle, dateOfBirth);
+            employee = Employee.getById(id); 
+            employee.Update(currentSalary, currentTitle, startDate, firstName, lastName, address, 
+                    phone, email, professionalTitle, dateOfBirth, vacationDays);
         }
         
-        return candidate; 
+        return employee; 
         
     }
+    
     
     /**
      * Creates or updates previous jobs to given id.
@@ -288,6 +302,7 @@ public class CandidatesController extends HttpServlet {
         return jobList; 
     }
     
+    
     /**
      * Creates or updates certificates to given id.
      * @return ArrayList of certificates. 
@@ -351,25 +366,25 @@ public class CandidatesController extends HttpServlet {
     }
     
     /**
-     * Deletes candidate, previousJobs and certificates from database.
+     * Deletes Employee, previousJobs and certificates from database.
      */
-    private void DeleteCandidate(Candidate candidate){
+    private void DeleteEmployee(Employee employee){
         
-        for (PreviousJob job : candidate.getPreviousJobs())
+        for (PreviousJob job : employee.getPreviousJobs())
         {
             int jobId = job.getId();
             PreviousJob.deleteById(jobId);
         }
-        for (Certificate cert : candidate.getCertificates())
+        for (Certificate cert : employee.getCertificates())
         {
             int certId = cert.getId();
             Certificate.deleteById(certId);
         }
         
-        Candidate.deleteById(candidate.getId());
+        Employee.deleteById(employee.getId());
         
     }
-
+  
     /**
      * Returns a short description of the servlet.
      *
@@ -379,6 +394,5 @@ public class CandidatesController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    
+
 }

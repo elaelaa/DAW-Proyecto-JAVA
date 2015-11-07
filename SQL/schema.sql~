@@ -17,7 +17,6 @@ CREATE TABLE Person (
 CREATE TABLE Employee (
   id INT NOT NULL,
   jobTitle VARCHAR(100) NOT NULL,
-  startDate DATE NOT NULL,
   salary DOUBLE NOT NULL,
   vacationDays INT NOT NULL DEFAULT 0,
   PRIMARY KEY(id),

@@ -66,7 +66,10 @@ public class Candidate extends Person {
         return true;
     }
     
-    
+    /**
+     * Update
+     * Updates all the fields
+     */
     public void Update(double newExpectation, String newName, String newLastname, 
             String newAddress, String newPhone, String newEmail, String newProfessionalTitle,
             Date newDateOfBirth)
