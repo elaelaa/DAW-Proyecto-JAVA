@@ -36,7 +36,7 @@
                         <input type="text" name="date" class="datepicker" value="${interview.getDate()}" required></label>
                     </p>
                     <p><label>Candidato:
-                            <select required> 
+                            <select name = "candidateId" required > 
                         <%	List<Candidate> candidates = (List<Candidate>)request.getAttribute("candidates");
 					int size = (candidates != null) ? candidates.size() : 0;
 					for (int i=0; i<size; i++) { %>
@@ -56,7 +56,7 @@
                         </label>
                     </p> 
                      <p><label>Feedback:
-                        <textarea rows="4" cols="50">
+                        <textarea name = "feedback" rows="4" cols="50">
                         ${interview.getFeedback()}
                         </textarea>
                     </p>

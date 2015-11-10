@@ -27,8 +27,8 @@
             <div class="wrapper">
                 <form action="interviews" id="createform" method="post">
                     <input type="hidden" name="operation" value="edit">
-                    <input type="hidden" name="employeeId" value="${employee.getId()}">
-                    <p>Entrevistador: <span>${employee.getFullName()}</span></p>
+                    <input type="hidden" name="employeeId" value="${interview.getEmployeeId()}">
+                    <p>Entrevistador: <span>${interview.getInterviewerName()}</span></p>
                      <p><label>Puesto de Trabajo:
                         <input type="text" name="jobTitle" value="${interview.getJobTitle()}" required></label>
                     </p>
@@ -36,7 +36,7 @@
                         <input type="text" name="date" class="datepicker" value="${interview.getDate()}" required></label>
                     </p>
                     <p><label>Candidato:
-                            <select required> 
+                            <select name = "candidateId" required> 
                         <%	List<Candidate> candidates = (List<Candidate>)request.getAttribute("candidates");
 					int size = (candidates != null) ? candidates.size() : 0;
 					for (int i=0; i<size; i++) { %>
@@ -56,7 +56,7 @@
                         </label>
                     </p> 
                      <p><label>Feedback:
-                        <textarea rows="4" cols="50">
+                        <textarea name = "feedback" rows="4" cols="50">
                         ${interview.getFeedback()}
                         </textarea>
                     </p>
