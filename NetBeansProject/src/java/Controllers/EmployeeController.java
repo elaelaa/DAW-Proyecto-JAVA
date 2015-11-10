@@ -53,7 +53,7 @@ public class EmployeeController extends HttpServlet {
         
         //handling the rerouting based on operation 
         if (operation == null){
-            List<Employee> employees = Employee.getAll(); // all of the candidates
+            List<Employee> employees = Employee.getAll(); // all of the employees
             request.setAttribute("employees", employees);  // setting the attribute
             url = "/employees.jsp";                         // url to redirect to
         }
@@ -72,7 +72,7 @@ public class EmployeeController extends HttpServlet {
                     url = "/edit_employee.jsp";
                     break;
                 case "delete":
-                    //DeleteCandidate(employee);
+                    DeleteEmployee(employee);
                     response.sendRedirect("employees");
                     redirect = true;
                     break; 

@@ -63,7 +63,7 @@
 				<input type="number" name="currentSalary" value="${employee.getSalary()}" required></label>
                     </p>
                     <p><label>Días de vacaciones: 
-				<input type="number" name="vacations" value="${employee.getVacations()}" required title="Amount of vacation days left."></label>
+				<input type="number" name="vacations" value="${employee.getVacationDays()}" required title="Amount of vacation days left."></label>
                     </p>
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <div id="allCertificates">

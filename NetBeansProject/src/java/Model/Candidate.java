@@ -43,12 +43,13 @@ public class Candidate extends Person {
             return false;
         }
         String query;
-        if (!this.existsInDB()) {
-            query = "INSERT INTO Candidate (firstName, lastName, email, address, phone, professionalTitle, dateOfBirth, expectation)" +
-                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', %f)";   
+        Boolean exists = this.existsInDB(); 
+        if (!exists) {
+            query = "INSERT INTO Person (firstName, lastName, email, address, phone, professionalTitle, dateOfBirth)" +
+                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";   
         } else {
-            query = "UPDATE Candidate SET firstName='%s', lastName='%s', email='%s, " + 
-                    "address='%s', phone='%s', professionalTitle='%s', dateOfBirth='%s', expectation=%f" +
+            query = "UPDATE Person SET firstName='%s', lastName='%s', email='%s, " + 
+                    "address='%s', phone='%s', professionalTitle='%s', dateOfBirth='%s'" +
                     "WHERE id = " + Integer.toString(this.id);
         }
 
@@ -57,12 +58,26 @@ public class Candidate extends Person {
             String dateOfBirth2 = df.format(this.dateOfBirth);
             Database.update(query, this.firstName, this.lastName, this.email, 
                 this.address, this.phone, this.professionalTitle, 
-                dateOfBirth2, this.expectation);
-            ResultSet rs = Database.query("SELECT id FROM Candidate ORDER BY id DESC LIMIT 1");
+                dateOfBirth2);
+            ResultSet rs = Database.query("SELECT id FROM Person ORDER BY id DESC LIMIT 1");
             this.setId(!rs.next() ? -1 : rs.getInt(1));
         } catch (SQLException ex) {
             Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        if (!exists) {
+            query = "INSERT INTO Candidate (id, expectation)" +
+                    "VALUES (%d, %f)";  
+         } else {
+            query = "UPDATE Candidate SET id =%d, expectation=%f" +
+                    "WHERE id = " + Integer.toString(this.id);
+        }
+        try {
+            Database.update(query, this.getId(), this.expectation);
+        } catch (SQLException ex) {
+            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return true;
     }
     
@@ -161,7 +176,7 @@ public class Candidate extends Person {
         Candidate candidate = null;
         
         try {
-            String query = "SELECT * FROM Candidate WHERE id = %d";
+            String query = "SELECT * FROM Candidate c, Person p WHERE p.id = %d AND p.id = c.id";
             ResultSet rs = Database.query(query, id);
             if (rs.next()){
                 candidate = new Candidate(
@@ -193,8 +208,7 @@ public class Candidate extends Person {
         List<Candidate> candidates = new ArrayList<>();
    
         try {
-            String query = "SELECT id, firstName, lastName, email, address, phone, professionalTitle, dateOfBirth, expectation " + 
-                           "FROM Candidate";
+            String query = "SELECT * FROM Candidate c, Person p WHERE p.id=c.id";
             ResultSet rs = Database.query(query);
             while(rs.next()) {
                 Candidate candidate = new Candidate(
@@ -257,7 +271,7 @@ public class Candidate extends Person {
     public static boolean deleteById(int id){
         int res = 0;
         try {
-            String query = "DELETE FROM Candidate WHERE id = %d";
+            String query = "DELETE FROM Candidate WHERE id = %d; DELETE FROM Person WHERE id=%d";
             res = Database.update(query, id);
         } catch (SQLException ex) {
             Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);

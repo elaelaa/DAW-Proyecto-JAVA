@@ -1,5 +1,5 @@
 <%-- 
-    Document   : create_candidate
+    Document   : create_employee
     Created on : Oct 20, 2015, 10:22:17 PM
     Author     : elaela
 --%>
@@ -60,7 +60,7 @@
 				<input type="number" name="currentSalary" value="${employee.getSalary()}" required></label>
                     </p>
                     <p><label>Días de vacaciones: 
-				<input type="number" name="vacations" value="${employee.getVacations()}" required title="Amount of vacation days left."></label>
+				<input type="number" name="vacations" value="${employee.getVacationDays()}" required title="Amount of vacation days left."></label>
                     </p>
                     <fieldset> <legend> Certificados obtenidos: </legend>
                         <div id="allCertificates">

@@ -1,5 +1,5 @@
 <%-- 
-    Document   : show_candidate
+    Document   : show_employee
     Created on : Oct 24, 2015, 6:43:20 PM
     Author     : elaela
 --%>
@@ -66,8 +66,8 @@
 				</ul> 
 			</div>
 			<div id="buttons">
-                            <a class="button" id="edit" href="candidates?operation=edit&id=<%= candidate.getId()%>">Editar</a>
-                            <a class="button" id="delete" href="candidates?operation=delete&id=<%= candidate.getId() %>">Borrar</a>
+                            <a class="button" id="edit" href="employees?operation=edit&id=<%= employee.getId()%>">Editar</a>
+                            <a class="button" id="delete" href="employees?operation=delete&id=<%= employee.getId() %>">Borrar</a>
 			</div>
 		</div>
 	</div>
