@@ -106,6 +106,19 @@ window.onload = function(){
                 required: true,
                 date: true
             },
+            date:{
+                required: true,
+                date: true
+            },
+            feedback:{
+                required: true
+            },
+            platform:{
+                required: true
+            },
+            candidateId:{
+                required: true
+            },
         },
         
         messages: {
@@ -128,7 +141,11 @@ window.onload = function(){
             jobTitle: "Please add job title",
             description:"Please add a short description",
             enddate:"Please add date in yyyy-mm-dd format",
-            startdate:"Please add date in yyyy-mm-dd format",            
+            date:"Please add date in yyyy-mm-dd format", 
+            feedback:"Please add feedback",
+            platform:"Please add a platform",
+            candidateId:"Please add the candidate Id",
+          
         },
         
         errorElement: "div",
