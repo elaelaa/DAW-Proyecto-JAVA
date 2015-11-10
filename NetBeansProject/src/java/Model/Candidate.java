@@ -99,6 +99,34 @@ public class Candidate extends Person {
         this.setDateOfBirth(newDateOfBirth);
     }
     
+    /**
+     * getInterviews
+     * 
+     * Retrieves all the interviews for a given candidate
+     * @return a list of type List<Interview>, empty if none present in DB
+     */
+    public List<Interview> getInterviews(){
+        List<Interview> interviews = new ArrayList<>();
+         try {
+            String query = "SELECT * FROM Interview WHERE candidateId = " + Integer.toString(this.id);
+            ResultSet rs = Database.query(query, this.getId());
+            while (rs.next()){
+                Interview interview = new Interview(
+                        rs.getInt("employeeId"),
+                        rs.getInt("candidateId"),
+                        rs.getString("jobTitle"),
+                        rs.getString("feedback"),
+                        rs.getString("platform"),
+                        rs.getDate("interviewDate")
+                );
+                interviews.add(interview);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return interviews; 
+        
+    }
     
     /**
      * getCertificates

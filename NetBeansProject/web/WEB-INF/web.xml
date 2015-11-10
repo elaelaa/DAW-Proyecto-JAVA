@@ -8,6 +8,10 @@
         <servlet-name>EmployeeController</servlet-name>
         <servlet-class>Controllers.EmployeeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InterviewController</servlet-name>
+        <servlet-class>Controllers.InterviewController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CandidatesController</servlet-name>
         <url-pattern>/candidates</url-pattern>
@@ -16,6 +20,10 @@
         <servlet-name>EmployeeController</servlet-name>
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>InterviewController</servlet-name>
+        <servlet-class>/interviews</servlet-class>
+    </servlet>
     <session-config>
         <session-timeout>
             30

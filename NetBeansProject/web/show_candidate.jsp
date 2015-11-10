@@ -4,6 +4,7 @@
     Author     : elaela
 --%>
 
+<%@page import="Model.Interview"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.PreviousJob"%>
 <%@page import="Model.Certificate"%>
@@ -58,7 +59,11 @@
 				<p>Expectativas Económicas: <span>$<%= candidate.getExpectation() %></span></p>
 				<p>Entrevistas: </p>
 				<ul id="interviews">
-						<li>Interviewzzz</li>
+                                    <%	List<Interview> interviews = (List<Interview>)request.getAttribute("interviews");
+					int sizei = (interviews != null) ? interviews.size() : 0;
+					for (int i=0; i<sizei; i++) { %>
+                                        <li><a href=<%= "interviews?operation=show&id="+interviews.get(i).getId() %>n"><%= interviews.get(i).getJobTitle()%>, <%= interviews.get(i).getDate()%></a></li>
+                                     <% } %>
 				</ul> 
 			</div>
 			<div id="buttons">

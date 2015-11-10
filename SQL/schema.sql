@@ -66,6 +66,7 @@ CREATE TABLE Interview (
   id INT NOT NULL AUTO_INCREMENT,
   employeeId INT NOT NULL,
   candidateId INT NOT NULL,
+  jobTitle VARCHAR(100) NOT NULL, 
   interviewDate DATE NOT NULL,
   feedback VARCHAR(2000) NOT NULL,
   platform VARCHAR(100) NOT NULL,
