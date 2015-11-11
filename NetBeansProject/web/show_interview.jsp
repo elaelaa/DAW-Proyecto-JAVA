@@ -32,8 +32,8 @@
 				
 			</div>
 			<div id="buttons">
-                            <a class="button" id="edit" href="interview?operation=edit&id=<%= interview.getId()%>">Editar</a>
-                            <a class="button" id="delete" href="interview?operation=delete&id=<%= interview.getId() %>">Borrar</a>
+                            <a class="button" id="edit" href="interviews?operation=edit&id=<%= interview.getId()%>">Editar</a>
+                            <a class="button" id="delete" href="interviews?operation=delete&id=<%= interview.getId() %>">Borrar</a>
 			</div>
 		</div>
 	</div>

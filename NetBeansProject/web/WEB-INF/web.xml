@@ -20,10 +20,10 @@
         <servlet-name>EmployeeController</servlet-name>
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
-    <servlet>
+    <servlet-mapping>
         <servlet-name>InterviewController</servlet-name>
-        <servlet-class>/interviews</servlet-class>
-    </servlet>
+        <url-pattern>/interviews</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

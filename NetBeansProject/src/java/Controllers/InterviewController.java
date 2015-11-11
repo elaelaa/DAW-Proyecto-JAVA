@@ -5,9 +5,9 @@
  */
 package Controllers;
 
-import Model.Certificate;
 import Model.Employee;
-import Model.PreviousJob;
+import Model.Candidate;
+import Model.Interview;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -53,33 +53,40 @@ public class InterviewController extends HttpServlet {
         
         //handling the rerouting based on operation 
         if (operation == null){
-            List<Employee> employees = Employee.getAll(); // all of the employees
-            request.setAttribute("employees", employees);  // setting the attribute
-            url = "/employees.jsp";                         // url to redirect to
+            List<Interview> interviews = Interview.getAll(); // all of the employees
+            request.setAttribute("interviews", interviews);  // setting the attribute
+            url = "/interviews.jsp";                         // url to redirect to
         }
         else if (paramId != null && paramId.matches("\\d+") &&
 				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??
             int id = Integer.parseInt(paramId);
-            Employee employee = Employee.getById(id);
-            if (employee != null){                                                  // else, set route to candidate view
-            request.setAttribute("employee", employee);   // and init the req parameter
+            Interview interview = Interview.getById(id);
+            if (interview != null){                                                  // else, set route to candidate view
+                request.setAttribute("interview", interview);   // and init the req parameter
             }
             switch (operation) {
                 case "show":
-                    url = "/show_employee.jsp";
+                    url = "/show_interview.jsp";
                     break;
                 case "edit":
-                    url = "/edit_employee.jsp";
+                    List<Candidate> candidates = Candidate.getAll(); // all of the employees
+                    request.setAttribute("candidates", candidates);
+                    url = "/edit_interview.jsp";
                     break;
                 case "delete":
-                    DeleteEmployee(employee);
-                    response.sendRedirect("employees");
+                    DeleteInterview(interview);
+                    response.sendRedirect("interviews");
                     redirect = true;
                     break; 
             }
         }
         else if (operation.equals("create")){
-            url = "/create_employee.jsp";
+            List<Candidate> candidates = Candidate.getAll(); // all of the employees
+            request.setAttribute("candidates", candidates);
+            //User user = request.getSession().getAttribute("User");
+            //Employee employee = Employee.getById(user.getId())
+            //request.setAttribute("employee", employee);
+            url = "/create_interview.jsp";
         }
         
         if (!redirect)
@@ -114,40 +121,16 @@ public class InterviewController extends HttpServlet {
         
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         
-        Employee employee = createEmployee(request, creating, df); 
+        Interview interview = createInterview(request, creating, df); 
         
         ServletContext context = getServletContext();
         
-        employee.save(); 
-        int id = employee.getId(); 
+        interview.save(); 
+        int id = interview.getId(); 
         
-        ArrayList newCertIDs = createCertificates(request, creating, df, id);
-        ArrayList newJobIDs = createJobs(request, creating, df, id); 
-        
-        if (!creating)
-        {
-            for (Certificate oldCert : employee.getCertificates())
-            {
-                int oldId = oldCert.getId(); 
-                if (!newCertIDs.contains(oldId))
-                {
-                    Certificate.deleteById(oldId);
-                }
-            }
-             
-            for (PreviousJob oldJob : employee.getPreviousJobs())
-            {
-                int oldId = oldJob.getId(); 
-                if (!newJobIDs.contains(oldId))
-                {
-                    PreviousJob.deleteById(oldId); 
-                }
-            }
-        }
-        
-        String url = "/show_employee.jsp";
+        String url = "/show_interview.jsp";
 
-        request.setAttribute("employee", employee); 
+        request.setAttribute("interview", interview); 
 
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response); 
@@ -162,226 +145,51 @@ public class InterviewController extends HttpServlet {
      * @param df dateformat
      * @return Employee created.
      */
-    private Employee createEmployee(HttpServletRequest request, Boolean creating, DateFormat df)
+    private Interview createInterview(HttpServletRequest request, Boolean creating, DateFormat df)
     {
+        String interviewId = request.getParameter("interviewId");
         
-        String personId = request.getParameter("id"); 
+        String employeeId = request.getParameter("employeeId");
+        String jobTitle = request.getParameter("jobTitle");
+        String dateStr = request.getParameter("date");
+        String candidateId = request.getParameter("candidateId");
+        String platform = request.getParameter("platform");
+        String feedback = request.getParameter("feedback");
         
-        // get parameters from the request
-        String firstName = request.getParameter("name");
-        String lastName = request.getParameter("lastname");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String currentTitle = request.getParameter("currentTitle");
-        String professionalTitle = request.getParameter("professionalTitle");
-        String currentSalaryStr = request.getParameter("currentSalary");
-        String birthday = request.getParameter("birthday");
-        String vacationDaysStr = request.getParameter("vacations");
-        String startDateStr = request.getParameter("startDate");
+        int eId = Integer.parseInt(employeeId);
+        int cId = Integer.parseInt(candidateId);
         
-        double currentSalary = Double.parseDouble(currentSalaryStr);
-        int vacationDays = Integer.parseInt(vacationDaysStr);
-        
-        Date dateOfBirth = new Date();
+        Date date = new Date();
         try{
-            dateOfBirth = df.parse(birthday);
+            date = df.parse(dateStr);
         } 
         catch (ParseException ex){
             
         }
         
-        Date startDate = new Date();
-        try{
-            startDate = df.parse(startDateStr);
-        } 
-        catch (ParseException ex){
-            
-        }
-        phone = phone.replaceAll(" ", "");
-        phone = phone.replaceAll("\\.", "");
-        phone = phone.replaceAll("-", ""); 
-        
-        
-        Employee employee = null; 
+        Interview interview = null; 
         
         
         if (creating)
         {
-            employee = new Employee(currentSalary, currentTitle, startDate, firstName, lastName, address, 
-                    phone, email, professionalTitle, dateOfBirth, vacationDays);     
+            interview = new Interview(eId, cId, jobTitle, feedback, platform, date);     
         }
         else 
         {
-            int id = Integer.parseInt(personId);
-            employee = Employee.getById(id); 
-            employee.Update(currentSalary, currentTitle, startDate, firstName, lastName, address, 
-                    phone, email, professionalTitle, dateOfBirth, vacationDays);
+            int id = Integer.parseInt(interviewId);
+            interview = interview.getById(id); 
+            interview.Update(eId, cId, jobTitle, feedback, platform, date);
         }
         
-        return employee; 
-        
-    }
-    
-    
-    /**
-     * Creates or updates previous jobs to given id.
-     * @return ArrayList of jobs. 
-     */
-    private ArrayList createJobs(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
-        
-        String[] jobIDs = request.getParameterValues("jobId"); 
-        String[] previousJobs = request.getParameterValues("jobTitle");
-        String[] previousCompanies = request.getParameterValues("company"); 
-        String[] descriptions = request.getParameterValues("description");
-        String[] salaries = request.getParameterValues("salary");
-        String[] startDates = request.getParameterValues("startdate");
-        String[] endDates = request.getParameterValues("enddate");
-        
-        ArrayList jobList = new ArrayList(); 
-        
-        String jobTitle; 
-        String company; 
-        String description; 
-        String salaryStr; 
-        String startDateStr;
-        String endDateStr; 
-
-        
-        if (previousJobs != null)
-        {
-            
-            for(int i = 0; i<previousJobs.length; i++)
-            {
-                jobTitle = previousJobs[i];
-                company = previousCompanies[i]; 
-                description = descriptions[i];
-                salaryStr = salaries[i];
-                startDateStr = startDates[i];
-                endDateStr = endDates[i];
-
-                Date endDate = null; 
-                Date startDate = null;
-                try{
-                    startDate = df.parse(startDateStr);
-                } 
-                catch (Exception e){
-                }
-                try{
-                    endDate = df.parse(endDateStr);
-                } 
-                catch (Exception e){
-                }
-
-                double salary = Double.parseDouble(salaryStr); 
-
-                int jobID = -1; 
-
-                if (jobIDs != null)
-                {
-                    if (jobIDs.length > i)
-                    {
-                        jobID = Integer.parseInt(jobIDs[i]); 
-                    }
-
-                }
-                PreviousJob job = null; 
-                if (jobID > -1)
-                {
-                    job = PreviousJob.getById(jobID); 
-                    job.Update(jobTitle, company, description, salary, startDate, endDate); 
-                }   
-                else
-                {
-                    job = new PreviousJob(personID, jobTitle, company, description, salary, startDate, endDate); 
-                }
-                job.save(); 
-                jobList.add(job.getId());
-            }
-        }
-        return jobList; 
-    }
-    
-    
-    /**
-     * Creates or updates certificates to given id.
-     * @return ArrayList of certificates. 
-     */
-    private ArrayList createCertificates(HttpServletRequest request, Boolean creating, DateFormat df, int personID){
-        
-        String[] certIDs = request.getParameterValues("certId"); 
-        String[] types = request.getParameterValues("type"); 
-        String[] degrees = request.getParameterValues("degreename"); 
-        String[] organizations = request.getParameterValues("organization"); 
-        String[] dates = request.getParameterValues("dateacquired"); 
-        
-        ArrayList degreeList = new ArrayList(); 
-        String type; 
-        String degree; 
-        String organization; 
-        String dateStr; 
-
-        if (types != null)
-        {
-            for(int i = 0; i<types.length; i++)
-            {
-                type = types[i];
-                degree = degrees[i]; 
-                organization = organizations[i];
-                dateStr = dates[i]; 
-                Date dateOfCert = null; 
-                try{
-                    dateOfCert = df.parse(dateStr);
-                } 
-                catch (Exception e){
-                
-                }
-                int certID = -1; 
-
-                if (certIDs != null)
-                {
-                    if (certIDs.length > i)
-                    {
-                        certID = Integer.parseInt(certIDs[i]); 
-                    }
-
-                }
-                Certificate cert = null;  
-                if (certID > -1)
-                {
-                    cert = Certificate.getById(certID); 
-                    cert.Update(type, degree, organization, dateOfCert); 
-                }
-                else
-                {
-                    cert = new Certificate(personID, type, degree, organization, dateOfCert);
-                }
-                
-                cert.save();
-                degreeList.add(cert.getId());
-            }
-        }
-        return degreeList; 
+        return interview; 
         
     }
     
     /**
      * Deletes Employee, previousJobs and certificates from database.
      */
-    private void DeleteEmployee(Employee employee){
-        
-        for (PreviousJob job : employee.getPreviousJobs())
-        {
-            int jobId = job.getId();
-            PreviousJob.deleteById(jobId);
-        }
-        for (Certificate cert : employee.getCertificates())
-        {
-            int certId = cert.getId();
-            Certificate.deleteById(certId);
-        }
-        
-        Employee.deleteById(employee.getId());
+    private void DeleteInterview(Interview interview){
+        Interview.deleteById(interview.getId());
         
     }
   

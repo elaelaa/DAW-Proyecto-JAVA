@@ -59,10 +59,10 @@
 				<p>Expectativas Económicas: <span>$<%= candidate.getExpectation() %></span></p>
 				<p>Entrevistas: </p>
 				<ul id="interviews">
-                                    <%	List<Interview> interviews = (List<Interview>)request.getAttribute("interviews");
+                                    <%	List<Interview> interviews = (List<Interview>)candidate.getInterviews();
 					int sizei = (interviews != null) ? interviews.size() : 0;
 					for (int i=0; i<sizei; i++) { %>
-                                        <li><a href=<%= "interviews?operation=show&id="+interviews.get(i).getId() %>n"><%= interviews.get(i).getJobTitle()%>, <%= interviews.get(i).getDate()%></a></li>
+                                        <li><a href="interviews?operation=show&id=<%= interviews.get(i).getId() %>"><%= interviews.get(i).getJobTitle()%>, <%= interviews.get(i).getDate()%></a></li>
                                      <% } %>
 				</ul> 
 			</div>
