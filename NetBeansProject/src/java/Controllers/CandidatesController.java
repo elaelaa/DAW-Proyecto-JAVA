@@ -49,7 +49,7 @@ public class CandidatesController extends HttpServlet {
         
         String url = "/404.jsp"; // starts default not found url
         
-        Boolean redirect =false; 
+        Boolean redirect = false; 
         
         //handling the rerouting based on opertion? 
         if (operation == null){

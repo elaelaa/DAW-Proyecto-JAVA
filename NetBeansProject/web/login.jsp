@@ -1,3 +1,10 @@
+<%-- 
+    Document   : login
+    Created on : Nov 10, 2015, 2:31:16 PM
+    Author     : manolo
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html>
 <head>
@@ -15,8 +22,9 @@
 			<div id="logo">
 				<h1>Human Capital System</h1>
 			</div>
-			<form method="GET" action="">
-				<p><label>Usuario: <input type="text" name="username" required></label></p>
+			<form method="post" action="LoginController">
+				<input type="hidden" name="operation" value="login"/>
+				<p><label>Usuario: <input type="text" name="user" required></label></p>
 				
 				<p><label>Contraseña: <input type="password" name="password" required></label></p>
 				
