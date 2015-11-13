@@ -9,6 +9,8 @@ import Database.Database;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +44,48 @@ public class Employee extends Person {
      * @return true if the insert / update was successful, false otherwise
      */
     public boolean save(){
-        //TODO: IMPLEMENT ME
-        return false;
+        if (!this.isValid()){
+            return false;
+        }
+        String query;
+        Boolean exists = this.existsInDB(); 
+        if (!exists) {
+            query = "INSERT INTO Person (firstName, lastName, email, address, phone, professionalTitle, dateOfBirth)" +
+                    "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";   
+        } else {
+            query = "UPDATE Person SET firstName='%s', lastName='%s', email='%s, " + 
+                    "address='%s', phone='%s', professionalTitle='%s', dateOfBirth='%s'" +
+                    "WHERE id = " + Integer.toString(this.id);
+        }
+
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String dateOfBirth2 = df.format(this.dateOfBirth);
+            Database.update(query, this.firstName, this.lastName, this.email, 
+                this.address, this.phone, this.professionalTitle, 
+                dateOfBirth2);
+            ResultSet rs = Database.query("SELECT id FROM Person ORDER BY id DESC LIMIT 1");
+            this.setId(!rs.next() ? -1 : rs.getInt(1));
+        } catch (SQLException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (!exists) {
+            query = "INSERT INTO Employee (id, jobTitle, startDate, salary, vacationDays)" +
+                    "VALUES (%d, '%s', '%s', %f, %d)";  
+         } else {
+            query = "UPDATE Employee SET id =%d, jobTitle='%s', startDate='%s', salary=%f, vacationDays=%d" +
+                    "WHERE id = " + Integer.toString(this.id);
+        }
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String startDate2 = df.format(this.startDate);
+            Database.update(query, this.getId(), this.jobTitle, startDate2, this.salary, this.vacationDays);
+        } catch (SQLException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return true;
     }
     
     /**
@@ -91,7 +133,7 @@ public class Employee extends Person {
                 certificates.add(certificate);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
         return certificates;
     }
@@ -124,7 +166,7 @@ public class Employee extends Person {
                 previousJobs.add(pj);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return previousJobs;
@@ -133,15 +175,15 @@ public class Employee extends Person {
     /**
      * getById
      * 
-     * Method to retrieve a Candidate from the database by its ID.
+     * Method to retrieve a Employee from the database by its ID.
      * @param id
-     * @return a Candidate object if found, null if not present in DB.
+     * @return a Employee object if found, null if not present in DB.
      */
     public static Employee getById(int id){
         Employee employee = null;
         
         try {
-            String query = "SELECT * FROM Employee WHERE id = %d";
+            String query = "SELECT * FROM Employee e, Person p WHERE p.id = %d AND p.id = e.id";
             ResultSet rs = Database.query(query, id);
             if (rs.next()){
                 employee = new Employee(
@@ -160,7 +202,7 @@ public class Employee extends Person {
                 employee.setId(rs.getInt("id"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return employee;
@@ -169,15 +211,14 @@ public class Employee extends Person {
     /**
      * getAll
      * 
-     * Method to retrieve all the Candidates from the database.
+     * Method to retrieve all the Employee from the database.
      * @return a list of type List<Employee>, empty list if there are none in DB.
      */
     public static List<Employee> getAll(){
         List<Employee> employees = new ArrayList<>();
    
         try {
-            String query = "SELECT id, firstName, lastName, email, address, phone, professionalTitle, dateOfBirth, expectation " + 
-                           "FROM Employee";
+            String query = "SELECT * FROM Employee e, Person p WHERE p.id=e.id";
             ResultSet rs = Database.query(query);
             while(rs.next()) {
                 Employee employee = new Employee(
@@ -197,7 +238,7 @@ public class Employee extends Person {
                 employees.add(employee);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return employees;
@@ -207,7 +248,7 @@ public class Employee extends Person {
      * exists
      * 
      * Method to check if the object exists in the Database.
-     * @return true if the candidate exists in database, false otherwise.
+     * @return true if the employee exists in database, false otherwise.
      */
     public boolean existsInDB(){
         return (getById(this.id) != null);
@@ -237,7 +278,7 @@ public class Employee extends Person {
     /**
      * deleteById
      * 
-     * Method to delete a Candidate record from the database by its ID
+     * Method to delete a Employee record from the database by its ID
      * @return true if the fields are filled correctly
      */
     public static boolean deleteById(int id){
