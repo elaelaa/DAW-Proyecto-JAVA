@@ -9,13 +9,12 @@
         <servlet-class>Controllers.EmployeeController</servlet-class>
     </servlet>
     <servlet>
-<<<<<<< HEAD
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controllers.LoginController</servlet-class>
-=======
+	</servlet>
+    <servlet>
         <servlet-name>InterviewController</servlet-name>
         <servlet-class>Controllers.InterviewController</servlet-class>
->>>>>>> 3a376502b14202be96ce62239b1f503753be85e9
     </servlet>
     <servlet-mapping>
         <servlet-name>CandidatesController</servlet-name>
@@ -26,13 +25,12 @@
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<<<<<<< HEAD
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
-=======
+	</servlet-mapping>
+    <servlet-mapping>
         <servlet-name>InterviewController</servlet-name>
         <url-pattern>/interviews</url-pattern>
->>>>>>> 3a376502b14202be96ce62239b1f503753be85e9
     </servlet-mapping>
     <session-config>
         <session-timeout>
