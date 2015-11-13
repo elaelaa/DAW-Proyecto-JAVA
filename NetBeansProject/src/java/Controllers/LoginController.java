@@ -8,7 +8,6 @@ package Controllers;
 import Database.Database;
 import Model.Candidate;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -37,31 +36,29 @@ public class LoginController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String operation = request.getParameter("operation");
-		String url = "/login.jsp";
+		String url = "login.jsp";
 		
 		if (operation.equals("login")) {
 			String user = request.getParameter("user"), pass = request.getParameter("password");
 			int x = -1;
-			try {
-				
+			try {				
 				String query = "SELECT p.id FROM Person p, User u WHERE email = '%s' AND u.password = '%s' AND u.id = p.id";
 				ResultSet rs = Database.query(query, user, pass);
 				if (rs.first()) {
-					System.out.println(rs);
-					x = rs.getInt("id");
+					request.getSession().setAttribute("loggedIn", rs.getInt("id"));
+					url = "candidates";
+				} else {
+					url = "login.jsp?error=1";
 				}
 				System.out.println(x);
 			} catch (SQLException ex) {
 				Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
 			}
-			
-			url = "/candidates";
 		} else if (operation.equals("logout")) {
-			
+			request.getSession().invalidate();
+			url = "login.jsp";
 		}
-		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		response.sendRedirect(url);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

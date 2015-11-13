@@ -27,7 +27,9 @@
 				<p><label>Usuario: <input type="text" name="user" required></label></p>
 				
 				<p><label>Contraseña: <input type="password" name="password" required></label></p>
-				
+				<% if (request.getParameter("error") != null) { %>
+				<p class="error">Nombre de usuario o contraseña incorrectos.</p>
+				<% } %>
 				<input type="submit" value="Login">
 			</form>
 		</div>

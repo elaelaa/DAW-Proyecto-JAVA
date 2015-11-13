@@ -13,7 +13,7 @@
 	<title>404 error</title>
 </head>
 <body>
-	<%@include file="header.html" %>
+	<%@include file="header.jsp" %>
 	<h1 class="error">Something went wrong!</h1>
 	<%@include file="footer.html" %>
 </body>

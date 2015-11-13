@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<%@include file="header.html" %>
+	<%@include file="header.jsp" %>
 
 	<div id="main">
 		<div class="wrapper">
