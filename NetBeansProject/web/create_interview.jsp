@@ -17,7 +17,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script src="js/edit_create_functionality.js"></script> 
+        <script src="js/edit_interview_functions.js"></script> 
     </head>
     <body>
         
