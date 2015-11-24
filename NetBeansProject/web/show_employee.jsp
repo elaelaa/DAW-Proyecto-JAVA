@@ -18,7 +18,7 @@
 </head>
 <body>
 
-	<%@include file="header.html" %>
+	<%@include file="header.jsp" %>
 
 	<div id="main">
 		<div class="wrapper">
@@ -59,11 +59,6 @@
                                         <p class="intended">Empresa: <span><%= jobs.get(i).getCompany()%></span></p>
 					<span class="separator"></span>
 				<%	} %>
-				
-				<p>Entrevistas: </p>
-				<ul id="interviews">
-						<li>Interviewzzz</li>
-				</ul> 
 			</div>
 			<div id="buttons">
                             <a class="button" id="edit" href="employees?operation=edit&id=<%= employee.getId()%>">Editar</a>

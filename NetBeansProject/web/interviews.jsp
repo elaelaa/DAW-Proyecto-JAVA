@@ -16,7 +16,7 @@
 	<title>Entrevistas</title>
 </head>
 <body>
-	<%@include file="header.html" %>
+	<%@include file="header.jsp" %>
 	
 	<div id="main">
 		<div class="wrapper">
@@ -43,7 +43,7 @@
 							<td><%= interviews.get(i).getJobTitle() %></td>
 							<td><%= interviews.get(i).getDate() %></td>
 							<td><%= interviews.get(i).getCandidateName() %></td>
-							<td>$<%= interviews.get(i).getInterviewerName() %></td>
+							<td><%= interviews.get(i).getInterviewerName() %></td>
 							<td><a href=<%= "interviews?operation=show&id="+interviews.get(i).getId() %> class="button">Mostrar</a></td>
 						</tr>
 				<% } %>

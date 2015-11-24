@@ -25,6 +25,10 @@ h1 {
 	width: 100%;
 }
 
+.error {
+	color: red;
+}
+
 form {
 	float: right;
 	width: 340px;

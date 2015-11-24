@@ -119,6 +119,7 @@ public class Candidate extends Person {
                         rs.getString("platform"),
                         rs.getDate("interviewDate")
                 );
+                interview.setId(rs.getInt("id")); 
                 interviews.add(interview);
             }
         } catch (SQLException ex) {

@@ -75,3 +75,12 @@ VALUES (
 
 -- USER CREATION
 INSERT INTO User (id, password) VALUES (2, 'password');
+
+-- INTERVIEW CREATION
+INSERT INTO Interview (employeeId, candidateId, jobTitle, interviewDate, feedback, platform)
+VALUES (2, 
+	1, 
+	'Boss', 
+	CURDATE(), 
+	'GREAT!!!',
+	'skype');

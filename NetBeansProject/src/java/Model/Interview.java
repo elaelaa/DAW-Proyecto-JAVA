@@ -100,7 +100,7 @@ public class Interview {
         Interview interview = null;
         
         try {
-            String query = "SELECT * FROM Interview id = %d";
+            String query = "SELECT * FROM Interview WHERE id = %d";
             ResultSet rs = Database.query(query, id);
             if (rs.next()){
                 interview = new Interview(

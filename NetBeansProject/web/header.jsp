@@ -1,3 +1,8 @@
+<%
+if (request.getSession().getAttribute("loggedIn") == null) {
+	response.sendRedirect("login.jsp");
+}
+%>
 <header>
 	<nav>
 		<div class="wrapper">
@@ -6,7 +11,7 @@
 				<li><a href="employees">Empleados</a></li>
 				<li><a href="candidates">Candidatos</a></li>
 				<li><a href="interviews">Entrevistas</a></li>
-				<li><a href="login.html">Logout</a></li>
+				<li><a href="LoginController?operation=logout">Logout</a></li>
 			</ul>
 		</div>
 	</nav>

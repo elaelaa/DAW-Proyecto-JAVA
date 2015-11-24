@@ -9,6 +9,10 @@
         <servlet-class>Controllers.EmployeeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>Controllers.LoginController</servlet-class>
+	</servlet>
+    <servlet>
         <servlet-name>InterviewController</servlet-name>
         <servlet-class>Controllers.InterviewController</servlet-class>
     </servlet>
@@ -20,16 +24,20 @@
         <servlet-name>EmployeeController</servlet-name>
         <url-pattern>/employees</url-pattern>
     </servlet-mapping>
-    <servlet>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
         <servlet-name>InterviewController</servlet-name>
-        <servlet-class>/interviews</servlet-class>
-    </servlet>
+        <url-pattern>/interviews</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

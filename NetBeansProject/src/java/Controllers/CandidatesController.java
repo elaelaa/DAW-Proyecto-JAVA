@@ -49,10 +49,10 @@ public class CandidatesController extends HttpServlet {
         
         String url = "/404.jsp"; // starts default not found url
         
-        Boolean redirect =false; 
+        Boolean redirect = false; 
         
         //handling the rerouting based on opertion? 
-        if (operation == null){
+        if (operation == null || operation.equals("login")){
             List<Candidate> candidates = Candidate.getAll(); // all of the candidates
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to
@@ -105,9 +105,14 @@ public class CandidatesController extends HttpServlet {
         //figure out if trying to modify or create
         String operation = request.getParameter("operation"); 
         
+		if (operation.equals("login")) {
+			doGet(request, response);
+			return;
+		}
+		
         Boolean creating = false; 
         
-        if (operation.equals("create"))
+		if (operation.equals("create"))
         {
             creating = true; 
         }
