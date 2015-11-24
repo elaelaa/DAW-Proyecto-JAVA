@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
         <script src="js/edit_create_functionality.js"></script> 
     </head>
     <body>
@@ -27,6 +27,7 @@
             <div class="wrapper">
                 <form action="interviews" id="createform" method="post">
                     <input type="hidden" name="operation" value="edit">
+                    <input type="hidden" name="interviewId" value="${interview.getId()}">
                     <input type="hidden" name="employeeId" value="${interview.getEmployeeId()}">
                     <p>Entrevistador: <span>${interview.getInterviewerName()}</span></p>
                      <p><label>Puesto de Trabajo:

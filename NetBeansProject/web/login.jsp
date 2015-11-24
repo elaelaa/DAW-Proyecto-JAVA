@@ -24,7 +24,7 @@
 			</div>
 			<form method="post" action="LoginController">
 				<input type="hidden" name="operation" value="login"/>
-				<p><label>Usuario: <input type="text" name="user" required></label></p>
+				<p><label>Email: <input type="text" name="user" required></label></p>
 				
 				<p><label>Contraseña: <input type="password" name="password" required></label></p>
 				<% if (request.getParameter("error") != null) { %>
