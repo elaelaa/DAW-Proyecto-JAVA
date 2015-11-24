@@ -1,9 +1,15 @@
 window.onload = function(){
         
     var element= document.getElementById("addCert");
-    element.addEventListener("click", addDegree, false);
+    if (element)
+    {
+        element.addEventListener("click", addDegree, false);
+    }
     var element= document.getElementById("addJob");
-    element.addEventListener("click", addWork, false);
+    if(element)
+    {
+        element.addEventListener("click", addWork, false);
+    }
     
     $('body').on('focus',".datepicker", function(){
     $(this).datepicker({
