@@ -235,12 +235,13 @@ table {
 	border-spacing: 0;
 }
 
-thead, tbody tr:nth-child(even) {
-	background: rgba(255, 255, 255, .7);
+thead > tr > th {
+	background-color: #333333;
+	color: #EEE !important;
 }
 
-tbody tr:nth-child(odd) {
-	background: rgba(0, 0, 0, .05);
+tbody tr {
+	background: rgba(255, 255, 255, .7);
 }
 
 th, td {
