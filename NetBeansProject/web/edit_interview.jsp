@@ -26,6 +26,7 @@
 	<div id="main">
             <div class="wrapper">
                 <form action="interviews" id="createform" method="post">
+                    <input type="hidden" name="interviewId" value="${interview.getId()}">
                     <input type="hidden" name="operation" value="edit">
                     <input type="hidden" name="employeeId" value="${interview.getEmployeeId()}">
                     <p>Entrevistador: <span>${interview.getInterviewerName()}</span></p>
