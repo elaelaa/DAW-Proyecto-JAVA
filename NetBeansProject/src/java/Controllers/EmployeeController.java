@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -111,21 +113,30 @@ public class EmployeeController extends HttpServlet {
          //figure out if trying to modify or create
         String operation = request.getParameter("operation"); 
         
-        Boolean creating = false; 
+        Boolean creating = false;
         
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            
+        ServletContext context = getServletContext();
+
         switch (operation){
             case "create":
                 creating = true;
                 break;
-            case "hire":
+            case "hire": // super special case...
+                String strCandidateId = request.getParameter("candidateId");
+                int candidateId = Integer.parseInt(strCandidateId);
+                Candidate candidate = Candidate.getById(candidateId);
+                Employee newEmployee = makeEmployee(candidate, request);
 
+                // repeated code!
+                String url = "/show_employee.jsp"; 
+                request.setAttribute("employee", newEmployee);
+                RequestDispatcher dispatcher = context.getRequestDispatcher(url);
+                dispatcher.forward(request, response);
         }
-        
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         Employee employee = createEmployee(request, creating, df); 
-        
-        ServletContext context = getServletContext();
         
         employee.save(); 
         int id = employee.getId(); 
@@ -380,8 +391,7 @@ public class EmployeeController extends HttpServlet {
      * @param request
      * @return The newly hired Employee object
      */
-    private Employee makeEmployee(Candidate candidate, HttpServletRequest request) 
-            throws ParseException{
+    private Employee makeEmployee(Candidate candidate, HttpServletRequest request){
         // gathering params from te request
         String jobTitle = request.getParameter("jobTitle");
 
@@ -396,7 +406,12 @@ public class EmployeeController extends HttpServlet {
         // parsing the date with the date format
         String strStartDate = request.getParameter("startDate");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = df.parse(strStartDate);
+        Date startDate = new Date();
+        try {
+            startDate = df.parse(strStartDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // actually hiring the candidate
         Employee newHire = candidate.hire(jobTitle, salary, startDate, vacationDays);

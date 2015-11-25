@@ -30,8 +30,8 @@
 				<p>Teléfono: <span><%= employee.getPhone() %></span></p>
 				<p>E-mail: <span><%= employee.getEmail() %></span></p>
 				<p>Fecha de nacimiento: <span><%= employee.getDateOfBirth() %></span></p>
-                                <p>Puesto: <span><%= employee.getStartDate() %></span></p>
-                                <p>Fecha de inicio: <span><%= employee.getJobTitle() %></span></p>
+                                <p>Puesto: <span><%= employee.getJobTitle() %></span></p>
+                                <p>Fecha de inicio: <span><%= employee.getStartDate() %></span></p>
 				<p>Título profesional: <span><%= employee.getProfessionalTitle() %></span></p>
 				<p>Salario: <span><%= employee.getSalary() %></span></p>
                                 <p>Días de vacaciones: <span><%= employee.getVacationDays() %></span></p>

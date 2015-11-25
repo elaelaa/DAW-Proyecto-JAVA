@@ -309,6 +309,24 @@ public class Candidate extends Person {
     }
 
     /**
+     * deleteByIdWithoutPerson
+     * 
+     * Method to delete a Candidate record from the database by its ID
+     * but leave the person superclass intact
+     * @return true if the fields are filled correctly
+     */
+    public static boolean deleteByIdWithoutPerson(int id){
+        int res = 0;
+        try {
+            String query = "DELETE FROM Candidate WHERE id = %d;";
+            res = Database.update(query, id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res == 1;
+    }
+
+    /**
      * hire
      * 
      * Hires the bitch.
@@ -323,14 +341,21 @@ public class Candidate extends Person {
         double salary, Date startDate, int vacationDays){
         
         // first we delete the candidate, CAREFUL: might fail if id is invalid
-        Candidate.deleteById(this.id);
+        Candidate.deleteByIdWithoutPerson(this.id);
         int personId = this.id;
+
+        // format date to string for DB
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String strStartDate = df.format(startDate);
         
         // create employee (w/o person attrs) object and save it
         String query = "INSERT INTO Employee (id, jobTitle, startDate, salary, vacationDays)" +
                        "VALUES (%d, '%s', '%s', %f, %d)";
+        
+        String queryF = String.format(query, personId, jobTitle, strStartDate, salary, vacationDays);
+        
         try {
-            Database.update(query, personId, jobTitle, startDate, salary, vacationDays);
+            Database.update(query, personId, jobTitle, strStartDate, salary, vacationDays);
         } catch (SQLException ex) {
             Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
         }

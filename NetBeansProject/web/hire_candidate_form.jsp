@@ -28,6 +28,8 @@
                 font-size: 20px;
                 font-weight: 800;
             }
+            b { font-weight: 600; }
+            h3 { margin: 10px 10px; }
             hr {
                 background-color: #EEE;
                 border: 1px solid #333;
@@ -45,16 +47,18 @@
                     <!-- Declaring vairables and setting hidden POST fields -->
                     <% Candidate candidate = (Candidate)request.getAttribute("candidate"); %>
                     <input type="hidden" name="operation" value="hire">
-                    <input type="hidden" name="candidateId" value="{candidate.id}">
+                    <input type="hidden" name="candidateId" value="${candidate.id}">
 
                     <!-- Person to hire data -->
-                    <h2>Datos de la persona a contratar</h2>
-                    <p>Nombre: ${candidate.getFirstName()}</p>
-                    <p>Apellidos: ${candidate.getLastName()}</p>
-                    <p>Dirección: ${candidate.getAddress()}</p>
-                    <p>Teléfono: ${candidate.getPhone()}</p>
-                    <p>Correo Electrónico: ${candidate.getEmail()}</p>
-                    <p>Fecha de Nacimiento: ${candidate.getDateOfBirth()}</p>
+                    <div style="text-align: left;">
+                        <h2>Datos de la persona a contratar</h2>
+                        <h3><b>Nombre:</b> ${candidate.getFirstName()}</h3>
+                        <h3><b>Apellidos:</b> ${candidate.getLastName()}</h3>
+                        <h3><b>Dirección:</b> ${candidate.getAddress()}</h3>
+                        <h3><b>Teléfono:</b> ${candidate.getPhone()}</h3>
+                        <h3><b>Correo Electrónico:</b> ${candidate.getEmail()}</h3>
+                        <h3><b>Fecha de Nacimiento:</b> ${candidate.getDateOfBirth()}</h3>
+                    </div>
                         
                     <hr>
 
@@ -79,10 +83,23 @@
                     </p>
 
                     <!-- Submit Button -->
-                    <input type ="submit" value="Contratar!">
+                    <div id="buttons">
+                        <input type ="submit" id="hire-btn" value="Contratar!">
+                        <a href="candidates" class="button" style="color:black; background-color:white;">Cancelar</a>
+                    </div>
                 </form>
             </div>  
         </div>
+
+        <!-- Special script -->
+        <script>
+            document.getElementById("hire-btn").onclick = function (e){
+                var message = "Esta seguro de que quiere contratar a al candidato ${candidate.getFirstName()}?";
+                if (!confirm(message)) {
+                    e.preventDefault();
+                };
+            }
+        </script>
     
         <%@include  file="/footer.html" %>
         
