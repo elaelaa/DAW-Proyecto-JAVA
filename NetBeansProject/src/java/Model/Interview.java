@@ -164,7 +164,7 @@ public class Interview {
     /**
      * deleteById
      * 
-     * Method to delete a Employee record from the database by its ID
+     * Method to delete a Interview record from the database by its ID
      * @return true if the fields are filled correctly
      */
     public static boolean deleteById(int id){

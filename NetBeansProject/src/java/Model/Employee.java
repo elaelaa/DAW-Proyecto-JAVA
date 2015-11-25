@@ -284,7 +284,7 @@ public class Employee extends Person {
     public static boolean deleteById(int id){
         int res = 0;
         try {
-            String query = "DELETE FROM Employee WHERE id = %d";
+            String query = "DELETE FROM Employee WHERE id = %d; DELETE FROM Person WHERE id = %d";
             res = Database.update(query, id);
         } catch (SQLException ex) {
             Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);

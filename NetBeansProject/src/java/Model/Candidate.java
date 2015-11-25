@@ -299,13 +299,36 @@ public class Candidate extends Person {
      */
     public static boolean deleteById(int id){
         int res = 0;
-        try {
-            String query = "DELETE FROM Candidate WHERE id = %d; DELETE FROM Person WHERE id=%d";
-            res = Database.update(query, id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+        res = Candidate.deleteInterviews(id);
+        if (res == 1){
+            try {
+                String query = "DELETE FROM Candidate WHERE id = %d; DELETE FROM Person WHERE id=%d";
+                res = Database.update(query, id);
+            } catch (SQLException ex) {
+                Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return res == 1;
         }
-        return res == 1;
+        return false; 
+    }
+    
+    /**
+     * deleteInterviews
+     * 
+     * Method to delete a Interviews from Candidate 
+     */
+    public static int deleteInterviews(int id){
+        Boolean res = false; 
+        Candidate candidate = Candidate.getById(id);
+        List<Interview> interviews = candidate.getInterviews();
+        for(Interview interview : interviews){
+            int interviewID=interview.getId();
+            res = Interview.deleteById(interviewID);
+            if (!res){
+                return 0;
+            }
+        }
+        return 1; 
     }
 
     /**
@@ -317,13 +340,17 @@ public class Candidate extends Person {
      */
     public static boolean deleteByIdWithoutPerson(int id){
         int res = 0;
-        try {
-            String query = "DELETE FROM Candidate WHERE id = %d;";
-            res = Database.update(query, id);
-        } catch (SQLException ex) {
-            Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+        res = Candidate.deleteInterviews(id);
+        if (res == 1){
+            try {
+                String query = "DELETE FROM Candidate WHERE id = %d;";
+                res = Database.update(query, id);
+            } catch (SQLException ex) {
+                Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return res == 1;
         }
-        return res == 1;
+        return false; 
     }
 
     /**
