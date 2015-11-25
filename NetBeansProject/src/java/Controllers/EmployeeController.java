@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Model.Candidate;
 import Model.Certificate;
 import Model.Employee;
 import Model.PreviousJob;
@@ -58,7 +59,8 @@ public class EmployeeController extends HttpServlet {
             url = "/employees.jsp";                         // url to redirect to
         }
         else if (paramId != null && paramId.matches("\\d+") &&
-				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??
+			    (operation.equals("edit") || operation.equals("show") || 
+                 operation.equals("delete") || operation.equals("hire"))){ //if operation is only digits??
             int id = Integer.parseInt(paramId);
             Employee employee = Employee.getById(id);
             if (employee != null){                                                  // else, set route to candidate view
@@ -76,6 +78,10 @@ public class EmployeeController extends HttpServlet {
                     response.sendRedirect("employees");
                     redirect = true;
                     break; 
+                case "hire": // super special case
+                    url = "/hire_candidate_form.jsp";
+                    Candidate candidate = Candidate.getById(id);
+                    request.setAttribute("candidate", candidate);
             }
         }
         else if (operation.equals("create")){
@@ -107,9 +113,12 @@ public class EmployeeController extends HttpServlet {
         
         Boolean creating = false; 
         
-        if (operation.equals("create"))
-        {
-            creating = true; 
+        switch (operation){
+            case "create":
+                creating = true;
+                break;
+            case "hire":
+
         }
         
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -151,8 +160,6 @@ public class EmployeeController extends HttpServlet {
 
         RequestDispatcher dispatcher = context.getRequestDispatcher(url);
         dispatcher.forward(request, response); 
-        
-        
     }
     
     
@@ -364,25 +371,52 @@ public class EmployeeController extends HttpServlet {
         return degreeList; 
         
     }
+
+    /**
+     * makeEmployee
+     * 
+     * Transforms a candidate to an employee with the parameters of the request
+     * @param candidate
+     * @param request
+     * @return The newly hired Employee object
+     */
+    private Employee makeEmployee(Candidate candidate, HttpServletRequest request) 
+            throws ParseException{
+        // gathering params from te request
+        String jobTitle = request.getParameter("jobTitle");
+
+        // parsing the salary str
+        String strSalary = request.getParameter("salary");
+        double salary = Double.parseDouble(strSalary);
+
+        // parsing the vacation days int
+        String strVacationDays = request.getParameter("vacationDays");
+        int vacationDays = Integer.parseInt(strVacationDays);
+
+        // parsing the date with the date format
+        String strStartDate = request.getParameter("startDate");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = df.parse(strStartDate);
+
+        // actually hiring the candidate
+        Employee newHire = candidate.hire(jobTitle, salary, startDate, vacationDays);
+        return newHire;
+    }
     
     /**
      * Deletes Employee, previousJobs and certificates from database.
      */
     private void DeleteEmployee(Employee employee){
         
-        for (PreviousJob job : employee.getPreviousJobs())
-        {
+        for (PreviousJob job : employee.getPreviousJobs()){
             int jobId = job.getId();
             PreviousJob.deleteById(jobId);
         }
-        for (Certificate cert : employee.getCertificates())
-        {
+        for (Certificate cert : employee.getCertificates()){
             int certId = cert.getId();
             Certificate.deleteById(certId);
         }
-        
         Employee.deleteById(employee.getId());
-        
     }
   
     /**

@@ -186,6 +186,10 @@ input[type="submit"] {
 	background: #eff0ef;
 }
 
+.button.hire-btn {
+	background-color: #8BC34A;
+}
+
 #buttons {
 	padding: 20px 0;
 }

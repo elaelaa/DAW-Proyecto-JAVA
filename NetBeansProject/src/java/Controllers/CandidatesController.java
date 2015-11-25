@@ -75,7 +75,10 @@ public class CandidatesController extends HttpServlet {
                     DeleteCandidate(candidate);
                     response.sendRedirect("candidates");
                     redirect = true;
-                    break; 
+                    break;
+                case "hire":
+                    url = "/hire_candidate_form.jsp";
+                    break;
             }
         }
         else if (operation.equals("create")){
@@ -360,13 +363,11 @@ public class CandidatesController extends HttpServlet {
      */
     private void DeleteCandidate(Candidate candidate){
         
-        for (PreviousJob job : candidate.getPreviousJobs())
-        {
+        for (PreviousJob job : candidate.getPreviousJobs()){
             int jobId = job.getId();
             PreviousJob.deleteById(jobId);
         }
-        for (Certificate cert : candidate.getCertificates())
-        {
+        for (Certificate cert : candidate.getCertificates()){
             int certId = cert.getId();
             Certificate.deleteById(certId);
         }

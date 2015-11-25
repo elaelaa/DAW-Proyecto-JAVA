@@ -31,7 +31,7 @@ public class Candidate extends Person {
         super(name, lastName, address, phone, email, professionalTitle, dateOfBirth);
         this.expectation = expectation;
     }
-    
+
     /**
      * save
      * 
@@ -308,6 +308,35 @@ public class Candidate extends Person {
         return res == 1;
     }
 
+    /**
+     * hire
+     * 
+     * Hires the bitch.
+     * @param candidate
+     * @param jobTitle
+     * @param salary
+     * @param startDate
+     * @param vacationDays
+     * @return The newly hired Employee object
+     */
+    public Employee hire(String jobTitle, 
+        double salary, Date startDate, int vacationDays){
+        
+        // first we delete the candidate, CAREFUL: might fail if id is invalid
+        Candidate.deleteById(this.id);
+        int personId = this.id;
+        
+        // create employee (w/o person attrs) object and save it
+        String query = "INSERT INTO Employee (id, jobTitle, startDate, salary, vacationDays)" +
+                       "VALUES (%d, '%s', '%s', %f, %d)";
+        try {
+            Database.update(query, personId, jobTitle, startDate, salary, vacationDays);
+        } catch (SQLException ex) {
+            Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Employee newHire = Employee.getById(personId);
+        return newHire;
+    }
     
     /* -------- GETTERS AND SETTERS ----------------------------------------- */
 

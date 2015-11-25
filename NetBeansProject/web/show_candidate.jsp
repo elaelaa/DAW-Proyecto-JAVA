@@ -69,6 +69,7 @@
 			<div id="buttons">
                             <a class="button" id="edit" href="candidates?operation=edit&id=<%= candidate.getId()%>">Editar</a>
                             <a class="button" id="delete" href="candidates?operation=delete&id=<%= candidate.getId() %>">Borrar</a>
+                            <a class="button hire-btn" id="hire-btn" href="employees?operation=hire&id=<%= candidate.getId() %>">Contratar</a>
 			</div>
 		</div>
 	</div>
