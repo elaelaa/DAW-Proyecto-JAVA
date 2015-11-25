@@ -83,9 +83,10 @@ public class InterviewController extends HttpServlet {
         else if (operation.equals("create")){
             List<Candidate> candidates = Candidate.getAll(); // all of the employees
             request.setAttribute("candidates", candidates);
-            //User user = request.getSession().getAttribute("User");
-            //Employee employee = Employee.getById(user.getId())
-            //request.setAttribute("employee", employee);
+            int employeeId = (int)request.getSession().getAttribute("loggedIn");
+            Employee employee;
+            employee = Employee.getById(employeeId);
+            request.setAttribute("employee", employee);
             url = "/create_interview.jsp";
         }
         

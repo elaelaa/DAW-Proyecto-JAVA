@@ -7,8 +7,10 @@ package Controllers;
 
 import Model.Candidate;
 import Model.Certificate;
+import Model.Person;
 import Model.PreviousJob;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
@@ -51,11 +55,27 @@ public class CandidatesController extends HttpServlet {
         
         Boolean redirect = false; 
         
-        //handling the rerouting based on opertion? 
+        //handling the rerouting based on operation
         if (operation == null || operation.equals("login")){
             List<Candidate> candidates = Candidate.getAll(); // all of the candidates
             request.setAttribute("candidates", candidates);  // setting the attribute
             url = "/candidates.jsp";                         // url to redirect to
+        }
+        else if (operation.equals("email")){
+            try {
+                if(!Person.isValidEmail(request.getParameter("email"))){
+                    response.setContentType("text/plain;charset=UTF-8");
+                    response.getWriter().write("Email address already exists.");
+                    redirect=true; 
+                }
+                else{
+                    response.setContentType("text/plain;charset=UTF-8");
+                    response.getWriter().write("valid");
+                    redirect=true; 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CandidatesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if (paramId != null && paramId.matches("\\d+") &&
 				(operation.equals("edit") || operation.equals("show") || operation.equals("delete"))){ //if operation is only digits??

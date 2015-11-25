@@ -1,9 +1,15 @@
+var emailvalue = ""; 
+
 window.onload = function(){
     var element= document.getElementById("addCert");
     element.addEventListener("click", addDegree, false);
     
     var element= document.getElementById("addJob");
     element.addEventListener("click", addWork, false);
+    
+    var element= document.getElementById("email");
+    emailvalue=element.value; 
+    element.addEventListener("blur", checkEmailAvailability, false);
     
     $('body').on('focus',".datepicker", function(){
     $(this).datepicker({
@@ -215,7 +221,39 @@ function addWork(){
     
 }
 
+function checkEmailAvailability() {
+    
+        value = document.getElementById("email").value;
+
+        //returns if editing and email value is the same as the user's current
+        if (emailvalue == value){
+            return; 
+        }
+
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState === 4) {
+                var response = xmlhttp.responseText;
+                if (xmlhttp.responseText == "valid") {
+                    document.getElementById("emailerror").innerHTML = "";
+                } else {
+                    document.getElementById("emailerror").innerHTML = xmlhttp.responseText;
+                }
+            }
+        };
+
+        xmlhttp.open("GET", "candidates?operation=email&email=" + value, true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send();
+    }
+
 function Remove(link) { 
-    //alert("removing" + link.parentNode + "from" + link.parentNode.parentNode);
     link.parentNode.parentNode.removeChild(link.parentNode);
 }

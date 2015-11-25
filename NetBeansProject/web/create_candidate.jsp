@@ -41,7 +41,8 @@
                         <input type="text" name="phone" value="${candidate.getPhone()}" required></label>
                     </p> 
                     <p><label>Correo Electrónico:
-                        <input type="email" name="email" value="${candidate.getEmail()}" required></label>
+                        <input type="email" name="email" id="email" value="${candidate.getEmail()}" required></label>
+                        <span class="errorMessage" id="emailerror" ></span>
                     </p>
                     <p>
                         <label>Fecha de nacimiento: 
