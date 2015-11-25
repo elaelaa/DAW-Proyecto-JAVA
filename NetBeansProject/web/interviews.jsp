@@ -20,7 +20,7 @@
 	
 	<div id="main">
 		<div class="wrapper">
-			<a class="button" id="new" href="create_interview.jsp">Nuevo</a>
+			<a class="button" id="new" href="interviews?operation=create">Nuevo</a>
 			<div id="search">
 				<div id="searchImage"><div class="svg"></div></div>
 				<input id="searchBox" class="light-table-filter" data-table="order-table" type="text" name="search" value="" placeholder="Search" />

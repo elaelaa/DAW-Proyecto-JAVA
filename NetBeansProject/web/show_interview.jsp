@@ -26,7 +26,8 @@
 				<% Interview interview = (Interview)request.getAttribute("interview"); %>
 				<p>Puesto de trabajo: <span><%= interview.getJobTitle() %></span></p>
 				<p>Fecha de entrevista: <span><%= interview.getDate() %></span></p>
-				<p>Candidato: <span><%= interview.getCandidateId() %></span></p>
+				<p>Entrevistador: <span><%= interview.getInterviewerName() %></span></p>
+                                <p>Candidato: <span><%= interview.getCandidateName() %></span></p>
 				<p>Plataforma: <span><%= interview.getPlatform() %></span></p>
 				<p>Feedback: <span><%= interview.getFeedback() %></span></p>
 				

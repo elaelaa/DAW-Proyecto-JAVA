@@ -5,7 +5,10 @@
  */
 package Model;
 
+import Database.Database;
 import java.lang.reflect.Field;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +53,17 @@ public class Person {
             }
         }
         return true;
+    }
+    /**
+     * checks database if given email already exists
+     * @param email email to be checked
+     * @return true if email doesn't exists, false otherwise
+     * @throws java.sql.SQLException
+     */
+    public static Boolean isValidEmail(String email) throws SQLException{
+        String query = "SELECT * FROM Person p WHERE p.email = '%s'";
+        ResultSet rs = Database.query(query, email);
+        return !rs.first(); 
     }
 	
     /**
