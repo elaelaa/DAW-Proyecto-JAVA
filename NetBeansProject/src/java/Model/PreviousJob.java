@@ -74,7 +74,8 @@ public class PreviousJob {
             return false;
         }
         String query;
-        if (!this.existsInDB()) {
+        boolean exists= this.existsInDB(); 
+        if (!exists) {
             query = "INSERT INTO PreviousJob (personId, jobTitle, company, jobDescription, salary, startDate, endDate)" +
                     "VALUES (%d, '%s', '%s', '%s', %f, '%s', '%s')";   
         } else {
@@ -89,7 +90,9 @@ public class PreviousJob {
             Database.update(query, this.personId, this.jobTitle, this.company, this.jobDescription, 
                 this.salary, startDate2, endDate2);
             ResultSet rs = Database.query("SELECT id FROM PreviousJob ORDER BY id DESC LIMIT 1");
-            this.setId(!rs.next() ? -1 : rs.getInt(1));
+            if (!exists){
+                this.setId(!rs.next() ? -1 : rs.getInt(1));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(PreviousJob.class.getName()).log(Level.SEVERE, null, ex);
         }

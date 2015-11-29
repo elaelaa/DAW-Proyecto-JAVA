@@ -150,13 +150,16 @@ public class CandidatesController extends HttpServlet {
         
         candidate.save(); 
         int id = candidate.getId(); 
+        
+        List<Certificate> oldCertificates = candidate.getCertificates();
+        List<PreviousJob> oldJobs = candidate.getPreviousJobs();
 
         ArrayList newCertIDs = createCertificates(request, creating, df, id);
         ArrayList newJobIDs = createJobs(request, creating, df, id); 
                 
         if (!creating)
         {
-            for (Certificate oldCert : candidate.getCertificates())
+            for (Certificate oldCert : oldCertificates)
             {
                 int oldId = oldCert.getId(); 
                 if (!newCertIDs.contains(oldId))
@@ -164,8 +167,8 @@ public class CandidatesController extends HttpServlet {
                     Certificate.deleteById(oldId);
                 }
             }
-                
-            for (PreviousJob oldJob : candidate.getPreviousJobs())
+             
+            for (PreviousJob oldJob : oldJobs)
             {
                 int oldId = oldJob.getId(); 
                 if (!newJobIDs.contains(oldId))

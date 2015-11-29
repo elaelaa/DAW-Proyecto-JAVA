@@ -1,4 +1,4 @@
-DROP SCHEMA HumanCapital;
+DROP SCHEMA IF EXISTS HumanCapital;
 CREATE SCHEMA HumanCapital;
 USE HumanCapital;
 

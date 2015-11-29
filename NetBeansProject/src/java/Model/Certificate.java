@@ -63,7 +63,8 @@ public class Certificate {
             return false;
         }
         String query;
-        if (!this.existsInDB()) {
+        boolean exists = this.existsInDB(); 
+        if (!exists) {
             query = "INSERT INTO Certificate (personId, type, name, organization, dateAquired)" +
                     "VALUES (%d, '%s', '%s', '%s', '%s')";   
         } else {
@@ -77,7 +78,9 @@ public class Certificate {
             Database.update(query, this.personId, this.type, this.name, 
                 this.organization, dateAquired2);
             ResultSet rs = Database.query("SELECT id FROM Certificate ORDER BY id DESC LIMIT 1");
-            this.setId(!rs.next() ? -1 : rs.getInt(1));
+            if (!exists){
+                this.setId(!rs.next() ? -1 : rs.getInt(1));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Certificate.class.getName()).log(Level.SEVERE, null, ex);
         }

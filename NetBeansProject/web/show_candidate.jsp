@@ -36,6 +36,7 @@
 					int size = (certificates != null) ? certificates.size() : 0;
 					if (size > 0) { %>
 					<p>Certificados obtenidos:</p>
+                                        <span class="separator"></span>
 				<%	}
 					for (int i=0; i<size; i++) { %>
 					<p class="indented">Tipo: <span><%= certificates.get(i).getType() %></span></p>
@@ -49,12 +50,16 @@
 					size = (jobs != null) ? jobs.size() : 0;
 					if (size > 0) { %>
 					<p>Trabajos anteriores: </p>
+                                        <span class="separator"></span>
 				<%	}
 					for (int i=0; i<size; i++) { %>
 					<p class="indented">Descripción: <span><%= jobs.get(i).getJobDescription() %></span></p>
 					<p class="indented">Título: <span><%= jobs.get(i).getJobTitle() %></span></p>
-                                        <p class="intended">Empresa: <span><%= jobs.get(i).getCompany()%></span></p>
-					<span class="separator"></span>
+                                        <p class="indented">Empresa: <span><%= jobs.get(i).getCompany()%></span></p>
+                                        <p class="indented">Salario: <span><%= jobs.get(i).getSalary()%></span></p>
+                                        <p class="indented">Fecha de inicio: <span><%= jobs.get(i).getStartDate()%></span></p>
+                                        <p class="indented">Fecha final: <span><%= jobs.get(i).getEndDate()%></span></p>
+                                        <span class="separator"></span>
 				<%	} %>
 				<p>Expectativas Económicas: <span>$<%= candidate.getExpectation() %></span></p>
 				<p>Entrevistas: </p>

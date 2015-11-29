@@ -141,12 +141,15 @@ public class EmployeeController extends HttpServlet {
         employee.save(); 
         int id = employee.getId(); 
         
+        List<Certificate> oldCertificates = employee.getCertificates();
+        List<PreviousJob> oldJobs = employee.getPreviousJobs();
+        
         ArrayList newCertIDs = createCertificates(request, creating, df, id);
         ArrayList newJobIDs = createJobs(request, creating, df, id); 
         
         if (!creating)
         {
-            for (Certificate oldCert : employee.getCertificates())
+            for (Certificate oldCert : oldCertificates)
             {
                 int oldId = oldCert.getId(); 
                 if (!newCertIDs.contains(oldId))
@@ -155,7 +158,7 @@ public class EmployeeController extends HttpServlet {
                 }
             }
              
-            for (PreviousJob oldJob : employee.getPreviousJobs())
+            for (PreviousJob oldJob : oldJobs)
             {
                 int oldId = oldJob.getId(); 
                 if (!newJobIDs.contains(oldId))
@@ -266,11 +269,9 @@ public class EmployeeController extends HttpServlet {
         String endDateStr; 
 
         
-        if (previousJobs != null)
-        {
+        if (previousJobs != null){
             
-            for(int i = 0; i<previousJobs.length; i++)
-            {
+            for(int i = 0; i<previousJobs.length; i++){
                 jobTitle = previousJobs[i];
                 company = previousCompanies[i]; 
                 description = descriptions[i];

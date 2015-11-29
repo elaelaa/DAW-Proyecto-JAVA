@@ -102,7 +102,7 @@
                                 for (int i=0; i<sizej; i++) 
                                 {
                                 %>
-                                <div class="certficate">
+                                <div class="certificate">
                                     <p><label>Título profesional:
                                             <input type="text" name="jobTitle" value="<%= jobs.get(i).getJobTitle()%>" required></label>
                                     </p>

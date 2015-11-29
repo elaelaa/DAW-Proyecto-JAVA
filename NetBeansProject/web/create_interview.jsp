@@ -47,11 +47,11 @@
                     </p>
                     <p><label>Plataforma:
                         <select name="platform" required value ="${interview.getPlatform()}">   
-				  <option value="faceToFace">Presencial</option>
-				  <option value="video">Video</option>
-				  <option value="phone">Teléfono</option>
-				  <option value="email">Email</option>
-                                  <option value="skype">Skype</option>
+				  <option value="Presencial">Presencial</option>
+				  <option value="Video">Video</option>
+				  <option value="Telefono">Telefono</option>
+				  <option value="Email">Email</option>
+                                  <option value="Skype">Skype</option>
 			</select>
                         </label>
                     </p> 
