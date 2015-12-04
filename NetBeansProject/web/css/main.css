@@ -186,6 +186,10 @@ input[type="submit"] {
 	background: #eff0ef;
 }
 
+table.ui-datepicker-calendar thead tr th span {
+	color: white !important;
+}
+
 .button.hire-btn {
 	background-color: #8BC34A;
 }
